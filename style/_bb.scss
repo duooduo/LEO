@@ -58,13 +58,29 @@
 	font-size: 16px;
 	line-height: 30px;
 	border-bottom: 1px solid #d2d2d2;
+	font-weight: bold;
 }
 
 .c-share-li {
+	padding-top: 4px;
 	padding-left: 16px;
 	padding-bottom: 21px;
 	border-bottom: 1px solid #eeeeee;
 }
 
-.c-share-li {}
+.c-share-li .c-share-title {
+	text-indent: -0.5em;
+	font-size: 12px;
+	line-height: 19px;
+	font-weight: bold;
+}
+
+.c-share-li i {
+	font-style: normal;
+}
+
+.c-share-li .c-share-text {
+	font-size: 9px;
+	line-height: 21px;
+}
 
