@@ -1,56 +1,22 @@
 @charset "utf-8";
 
 /* 课程封面 */
-.c-title-box {
-	width: 100%;
-	background: #ffffff;
-	line-height: 0;
+.c-title-box { width: 100%; background: #ffffff; line-height: 0;
+	.c-title-text { font-size: 16px; line-height: 46px; text-align: center; color: #0092ff; border-bottom: 1px solid #d2d2d2; }
+	.c-cover-textbox { font-size: 10px; line-height: 22px; padding: 9px 0 12px 16px; border-bottom: 1px solid #d2d2d2;
+		i {
+			font-style: normal;
+		}
+	}
 }
 
-.c-title-box .c-cover-box {
-	display: inline-block;
-	width: 100%;
-	position: relative;
-}
-
-.c-title-box .c-cover-box .c-cover-support {
-	margin-top: 53.3333%;
-}
-
-.c-title-box .c-cover-box .c-cover-back {
-	position: absolute;
-	top: 0;
-	right: 0;
-	left: 0;
-	bottom: 0;
-	background: #eeeeee;
-}
-
-.c-title-box .c-title-text {
-	font-size: 16px;
-	line-height: 46px;
-	text-align: center;
-	color: #0092ff;
-	border-bottom: 1px solid #d2d2d2;
-}
-
-.c-title-box .c-cover-textbox {
-	font-size: 10px;
-	line-height: 22px;
-	padding: 9px 0 12px 16px;
-	border-bottom: 1px solid #d2d2d2;
-}
-
-.c-title-box .c-cover-textbox i {
-	font-style: normal;
+.c-cover-box { display: inline-block; width: 100%; position: relative;
+	.c-cover-support { margin-top: 53.3333%; }
+	.c-cover-back { position: absolute; top: 0; right: 0; left: 0; bottom: 0; background: #eeeeee; }
 }
 
 /* 分享会内容 */
-.c-sharecontent-box {
-	width: 100%;
-	margin-top: 13px;
-	background: #ffffff;
-	padding-top: 9px;
+.c-sharecontent-box { width: 100%; margin-top: 13px; background: #ffffff; padding-top: 9px;
 }
 
 .c-sharecontent-box .c-sharecontent-title {
@@ -59,19 +25,20 @@
 	line-height: 30px;
 	border-bottom: 1px solid #d2d2d2;
 	font-weight: bold;
+
 }
 
 .c-share-li {
-	padding-top: 4px;
+	padding-top: 9px;
 	padding-left: 16px;
-	padding-bottom: 21px;
+	padding-bottom: 10px;
 	border-bottom: 1px solid #eeeeee;
 }
 
 .c-share-li .c-share-title {
 	text-indent: -0.5em;
 	font-size: 12px;
-	line-height: 19px;
+	line-height: 22px;
 	font-weight: bold;
 }
 
@@ -82,5 +49,31 @@
 .c-share-li .c-share-text {
 	font-size: 9px;
 	line-height: 21px;
+}
+
+/* 主讲人信息 */
+.c-mainspeaker-box {
+	width: 100%;
+	margin-top: 13px;
+	background: #ffffff;
+	padding-top: 9px;
+}
+
+.c-mainspeaker-box .c-mainspeaker-title {
+	margin-left: 16px;
+	font-size: 16px;
+	line-height: 30px;
+	border-bottom: 1px solid #d2d2d2;
+	font-weight: bold;
+
+}
+
+.c-speaker-li .c-speaker-btn {
+	display: block;
+	height: 56px;
+}
+
+.c-speaker-li .c-speaker-btn img {
+	border-radius: 20px;
 }
 
