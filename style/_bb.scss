@@ -1,5 +1,32 @@
 @charset "utf-8";
 
-.bb {
-	width: 100px;
-	height: 110px;}
+/* 课程封面 */
+.c-title-box {
+	width: 100%;
+}
+
+.c-title-box .c-cover-box {
+	display: inline-block;
+	width: 100%;
+	position: relative;
+}
+
+.c-title-box .c-cover-box .c-cover-support {
+	margin-top: 53.3333%;
+}
+
+.c-title-box .c-cover-box .c-cover-back {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	background: #eeeeee;
+}
+
+.c-title-box .c-title-text {
+	font-size: 16px;
+	line-height: 46px;
+	text-align: center;
+	color: #0092ff;
+}
