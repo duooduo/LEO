@@ -45,11 +45,39 @@ html,body { width: 100%; height: 100%; overflow: hidden;}
 }
 
 // --- 用户中心
-.user-box {}
-.user-img { width: 100%; height: 0; padding-top: 50%; position: relative; background: red;
+.user-box { background: #fff; box-sizing: border-box; width: 100%; padding: 0 10px; margin-bottom: 8px;}
+.user-img { width: 100%; height: 0; padding-top: 50%; position: relative; background: #eeeeee;
 	&.img-66 { padding-top: 66.66%;}
 	&.img-53 { padding-top: 53.33%;}
 	img { position: absolute; left: 0; right: 0; top: 0; bottom: 0; width: 100%; height: 100%;}
+}
+.user-info { padding: 12px 0 0; position: relative;
+	figure { float: left; width: 40px; height: 40px; margin-bottom: 15px; border-radius: 20px; overflow: hidden;
+		img { display: block; width: 100%; height: 100%;}
+	}
+	.user-infoR { overflow: hidden; padding-left: 15px; width: 120px;
+		h4 { line-height: 23px; font-size: 13px; color: #666;}
+		p { padding-top: 4px; line-height: 15px; font-size: 10px; color: #666;}
+	}
+	.user-infoR-r { position: absolute; right: 10px; top: 23px; font-size: 0; text-align: right;
+		span { display: inline-block; padding-right: 18%; line-height: 18px; font-size: 12px; color: #0092ff;}
+		span:last-child { padding: 0;}
+	}
+	@media (max-width:330px){
+		.user-infoR-r span { padding-right: 10%;}
+	}
+}
+.user-rz { padding: 12px 0 16px; border-top: 1px solid #ddd; font-size: 0;
+	span { display: inline-block; font-size: 10px; color: #666; margin-right: 20px; line-height: 20px;
+		&.user-rz-fa:before { content: ''; display: inline-block; width: 8px; height: 8px; margin: 0 5px 0 0; @extend %icons; background-position: -44px 0;}
+		&.user-rz-db:before { content: ''; display: inline-block; width: 9px; height: 10px; margin: 0 5px 0 0; @extend %icons; background-position: -44px -10px;}
+	}
+}
+.user-header { text-align: center; border-bottom: 1px solid #0092ff; margin-bottom: 1px;
+	h3 { display: inline-block; padding: 2px 20px 0; margin-bottom: -2px; height: 32px; min-width: 60px; line-height: 32px; border-bottom: 3px solid #0092ff; font-size: 15px; color: #666;}
+	&.c-dark { border-bottom-color: #0079df;
+		h3 { border-bottom-color: #0079df;}
+	}
 }
 
 // 临时
