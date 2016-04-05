@@ -1,6 +1,8 @@
 @charset "utf-8";
 @import "base";
 html,body { width: 100%; height: 100%; overflow: hidden;}
+.p-lr13 { padding: 0 13px;}
+.p-pb15 { padding-bottom: 15px;}
 // --- Public
 %icons { background: url("../images/icons.png") no-repeat; background-size: 100px auto;}
 
@@ -21,7 +23,6 @@ html,body { width: 100%; height: 100%; overflow: hidden;}
 	}
 }
 
-.p-lr13 { padding: 0 13px;}
 .p-btmfix { position: absolute; left: 0; bottom: 0; right: 0; box-sizing: border-box; width: 100%; height: 63px; background: #fff; }
 .p-btmfix2 { position: absolute; left: 0; bottom: 0; right: 0; box-sizing: border-box; width: 100%; height: 55px; background: #fff;
 	.p-btm-star { float: left; width: 54px; height: 50px; padding: 5px 0 0 10px; border-right: 1px solid #eeeeee;
@@ -43,6 +44,12 @@ html,body { width: 100%; height: 100%; overflow: hidden;}
 		p { }
 	}
 }
+.topic-box02 { padding: 0; background: #fff;
+	h3 { font-size: 16px; line-height: 21px; text-align: center; color: #0092ff;}
+	.topic-txt { padding-top: 15px; line-height: 21px; font-size: 12px; color: #666;
+		p { }
+	}
+}
 
 // --- 用户中心
 .user-box { background: #fff; box-sizing: border-box; width: 100%; padding: 0 10px; margin-bottom: 8px;}
@@ -51,28 +58,31 @@ html,body { width: 100%; height: 100%; overflow: hidden;}
 	&.img-53 { padding-top: 53.33%;}
 	img { position: absolute; left: 0; right: 0; top: 0; bottom: 0; width: 100%; height: 100%;}
 }
+
 .user-info { padding: 12px 0 0; position: relative;
 	figure { float: left; width: 40px; height: 40px; margin-bottom: 15px; border-radius: 20px; overflow: hidden;
 		img { display: block; width: 100%; height: 100%;}
 	}
-	.user-infoR { overflow: hidden; padding-left: 15px; width: 120px;
+	.user-infoR { overflow: hidden; padding-left: 15px;
 		h4 { line-height: 23px; font-size: 13px; color: #666;}
 		p { padding-top: 4px; line-height: 15px; font-size: 10px; color: #666;}
 	}
-	.user-infoR-r { position: absolute; right: 10px; top: 23px; font-size: 0; text-align: right;
-		span { display: inline-block; padding-right: 18%; line-height: 18px; font-size: 12px; color: #0092ff;}
-		span:last-child { padding: 0;}
+	.user-infoR-r { position: absolute; right: 0; top: 23px; font-size: 0; text-align: right;
+		span { display: inline-block; padding-left: 18%; line-height: 18px; font-size: 12px; color: #0092ff;}
+		span:first-child { padding: 0;}
 	}
 	@media (max-width:330px){
-		.user-infoR-r span { padding-right: 10%;}
+		.user-infoR-r span { padding-left: 10%;}
 	}
 }
+
 .user-rz { padding: 12px 0 16px; border-top: 1px solid #ddd; font-size: 0;
 	span { display: inline-block; font-size: 10px; color: #666; margin-right: 20px; line-height: 20px;
 		&.user-rz-fa:before { content: ''; display: inline-block; width: 8px; height: 8px; margin: 0 5px 0 0; @extend %icons; background-position: -44px 0;}
 		&.user-rz-db:before { content: ''; display: inline-block; width: 9px; height: 10px; margin: 0 5px 0 0; @extend %icons; background-position: -44px -10px;}
 	}
 }
+
 .user-header { text-align: center; border-bottom: 1px solid #0092ff; margin-bottom: 1px;
 	h3 { display: inline-block; padding: 2px 20px 0; margin-bottom: -2px; height: 32px; min-width: 60px; line-height: 32px; border-bottom: 3px solid #0092ff; font-size: 15px; color: #666;}
 	&.c-dark { border-bottom-color: #0079df;
@@ -80,6 +90,38 @@ html,body { width: 100%; height: 100%; overflow: hidden;}
 	}
 }
 
+.user-content {
+	h4 { font-size: 12px; line-height: 38px; color: #666;}
+}
+.user-link01 { display: block; color: #666; position: relative;
+	&:after { content: ''; position: absolute; right: 0; top: 50%; display: block; width: 7px; height: 12px; margin-top: -6px; @extend %icons; background-position: -65px 0;}
+	em { color: #fe9595; padding-right: 8px;}
+	span { font-size: 10px;}
+}
+.user-tip { box-sizing: border-box; width: 100%; background: #eeeeee; border-radius: 4px;
+	a { display: block; padding: 0 15px 16px;
+		.tit { padding-top: 14px; line-height: 24px; text-align: center; font-size: 16px; color: #0092ff;}
+		p { padding: 10px 0 0; line-height: 21px; font-size: 12px; color: #666;}
+	}
+}
+.user-label { font-size: 0; margin-right: -9px;
+	span { display: inline-block; margin: 2px 9px 7px 0; height: 20px; line-height: 20px; padding: 0 10px; background: #a7d3f9; font-size: 10px; color: #fff; border-radius: 5px;}
+}
+// 教育背景
+.user-edu { padding-top: 8px;
+	.t { font-size: 13px; color: #0079df;}
+	.m { font-size: 10px; color: #666;}
+	&.edu01 { line-height: 30px; overflow: hidden;
+		.t { float: left;}
+		.m { overflow: hidden; font-size: 11px;
+			span { padding: 0 10px 0 6px;}
+		}
+	}
+	&.edu02 {
+		.t { line-height: 30px;}
+		.m { line-height: 17px; padding-right: 2px;}
+	}
+}
 // 临时
 .wrap { width: 500px; height: 400px; margin: 50px auto 0; background: #f2f2f2; border: 2px solid #999; position: relative;}
 .bullet-box { width: 200px; height: 240px; background: #ffffff; border: 2px solid #aa1c1a; position: absolute; right: 0; top: 0; overflow: hidden;
