@@ -36,6 +36,93 @@
 }
 
 
+/**********************专题二级**************************/
+.topic-box02 {
+	margin-bottom: 16px;
+
+	h3 {
+		padding: 3px 0 0 10px;
+		font-size: 16px;
+		line-height: 42px;
+		color: #0092ff;
+		border-bottom: 1px solid #d2d2d2;
+	}
+
+	.topic-txt {
+		padding: 5px 10px 9px 10px;
+		font-size: 12px;
+		line-height: 21px;
+
+		p {
+			padding-bottom: 20px;
+		}
+	}
+}
+
+.topic-box03 {
+	padding: 3px 10px 14px;
+	background: #ffffff;
+	h3 {
+		font-size: 16px;
+		line-height: 46px;
+	}
+	ul li {
+		margin-bottom: 6px;
+		background: #eeeeee;
+		border-radius: 5px;
+
+		h4 {
+			font-size: 15px;
+			color: #0092ff;
+			line-height: 40px;
+			text-align: center;
+			padding-bottom: 8px;
+		}
+
+		.topic-content {
+			padding: 0 15px 24px;
+			font-size: 12px;
+			line-height: 21px;
+		}
+
+		.topic-author-box {
+			padding: 9px 6px;
+
+			.topic-author-img {
+				float: left;
+				width: 30px;
+				height: 30px;
+				border-radius: 15px;
+				overflow: hidden;
+
+				img {
+					width: 30px;
+					height: 30px;
+				}
+			}
+
+			.topic-author-name {
+				font-size: 12px;
+				line-height: 30px;
+				margin-left: 13px;
+				float: left;
+			}
+
+			.topic-author-btn {
+				display: block;
+				font-size: 10px;
+				color: #ffffff;
+				background: #0092ff;
+				border-radius: 4px;
+				text-align: center;
+				padding: 6px 10px;
+				margin-top: 4px;
+				float: right;
+			}
+		}
+	}
+}
+
 
 
 
