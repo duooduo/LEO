@@ -8,6 +8,7 @@ html,body { width: 100%; height: 100%; overflow: hidden;}
 
 .p-wrap { width: 100%; height: 100%; overflow: auto; position: relative; -webkit-overflow-scrolling: touch;
 	&:after { content: ''; display: block; width: 100%; height: 70px;}
+	&.p-after0:after { height: 0;}
 }
 
 .p-header { width: 100%; height: 44px; background: #fff; border-bottom: 1px solid #eeeeee; position: relative;
@@ -45,10 +46,24 @@ html,body { width: 100%; height: 100%; overflow: hidden;}
 	}
 }
 .topic-box02 { background: #fff;
-	h3 { color: #0092ff;}
-	.topic-txt {
-		p { }
+	margin-bottom: 16px;
+	h3 {  padding: 3px 0 0 10px; font-size: 16px; line-height: 42px; color: #0092ff; border-bottom: 1px solid #d2d2d2;}
+	.topic-txt { padding: 5px 10px 9px 10px; font-size: 12px; line-height: 21px;
+		p { padding-bottom: 20px;}
 	}
+}
+.topic-box03 { padding: 3px 10px 14px; background: #ffffff;
+	h3 { font-size: 16px; line-height: 46px; }
+	li { margin-bottom: 6px; background: #eeeeee; border-radius: 5px;
+		h4 { font-size: 15px; color: #0092ff; line-height: 40px; text-align: center; padding-bottom: 8px; }
+	}
+	.topic-content { padding: 0 15px 24px; font-size: 12px; line-height: 21px; }
+	.topic-author-box { padding: 9px 6px;}
+	.topic-author-img { float: left; width: 30px; height: 30px; border-radius: 15px; overflow: hidden;
+		img { width: 30px; height: 30px; }
+	}
+	.topic-author-name { font-size: 12px; line-height: 30px; margin-left: 13px; float: left;}
+	.topic-author-btn { display: block; font-size: 10px; color: #ffffff; background: #0092ff; border-radius: 4px; text-align: center; padding: 6px 10px; margin-top: 4px; float: right;}
 }
 
 // --- 用户中心
@@ -113,8 +128,8 @@ html,body { width: 100%; height: 100%; overflow: hidden;}
 	.m { font-size: 10px; color: #666;}
 	&.edu01 { line-height: 30px; overflow: hidden;
 		.t { float: left;}
-		.m { overflow: hidden; font-size: 11px;
-			span { padding: 0 10px 0 6px;}
+		.m { overflow: hidden; padding: 5px 0 5px 6px; line-height: 20px; font-size: 11px;
+			span { float: left; padding: 0 15px 0 0;}
 		}
 	}
 	&.edu02 {
@@ -122,10 +137,32 @@ html,body { width: 100%; height: 100%; overflow: hidden;}
 		.m { line-height: 17px; padding-right: 2px;}
 	}
 }
+.user-comm {
+	li { padding: 5px 0;
+		.user-heart { padding-top: 5px; font-size: 0;
+			i { display: inline-block; width: 11px; height: 10px; margin-right: 8px; @extend %icons; background-position: -53px 0;}
+		}
+		p { padding-top: 5px; line-height: 17px; font-size: 13px; color: #666;
+			&.p2 { color: #8a8a8a;}
+		}
+		em { display: block; padding-top: 4px; line-height: 13px; font-size: 9px; color: #999;}
+		.user-comm-info { padding-top: 13px; overflow: hidden; line-height: 26px; height: 26px;
+			figure { float: left; width: 26px; height: 26px; border-radius: 20px; overflow: hidden;
+				img { display: block; width: 100%; height: 100%;}
+			}
+			span { float: left; padding-left: 12px; font-size: 12px; color: #999;}
+			i { float: right; padding-top: 15px; line-height: 12px; font-size: 9px; color: #999;}
+		}
+
+		&.user-comm-more { padding: 0 0 8px 0; margin-top: -5px; text-align: right; line-height: 10px;
+			a { font-size: 9px; color: #00b8df;}
+		}
+	}
+}
 // 临时
 .wrap { width: 500px; height: 400px; margin: 50px auto 0; background: #f2f2f2; border: 2px solid #999; position: relative;}
 .bullet-box { width: 200px; height: 240px; background: #ffffff; border: 2px solid #aa1c1a; position: absolute; right: 0; top: 0; overflow: hidden;
-	.unit { position: absolute; right: 10px; top: 260px; display: block; max-width: 200px; height: 30px; padding: 5px; background: rgba(0,0,0,.3); color: #fff; border-radius: 10px; -webkit-transition: -webkit-transform 1s ease-in 0s; transition: transform 1s ease-in 0s;
+	.unit { position: absolute; right: 10px; top: 260px; display: block; max-width: 200px; height: 30px; padding: 5px; background: rgba(0,0,0,.3); color: #fff; border-radius: 10px; -webkit-transition: -webkit-transform 1s ease-in; transition: transform 1s ease-in;
 		.face { float: left; display: block; width: 30px; height: 30px; margin-right: 5px; border-radius: 50%;}
 		.text { overflow: hidden; font-size: 13px; line-height: 15px; height: 30px; word-break: break-all;}
 	}
