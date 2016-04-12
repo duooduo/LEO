@@ -181,6 +181,54 @@ html,body { width: 100%; height: 100%; overflow: hidden;}
 .p-btmfix-s { position: absolute; left: 0; bottom: 0; right: 0; width: 100%; height: 50px; line-height: 50px; background: #ecf7ff; text-align: center; font-size: 18px; color: #fe4d4d;
 	&:before { content: ''; position: absolute; left: 48px; top: 50%; display: block; width: 19px; height: 22px; margin-top: -11px; @extend %icons; background-position: -24px 0;}
 }
+// 心事
+.mind-box { background: #fff; padding-bottom: 24px;}
+.mind-txt { padding: 15px 10px; word-break: break-all;}
+.mind-award { padding-top: 10px;
+	.p-btn { width: 178px; margin: 0 auto;}
+	p { padding-top: 18px; line-height: 24px; text-align: center; font-size: 10px; color: #333;
+		em { font-size: 18px; color: #fe9595;}
+	}
+	.mind-face { overflow: hidden; width: 185px; margin: 8px auto 0;
+		li { float: left; width: 22px; height: 22px; margin: 0 4px 4px 0; border-radius: 12px; overflow: hidden;
+			&:nth-of-type(7n) { margin-right: 0;}
+			img { display: block; width: 100%; height: 100%;}
+		}
+	}
+}
+.mind-vote { padding-top: 25px;
+	h3 { line-height: 30px; text-align: center; font-size: 16px; color: #333;}
+	.mind-vote-box { position: relative; padding: 34px 57px 0; height: 35px;
+		.left,.right { position: absolute; top: 16px; width: 57px; height: 16px; padding-top: 36px; line-height: 16px; text-align: center; font-size: 10px; color: #333;}
+		.left { left: 0;
+			&:after { content: ''; position: absolute; left: 50%; top: 0; display: block; width: 30px; height: 30px; margin-left: -15px; @extend %icons; background-position: 0 -23px;}
+		}
+		.right { right: 0;
+			&:after { content: ''; position: absolute; left: 50%; top: 0; display: block; width: 30px; height: 30px; margin-left: -15px; @extend %icons; background-position: -31px -23px;}
+		}
+		.line { width: 100%; height: 2px; background: #0092ff;
+			.line-l { height: 2px; background: #fe9595;}
+			em { padding-top: 5px; line-height: 14px; font-size: 10px;}
+			.line-l-n { float: left; color: #fe9595;}
+			.line-r-n { float: right; color: #0092ff;}
+		}
+	}
+}
+.mind-sug { margin-top: 10px; background: #fff;
+	h3 { padding: 10px 0 0 5px; line-height: 30px; font-size: 16px; color: #333;}
+	ul { padding: 7px 6px 0 10px;
+		li { border-bottom: 1px solid #d2d2d2; overflow: hidden;
+			&:last-child { border-bottom: 0;}
+			figure { float: left; width: 60px; height: 40px; margin: 8px 0;
+				img { display: block; width: 100%; height: 100%;}
+			}
+			p { overflow: hidden; padding: 8px 15px; height: 40px; line-height: 40px; font-size: 13px; color: #333; word-break: break-all;}
+		}
+		a { display: block; position: relative;
+			&:after { content: ''; position: absolute; right: 4px; top: 50%; display: block; width: 7px; height: 12px; margin-top: -6px; @extend %icons; background-position: -65px 0;}
+		}
+	}
+}
 
 // --- 弹幕
 .bullet-box { width: 200px; height: 240px; background: #ffffff; border: 2px solid #aa1c1a; position: absolute; right: 20px; top: 100px; overflow: hidden;
