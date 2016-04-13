@@ -91,7 +91,7 @@ html,body { width: 100%; height: 100%; overflow: hidden;}
 		p { padding-top: 4px; line-height: 15px; font-size: 10px; color: #666;}
 	}
 	.user-infoR-r { position: absolute; right: 0; top: 23px; font-size: 0; text-align: right;
-		span { display: inline-block; padding-left: 18%; line-height: 18px; font-size: 12px; color: #0092ff;}
+		span { /*display: inline-block;*/ padding-left: 18%; line-height: 18px; font-size: 12px; color: #0092ff;}
 		span:first-child { padding: 0;}
 	}
 	@media (max-width:330px){
@@ -172,7 +172,7 @@ html,body { width: 100%; height: 100%; overflow: hidden;}
 	img { display: block; width: 70px; height: 70px;}
 	figcaption { display: block; padding: 20px 0 13px; height: 29px; line-height: 29px; text-align: center; font-size: 18px; color: #fff;}
 }
-.s-box { overflow: hidden; padding: 25px 0 0 62px; margin-right: -25px;
+.s-box { overflow: hidden; padding: 25px 0 0 60px; margin-right: -25px;
 	p { line-height: 23px; font-size: 13px; color: #fff;}
 	.s-code { padding-top: 24px; font-size: 0;
 		span { display: inline-block; padding: 0 16px 0 13px; height: 30px; line-height: 30px; background: #fe9595; font-size: 13px; color: #fff;}
@@ -227,6 +227,40 @@ html,body { width: 100%; height: 100%; overflow: hidden;}
 		a { display: block; position: relative;
 			&:after { content: ''; position: absolute; right: 4px; top: 50%; display: block; width: 7px; height: 12px; margin-top: -6px; @extend %icons; background-position: -65px 0;}
 		}
+	}
+}
+
+.dis-box { width: 100%; background: #ffffff; margin-bottom: 13px; border-bottom: 1px solid #d2d2d2;
+	.dis-title { margin-left: 16px; padding-top: 9px; font-size: 16px; line-height: 30px; border-bottom: 1px solid #d2d2d2; font-weight: bold; }
+}
+
+/* 课程封面 */
+.dis-title-text { font-size: 16px; line-height: 46px; text-align: center; color: #0092ff; border-bottom: 1px solid #d2d2d2; }
+.dis-cover-textbox { font-size: 10px; line-height: 22px; padding: 9px 0 12px 16px;}
+
+/* 分享会内容 */
+.dis-share-ul {
+	li { padding: 9px 16px 10px 16px; border-bottom: 1px solid #eeeeee;
+		&:last-child { border-bottom: 0;}
+		h4 { text-indent: -0.5em; font-size: 12px; line-height: 22px; font-weight: bold; }
+		p { font-size: 9px; line-height: 21px; word-break: break-all;}
+	}
+}
+/* 主讲人信息 */
+.dis-speaker-ul {
+	li { padding-bottom: 18px; border-bottom: 1px solid #eeeeee;
+		&:last-child { border-bottom: 0;}
+		figure { margin-top: 8px; margin-left: 16px; border-radius: 20px; float: left; width: 40px; height: 40px;
+			img { display: block; width: 100%; height: 100%;}
+		}
+		.dis-speaker-info { float: left; padding: 8px 0 8px 14px;
+			p:nth-child(1){ font-size: 15px; line-height: 25px; color: #0092ff;}
+			p:nth-child(2){ font-size: 9px; line-height: 14px; color: #000000; }
+		}
+		p { box-sizing: border-box; width: 100%; font-size: 9px; line-height: 22px; padding: 0 16px; color: #333; word-break: break-all;}
+	}
+	a { display: block; position: relative;
+		&:after { content: ''; position: absolute; right: 17px; top: 19px; display: block; width: 9px; height: 17px; @extend %icons; background-position: -62px -13px; -webkit-transform: rotate(180deg); transform: rotate(180deg);}
 	}
 }
 
