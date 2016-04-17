@@ -19,7 +19,7 @@ $(function(){
 	}
 
 	$.ajax({
-		url: 'js/data/discovery_data.js',
+		url: location.protocol + '//' + location.host + '/LEO/js/data/discovery_data.js',
 		dataType: 'json',
 		success: function(d){
 			alert(1);
