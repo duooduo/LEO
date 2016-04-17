@@ -3,7 +3,7 @@
  */
 'use strict';
 var arr = ['11111111','11111111','阿拉里看的见覅档案局安宽带接口及覅地方看到','阿拉里看的见覅档案局安宽带接口及覅地方看到阿拉里看的见覅档案局安宽带接口及覅地方看到','三季度开始减肥','圣诞节疯狂的减肥is','顶顶顶顶顶是看见的方式开发if阿卡酒店房间爱的疯狂'];
-var N = 0;
+var arrN = 0;
 $(function () {
 
 	// 弹幕
@@ -16,7 +16,7 @@ $(function () {
 
 	// 心
 	var hN = 1;
-	$('.unit').live('click', function(){
+	$('.unit').live('touchend', function(){
 		// 点击效果
 		var obj = $(this);
 		if(obj.parent().css('opacity') != 1){ return;}
@@ -39,30 +39,38 @@ $(function () {
 			top: moveHeart.attr('top') + 'px'
 		});
 		box.append(moveHeart);
+
 		moveHeart.t0 = new Date().getTime();
-		moveHeart.top = parseFloat(obj.parent().css('top'))+parseFloat(obj.parent().attr('top')) + 10;
-		// console.log('top:'+moveHeart.top);
+		moveHeart.top = Number(moveHeart.attr('top')) + 10;
+
+		// log
+		// console.log('max-top:'+moveHeart.top);
+		// $('#log').append('<p>max-top:'+moveHeart.top+'</p>');
 
 		if(hN == 1) hN = -1;
 		else hN = 1;
 		moveHeart.dir = hN;
-		moveHeart.k = 15 + Math.random()*5; // 幅度 20
-		moveHeart.v = 15 + Math.random()*5; // 速度 20
+		moveHeart.k = 10 + Math.random()*20; // 幅度 20
+		moveHeart.v = 30 + Math.random()*20; // 速度 20
 		moveHeart.w = 2*Math.PI/(70 + Math.random()*10); // 周期T=2π/w，w= 2π/T
 
-		// console.log(moveHeart);
 		moveHeart.timer = window.setInterval(function () {
 			var t1 = new Date().getTime();
 			var x = (t1 - moveHeart.t0)/1000*moveHeart.v;
+
+			// console.log('x:'+x);
+			// $('#log').append('<p>x:'+x+'</p>');
 			if(x > moveHeart.top) {
 				clearInterval(moveHeart.timer);
 				moveHeart.remove();
 			}
 
 			var y = moveHeart.dir * moveHeart.k*Math.sin(moveHeart.w*x);
-			// var s = moveHeart.attr('style');
-			moveHeart.attr('style','left:'+moveHeart.attr('left')+'px; top:'+moveHeart.attr('top')+'px; -webkit-transform:translate3d('+y+'px,-'+x+'px,0)');
+
+			moveHeart.attr('style','left:'+moveHeart.attr('left')+'px; top:'+moveHeart.attr('top')+'px; -webkit-transform:translate3d('+y+'px,-'+x+'px,0); opacity:'+parseFloat((moveHeart.top-x)/moveHeart.top)+';');
 		}, 100);
+
+		return false;
 	});
 });
 
@@ -75,7 +83,6 @@ function upBullet(box) {
 	var aBox = box.find('.unitbox');
 	var l = aBox.length;
 	aBox.show();
-	console.log(l);
 	// 5条
 	if(l > maxN){
 		var n = l - maxN;
@@ -97,7 +104,7 @@ function upBullet(box) {
 	var $unit = $('<section class="unitbox" top="0" style="-webkit-transform:translate3d(0, 30%, 0);">' +
 		'<div class="unit">' +
 		'<img class="face" src="images/temp/c_cover.jpg" alt="">' +
-		'<p class="text">'+ arr[++N%arr.length] +'</p>' +
+		'<p class="text">'+ arr[++arrN%arr.length] +'</p>' +
 		'</div>' +
 		'</section>');
 	box.append($unit);
