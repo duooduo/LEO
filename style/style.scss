@@ -281,9 +281,8 @@ html,body { width: 100%; height: 100%; overflow: hidden;}
 
 // --- 弹幕
 .p-bullet-box {
-	//position: absolute; right: 0; top: 0; left: 0;
-	.unitbox { position: absolute; right: 10px; top: 50%; -webkit-transition: -webkit-transform 1s ease-in, opacity 1s ease; z-index: 10;}
-
+	//position: absolute; right: 0; top: 50%; width: 100%; height: 300px; margin-top: -150px;
+	.unitbox { position: absolute; right: 10px; top: 50%; -webkit-transition: -webkit-transform 0.5s ease-in, opacity 0.5s ease; z-index: 10;}
 	.unit { float: left; display: block; padding: 5px 40px 5px 15px; background: rgba(0,0,0,.4); color: #fff; border-radius: 15px; cursor: pointer; position: relative;
 		&.active { -webkit-animation: active ease-in-out 0.3s;}
 		&.on { color: #0092ff;}
