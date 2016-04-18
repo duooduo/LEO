@@ -20,7 +20,7 @@
 
 </div>
 <div class="p-bullet-box">
-	<section class="unitbox" top="-100" style="-webkit-transform: translate3d(0, -100px, 0);">
+	<section class="unitbox" top="0" style="-webkit-transform: translate3d(0, 30%, 0); transform: translate3d(0, 30%, 0); opacity: 0;">
 		<div class="unit">
 			<img class="face" src="images/temp/c_cover.jpg" alt="">
 			<p class="text">弹幕~~弹幕~~弹幕~~弹幕~~弹幕~~弹幕~~弹幕~~弹幕~~</p>
@@ -132,10 +132,8 @@
 		var $unit = $('<section class="unitbox" top="0" style="-webkit-transform:translate3d(0, 0, 0); transform:translate3d(0, 0, 0); opacity: 0;">' +
 				'<div class="unit">' +
 				'<img class="face" src="images/temp/c_cover.jpg" alt="">' +
-				'<p class="text">'+ arr[++arrN%arr.length] +'</p>' +
-				'</div>' +
-				'</section>');
-//		$unit.hide();
+				'<p class="text">'+ arr[++arrN%arr.length] +
+				'</p></div></section>');
 		box.append($unit);
 	}
 </script>
