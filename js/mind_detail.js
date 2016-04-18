@@ -67,7 +67,7 @@ $(function () {
 
 			var y = moveHeart.dir * moveHeart.k*Math.sin(moveHeart.w*x);
 
-			moveHeart.attr('style','left:'+moveHeart.attr('left')+'px; top:'+moveHeart.attr('top')+'px; -webkit-transform:translate3d('+y+'px,-'+x+'px,0); opacity:'+parseFloat((moveHeart.top-x)/moveHeart.top)+';');
+			moveHeart.attr('style','left:'+moveHeart.attr('left')+'px; top:'+moveHeart.attr('top')+'px; -webkit-transform:translate3d('+y+'px,-'+x+'px,0); transform:translate3d('+y+'px,-'+x+'px,0); opacity:'+parseFloat((moveHeart.top-x)/moveHeart.top)+';');
 		}, 100);
 
 		return false;
@@ -82,29 +82,25 @@ function upBullet(box) {
 
 	var aBox = box.find('.unitbox');
 	var l = aBox.length;
-	console.log(l);
-	aBox.show();
+	// console.log(l);
+	// $('#log').append('<p>'+l+'</p>');
+//		aBox.show();
 	// 5条
-	if(l > maxN){
-		aBox[0].remove();
-	}
-
+	if(l > maxN){ aBox.eq(0).remove();}
 	var step = aBox[l-1] ? (aBox[l-1].clientHeight + marginT): 50;
 	box.find('.unitbox').each(function(i){
 		var obj = $(this);
 		obj.show().attr('top',obj.attr('top') - step);
-		// if(obj.attr('top') <= -340) {obj.remove();}
+		// if(obj.attr('opacity') == 0) {obj.remove();}
 		if(l<maxN){ var opp = op[i+(maxN-l)];}
 		else {var opp = op[i];}
-		obj.attr('style','-webkit-transform:translate3d(0, '+obj.attr('top')+'px, 0); opacity:'+ opp +';');
+		obj.attr('style','-webkit-transition: -webkit-transform 0.5s ease-in, opacity 0.5s ease; transition: transform 0.5s ease-in, opacity 0.5s ease;-webkit-transform:translate3d(0, '+obj.attr('top')+'px, 0); transform:translate3d(0, '+obj.attr('top')+'px, 0); opacity:'+ opp +';');
 	});
 
-	var $unit = $('<section class="unitbox" top="0" style="-webkit-transform:translate3d(0, 30%, 0);">' +
+	var $unit = $('<section class="unitbox" top="0" style="-webkit-transform:translate3d(0, 0, 0); transform:translate3d(0, 0, 0); opacity: 0;">' +
 		'<div class="unit">' +
 		'<img class="face" src="images/temp/c_cover.jpg" alt="">' +
-		'<p class="text">'+ arr[++arrN%arr.length] +'</p>' +
-		'</div>' +
-		'</section>');
+		'<p class="text">'+ arr[++arrN%arr.length] +
+		'</p></div></section>');
 	box.append($unit);
-	$unit.hide();
 }
