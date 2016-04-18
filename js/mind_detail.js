@@ -82,13 +82,11 @@ function upBullet(box) {
 
 	var aBox = box.find('.unitbox');
 	var l = aBox.length;
+	console.log(l);
 	aBox.show();
 	// 5条
 	if(l > maxN){
-		var n = l - maxN;
-		for(var i=0; i<n; i++){
-			aBox[i].remove();
-		}
+		aBox[0].remove();
 	}
 
 	var step = aBox[l-1] ? (aBox[l-1].clientHeight + marginT): 50;
