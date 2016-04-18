@@ -118,7 +118,9 @@
 		$('#log').append('<p>'+l+'</p>');
 //		aBox.show();
 		// 5条
-//		if(l > maxN){ aBox[0].remove();}
+		if(l > maxN){
+			aBox.eq(0).remove();
+		}
 		var step = aBox[l-1] ? (aBox[l-1].clientHeight + marginT): 50;
 		box.find('.unitbox').each(function(i){
 			var obj = $(this);
