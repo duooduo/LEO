@@ -11,7 +11,7 @@ html,body { width: 100%; height: 100%; overflow: hidden;}
 .p-wrap { width: 100%; height: 100%; overflow: auto; position: relative; -webkit-overflow-scrolling: touch;
 	&:after { content: ''; display: block; width: 100%; height: 70px;}
 	&.p-after0:after { height: 0;}
-	&.p-b50:after { height: 50px;}
+	&.p-b50:after { height: rem(100);}
 }
 .p-header { width: 100%; height: 44px; background: #fff; border-bottom: 1px solid #eeeeee; position: relative;
 	.p-header-h2 { box-sizing: border-box; width: 100%; height: 44px; padding: 0 50px; line-height: 44px; text-align: center; font-size: 16px; color: #333; overflow: hidden; word-break: break-all;}
@@ -167,37 +167,67 @@ html,body { width: 100%; height: 100%; overflow: hidden;}
 	}
 }
 // --- share
-.s-img { width: 100%; margin-top: 9%; position: relative;
-	img { display: inline-block; width: 52.8%; }
-	.s-img-t { position: absolute; top: 6.6%; width: 118px; color: #fff;
-		h3 { float: left; width: 20px; line-height: 1em; padding: 12px 7px 10px; margin: 0 20px 0 0; font-size: 20px; text-align: left; background: url("../images/s-h3.png") no-repeat 0 0; background-size: 100% 100%;}
-		p { float: left; width: 21px; padding-top: 16px; line-height: 1em; font-size: 12px; text-align: left;}
+//.s-img { width: 100%; margin-top: 9%; position: relative;
+//	img { display: inline-block; width: 52.8%; }
+//	.s-img-t { position: absolute; top: 6.6%; width: 118px; color: #fff;
+//		h3 { float: left; width: 20px; line-height: 1em; padding: 12px 7px 10px; margin: 0 20px 0 0; font-size: 20px; text-align: left; background: url("../images/s-h3.png") no-repeat 0 0; background-size: 100% 100%;}
+//		p { float: left; width: 21px; padding-top: 16px; line-height: 1em; font-size: 12px; text-align: left;}
+//	}
+//
+//	&.s-img-l { text-align: left;
+//		.s-img-t { right: 2.6%;}
+//		.s-img-t h3 { margin: 0 20px 0 0;}
+//	}
+//	&.s-img-r { text-align: right;
+//		.s-img-t { left: 3.9%;}
+//		.s-img-t h3 { margin: 0 0 0 13px;}
+//	}
+//}
+//.s-txt { width: 100%; margin-top: 16px; overflow: hidden; position: relative;
+//	&:before { content: ''; position: absolute; left: 25px; right: 25px; top: 0; border-top: 1px dashed rgba(255,255,255,.4);}
+//}
+//.s-logo { float: left; padding: 30px 0 0 10%; width: 70px;
+//	img { display: block; width: 70px; height: 70px;}
+//	figcaption { display: block; padding: 20px 0 13px; height: 29px; line-height: 29px; text-align: center; font-size: 18px; color: #fff;}
+//}
+//.s-box { position: absolute; top: 0; right: 5px; padding: 25px 0 0 0; width: 200px;
+//	p { line-height: 23px; font-size: 13px; color: #fff;}
+//	.s-code { padding-top: 24px; font-size: 0;
+//		span { display: inline-block; padding: 0 16px; height: 30px; line-height: 30px; background: #fe9595; font-size: 13px; color: #fff;}
+//	}
+//}
+// --- share rem
+.s-img { width: 100%; margin-top: rem(68); position: relative;
+	img { display: inline-block; width: rem(395); height: rem(680); }
+	.s-img-t { position: absolute; top: rem(50); width: rem(236); color: #fff;
+		h3 { float: left; width: rem(40); line-height: 1em; padding: rem(24) rem(14) rem(20); margin: 0 rem(40) 0 0; font-size: rem(40); text-align: left; background: url("../images/s-h3.png") no-repeat 0 0; background-size: 100% 100%;}
+		p { float: left; width: rem(42); padding-top: rem(32); line-height: 1em; font-size: rem(24); text-align: left;}
 	}
 
 	&.s-img-l { text-align: left;
-		.s-img-t { right: 2.6%;}
-		.s-img-t h3 { margin: 0 20px 0 0;}
+		.s-img-t { right: rem(20);}
+		.s-img-t h3 { margin: 0 rem(40) 0 0;}
 	}
 	&.s-img-r { text-align: right;
-		.s-img-t { left: 3.9%;}
-		.s-img-t h3 { margin: 0 0 0 13px;}
+		.s-img-t { left: rem(30);}
+		.s-img-t h3 { margin: 0 0 0 rem(26);}
 	}
 }
-.s-txt { width: 100%; margin-top: 16px; overflow: hidden; position: relative;
-	&:before { content: ''; position: absolute; left: 25px; right: 25px; top: 0; border-top: 1px dashed rgba(255,255,255,.4);}
+.s-txt { width: 100%; margin-top: rem(32); overflow: hidden; position: relative;
+	&:before { content: ''; position: absolute; left: rem(50); right: rem(50); top: 0; border-top: 1px dashed rgba(255,255,255,.4);}
 }
-.s-logo { float: left; padding: 30px 0 0 10%; width: 70px;
-	img { display: block; width: 70px; height: 70px;}
-	figcaption { display: block; padding: 20px 0 13px; height: 29px; line-height: 29px; text-align: center; font-size: 18px; color: #fff;}
+.s-logo { float: left; padding: rem(60) 0 0 rem(75); width: rem(140);
+	img { display: block; width: rem(140); height: rem(140);}
+	figcaption { display: block; padding: rem(40) 0 rem(26); height: rem(58); line-height: rem(58); text-align: center; font-size: rem(36); color: #fff;}
 }
-.s-box { position: absolute; top: 0; right: 5px; padding: 25px 0 0 0; width: 200px;
-	p { line-height: 23px; font-size: 13px; color: #fff;}
-	.s-code { padding-top: 24px; font-size: 0;
-		span { display: inline-block; padding: 0 16px; height: 30px; line-height: 30px; background: #fe9595; font-size: 13px; color: #fff;}
+.s-box { position: absolute; top: 0; right: rem(10); padding: rem(50) 0 0 0; width: rem(400);
+	p { line-height: rem(46); font-size: rem(26); color: #fff;}
+	.s-code { padding-top: rem(48); font-size: 0;
+		span { display: inline-block; padding: 0 rem(32); height: rem(60); line-height: rem(60); background: #fe9595; font-size: rem(26); color: #fff;}
 	}
 }
-.p-btmfix-s { position: absolute; left: 0; bottom: 0; right: 0; width: 100%; height: 50px; line-height: 50px; background: #ecf7ff; text-align: center; font-size: 18px; color: #fe4d4d;
-	&:before { content: ''; position: absolute; left: 13%; top: 50%; display: block; width: 19px; height: 22px; margin-top: -11px; @extend %icons; background-position: -24px 0;}
+.p-btmfix-s { position: absolute; left: 0; bottom: 0; right: 0; width: 100%; height: rem(100); line-height: rem(100); background: #ecf7ff; text-align: center; font-size: rem(36); color: #fe4d4d;
+	&:before { content: ''; position: absolute; left: 50%; top: 50%; display: block; width: rem(38); height: rem(44); margin: rem(-22) 0 0 rem(-300); background: url("../images/s-icon.png") no-repeat 0 0; background-size: 100% 100%;}
 }
 // 心事
 .mind-box { background: #fff; padding-bottom: 24px;}

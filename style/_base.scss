@@ -27,3 +27,7 @@ a{text-decoration: none;}
 .pr {position: relative;}
 .pa {position: absolute;}
 .none { display: none;}
+
+@function rem($px){
+	@return ($px/50)+rem;
+}
