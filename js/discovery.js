@@ -25,7 +25,7 @@ function getQueryStringArgs() {
 $(function(){
 	$.ajax({
 		// url: location.protocol + '//' + location.host + '/share_meeting/info',
-		url: location.protocol + '//' + location.host + '/LEO/js/data/discovery_data.json',
+		url: './js/data/discovery_data.json',
 		dataType: 'json',
 		data: {
 			// shareId: getQueryStringArgs().shareId
