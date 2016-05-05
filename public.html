@@ -7,23 +7,6 @@
 <meta name="format-detection" content="telephone=no"/>
 <title>Public</title>
 <link rel="stylesheet" href="style/style.css">
-	<style>
-		.replace-emoji img {
-			display: inline-block;
-			vertical-align: text-bottom;
-			width: 16px;
-			height: 16px;
-		}
-	</style>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/jquery.emoji.js"></script>
-	<script>
-		$(document).ready(function(){
-			$('.replace-emoji').each(function(i, d){
-				$(d).emoji();
-			});
-		});
-	</script>
 </head>
 <body>
 <div class="p-wrap">
@@ -34,8 +17,7 @@
 		<a class="p-header-shr" href="javascript:;">分享</a>
 	</section>
 	<div id="log"></div>
-	<p class="replace-emoji">abc:+1:a</p>
-
+	<div class="emojstext" id="emojstext">:smile::rabbit::ok_hand::+1:</div>
 </div>
 <div class="p-bullet-box">
 	<section class="unitbox" top="0" style="-webkit-transform: translate3d(0, 30%, 0); transform: translate3d(0, 30%, 0); opacity: 0;">
@@ -50,7 +32,13 @@
 <div class="p-btmfix p-lr13">
 	<a href="#" class="p-btn">预约该专家</a>
 </div>
-<!--<script type="text/javascript" src="js/zepto.min.js"></script>-->
+
+<!--<script src="js/zepto.min.js"></script>-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/emoji.js"></script>
+<script>
+	$('.emojstext').eq(0).emoji();
+</script>
 
 </body>
 </html>

@@ -25,7 +25,7 @@ function getQueryStringArgs() {
 $(function(){
 	$.ajax({
 		// url: location.protocol + '//' + location.host + '/symposium/info',
-		url: location.protocol + '//' + location.host + '/LEO/js/data/topic_2_data.json',
+		url: './js/data/topic_2_data.json',
 		dataType: 'json',
 		data: {
 			// symposiumId: getQueryStringArgs().symposiumId
