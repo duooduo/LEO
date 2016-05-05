@@ -1,20 +1,16 @@
 {
-    "code": 0,
-    "data": {
-        "content": "<p>红红火火，红红火火，红红火火</p>",
-        "id": 1,
-        "title": "我就是热门",
-        "background":"images/temp/c_cover.jpg",
-        "rewardNum": 546,
-        "rewardHeadUrls": ["images/temp/c_cover.jpg","images/temp/c_cover.jpg","images/temp/c_cover.jpg"],
-        "likeNum": 1,
-        "stepNum": 3,
-        "recommend":[
-            {"background":"images/temp/c_cover.jpg",
-              "title":"出轨的爱情还要不要挽留",
-              "url":"h5.url",
-              "hotId":""}
-        ]
-    },
-    "message": "成功"
+  "code": 0,
+  "data": {
+    "content": "<p>红红火火，红红火火，红红火火</p>",
+    "title": "我就是热门",
+    "background":"images/temp/c_cover.jpg",
+    "rewardNum": 546,
+    "headUrl": ["images/temp/c_cover.jpg","images/temp/c_cover.jpg","images/temp/c_cover.jpg"],
+    "likeNum": 1,
+    "stepNum": 3,
+    "talkShow":"",
+    "buttonTitle":"",
+    "tellMe":""
+  },
+  "message": "成功"
 }

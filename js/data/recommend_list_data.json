@@ -1,0 +1,27 @@
+{
+  "code": 0,
+  "message" : "success",
+  "data" : {
+    "list" :
+    [
+      {
+        "hotId":"",
+        "url": "h5.url",
+        "title":"出轨的爱情还要不要挽留",
+        "text": "我睡了老公的小三",
+        "commentNum": 78,
+        "background" : "images/temp/c_cover.jpg",
+        "type" : "2"
+      },
+      {
+        "hotId":"",
+        "url": "h5.url",
+        "title":"出轨的爱情还要不要挽留",
+        "text": "我睡了老公的小三",
+        "commentNum": 78,
+        "background" : "images/temp/c_cover.jpg",
+        "type" : "2"
+      }
+    ]
+  }
+}

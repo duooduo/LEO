@@ -250,37 +250,57 @@ function ajaxBuildDom() {
 				$('.mind-txt').html(data.content); //描述
 				$('.mind-award').find('em').html(data.rewardNum); //打赏人数
 
-				var rewardHeadLength = data.rewardHeadUrls.length > 21? 21: data.rewardHeadUrls.length;
+				var rewardHeadLength = data.headUrl.length > 21? 21: data.headUrl.length;
 				var str = "";
 				for (var i = 0; i < rewardHeadLength; i++) {
-					var index = data.rewardHeadUrls[i];
+					var index = data.headUrl[i];
 					str += '<li><img src="'+index+'" alt=""></li>';
 				}
 				$('.mind-face').append(str);
 
 				likestepLine(data.likeNum,data.stepNum);
 
-				var recommend = data.recommend;
-				var ulRecommend = $('<ul></ul>');
-				for (var i = 0; i< recommend.length; i++) {
-					var index = recommend[i];
-					ulRecommend.append('' +
-						'<li>' +
-							'<a href="'+ index.url +'">' +
-								'<figure>' +
-									'<img src="'+ index.background +'" alt="">' +
-								'</figure>' +
-								'<p>'+ index.title +'</p>' +
-							'</a>' +
-						'</li>');
-				}
-				$('.mind-sug').append(ulRecommend);
+				getRecommend();
 			}
 		},
 		error: function(e){
 
 		}
 	})
+}
+
+function getRecommend() {
+	$.ajax({
+		type: 'POST',
+		// url: location.protocol + '//' + location.host + '/share/detail',
+		url: location.protocol + '//' + location.host + '/LEO/js/data/recommend_list_data.json',
+		dataType: 'json',
+		data: {
+			// shareId: getQueryStringArgs().shareId
+		},
+		success: function(d){
+			if (d.code == 0) {
+				var recommend = d.data.list;
+				var ulRecommend = $('<ul></ul>');
+				for (var i = 0; i< recommend.length; i++) {
+					var index = recommend[i];
+					ulRecommend.append('' +
+						'<li>' +
+						'<a href="'+ index.url +'">' +
+						'<figure>' +
+						'<img src="'+ index.background +'" alt="">' +
+						'</figure>' +
+						'<p>'+ index.title +'</p>' +
+						'</a>' +
+						'</li>');
+				}
+				$('.mind-sug').append(ulRecommend);
+
+			}
+
+		}
+	});
+
 }
 
 // 弹幕点赞提交
