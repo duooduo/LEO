@@ -13,12 +13,14 @@ $(function () {
 	$.ajax({
 		// url: location.protocol + '//' + location.host + '/share/comment/list',
 		url: './js/data/list_data.json',
+		type: 'POST',
 		dataType: 'json',
-		data: {
+		contentType: 'application/json;charset=UTF-8',
+		data: JSON.stringify({
 			shareId: getQueryStringArgs().shareId,    //分享对话id
 			start: 0,            //起始位置
 			size: 10            //请求数量
-		},
+		}),
 		success: function(d){
 			if (d.code == 0) {
 				listJson = d.data.list;
@@ -79,11 +81,13 @@ $(function () {
 		if (p_danIpt != '') {
 			$.ajax({
 				url: location.protocol + '//' + location.host + '/share/comment/add',
+				type: 'POST',
 				dataType: 'json',
-				data: {
+				contentType: 'application/json;charset=UTF-8',
+				data: JSON.stringify({
 					shareId: getQueryStringArgs().shareId,
 					text: p_danIpt
-				},
+				}),
 				success: function(d){
 					if (d.code == 0) {
 						var p_alert = $('.p-alert');
@@ -102,12 +106,14 @@ $(function () {
 		if (likestepArr.indexOf('like') == -1) {
 			$.ajax({
 				url: location.protocol + '//' + location.host + ' /share/detail/like_step',
+				type: 'POST',
 				dataType: 'json',
-				data: {
+				contentType: 'application/json;charset=UTF-8',
+				data: JSON.stringify({
 					shareId: getQueryStringArgs().shareId,
 					uid: '',
 					type: 1
-				},
+				}),
 				success: function(d){
 					if (d.code == 0) {
 						praiseArr.push('like');
@@ -122,12 +128,14 @@ $(function () {
 		if (likestepArr.indexOf('step') == -1) {
 			$.ajax({
 				url: location.protocol + '//' + location.host + ' /share/detail/like_step',
+				type: 'POST',
 				dataType: 'json',
-				data: {
+				contentType: 'application/json;charset=UTF-8',
+				data: JSON.stringify({
 					shareId: getQueryStringArgs().shareId,
 					uid: '',
 					type: 2
-				},
+				}),
 				success: function(d){
 					if (d.code == 0) {
 						praiseArr.push('step');
@@ -236,10 +244,12 @@ function ajaxBuildDom() {
 	$.ajax({
 		// url: location.protocol + '//' + location.host + '/share/detail',
 		url: './js/data/mind_detail_data.json',
+		type: 'POST',
 		dataType: 'json',
-		data: {
+		contentType: 'application/json;charset=UTF-8',
+		data: JSON.stringify({
 			// shareId: getQueryStringArgs().shareId
-		},
+		}),
 		success: function(d){
 			if (d.code == 0) {
 				var data = d.data;
@@ -269,13 +279,14 @@ function ajaxBuildDom() {
 
 function getRecommend() {
 	$.ajax({
-		type: 'POST',
 		// url: location.protocol + '//' + location.host + '/share/detail',
 		url: location.protocol + '//' + location.host + '/LEO/js/data/recommend_list_data.json',
+		type: 'POST',
 		dataType: 'json',
-		data: {
+		contentType: 'application/json;charset=UTF-8',
+		data: JSON.stringify({
 			// shareId: getQueryStringArgs().shareId
-		},
+		}),
 		success: function(d){
 			if (d.code == 0) {
 				var recommend = d.data.list;
@@ -306,10 +317,12 @@ function praiseAjax(unitId) {
 	if (praiseArr.indexOf(unitId) == -1) {
 		$.ajax({
 			url: location.protocol + '//' + location.host + '/share/comment/praise',
+			type: 'POST',
 			dataType: 'json',
-			data: {
+			contentType: 'application/json;charset=UTF-8',
+			data: JSON.stringify({
 				commentId: unitId
-			},
+			}),
 			success: function(d){
 				praiseArr.push(unitId);
 			}

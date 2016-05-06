@@ -26,10 +26,12 @@ $(function(){
 	$.ajax({
 		// url: location.protocol + '//' + location.host + '/symposium/info',
 		url: './js/data/topic_2_data.json',
+		type: 'POST',
 		dataType: 'json',
-		data: {
+		contentType: 'application/json;charset=UTF-8',
+		data: JSON.stringify({
 			// symposiumId: getQueryStringArgs().symposiumId
-		},
+		}),
 		success: function(d){
 			if (d.code == 0) {
 				var data = d.data;

@@ -26,10 +26,12 @@ $(function(){
 	$.ajax({
 		// url: location.protocol + '//' + location.host + '/symposium/info',
 		url: location.protocol + '//' + location.host + '/LEO/js/data/topic_detail_data.json',
+		type: 'POST',
 		dataType: 'json',
-		data: {
+		contentType: 'application/json;charset=UTF-8',
+		data: JSON.stringify({
 			// keyId: getQueryStringArgs().keyid
-		},
+		}),
 		success: function(d){
 			if (d.code == 0) {
 				var data = d.data;

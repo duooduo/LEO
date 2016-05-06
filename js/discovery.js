@@ -28,14 +28,12 @@ $(function(){
 		url: location.protocol + '//101.200.196.71:8200/share/detail?token=',
 		// url: './js/data/discovery_data.json',
 		type : 'POST',
-		headers: {
-			"Content-type": "application/json;charset=UTF-8"
-		},
 		dataType: 'json',
+		// headers: {"Content-type": "application/json;charset=UTF-8"},
+		contentType: 'application/json;charset=UTF-8',
 		data: JSON.stringify({
 			"shareId" : 1
 		}),
-		contentType: 'application/json',
 		success: function(d){
 			console.log(d);
 			if (d.code == 0) {
