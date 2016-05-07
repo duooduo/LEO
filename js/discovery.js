@@ -23,17 +23,16 @@ function getQueryStringArgs() {
 }
 
 $(function(){
+	var data = {"shareId" : 1};
 	$.ajax({
 		// url: location.protocol + '//' + location.host + '/share_meeting/info',
-		url: location.protocol + '//101.200.196.71:8200/share/detail?token=',
-		// url: './js/data/discovery_data.json',
+		// url: location.protocol + '//101.200.196.71:8200/share/detail?token=',
+		url: './js/data/discovery_data.json',
 		type : 'POST',
 		dataType: 'json',
 		// headers: {"Content-type": "application/json;charset=UTF-8"},
 		contentType: 'application/json;charset=UTF-8',
-		data: JSON.stringify({
-			"shareId" : 1
-		}),
+		data: JSON.stringify(data),
 		success: function(d){
 			console.log(d);
 			if (d.code == 0) {

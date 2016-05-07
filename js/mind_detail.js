@@ -1,32 +1,35 @@
-/**
- * Created by Ly on 2016/3/31.
- */
 'use strict';
 var arrN = 0;
 var listJson;
 var praiseArr = [];
 var likestepArr = [];
+var bulletTimer = null;
+var box = $('.p-bullet-box');
+var hN = 1;
+var likeNum=0,stepNum=0;
+
+var token = getQueryStringArgs().token == undefined? '' : getQueryStringArgs().token;
+var uid = getQueryStringArgs().uid == undefined? '' : getQueryStringArgs().uid;
+
 $(function () {
 	// ajax创建DOM结构
 	ajaxBuildDom();
 	// 弹幕
 	$.ajax({
-		// url: location.protocol + '//' + location.host + '/share/comment/list',
+		// url: location.protocol + '//' + location.host + '/share/comment/list?token=' + token,
 		url: './js/data/list_data.json',
 		type: 'POST',
 		dataType: 'json',
 		contentType: 'application/json;charset=UTF-8',
 		data: JSON.stringify({
-			shareId: getQueryStringArgs().shareId,    //分享对话id
-			start: 0,            //起始位置
-			size: 10            //请求数量
+			shareId: getQueryStringArgs().shareId    //分享对话id
+			// start: 0,            //起始位置
+			// size: 10            //请求数量
 		}),
 		success: function(d){
 			if (d.code == 0) {
 				listJson = d.data.list;
 				// 弹幕
-				var bulletTimer = null;
-				var box = $('.p-bullet-box');
 				box.step = 50;
 				upBullet(box);
 				bulletTimer = window.setInterval(function () {
@@ -50,7 +53,7 @@ $(function () {
 					}, 300);
 
 					// 桃心轨迹
-					moveHeart();
+					moveHeart(this);
 					return false;
 				});
 
@@ -58,11 +61,13 @@ $(function () {
 				$('.p-danChange').on('touchend', function () {
 					if(this.dataset.onoff == 'on'){
 						this.dataset.onoff = 'off';
+						$(this).addClass('off');
 						clearInterval(bulletTimer);
 						box.html('');
 						return false;
 					} else {
 						this.dataset.onoff = 'on';
+						$(this).removeClass('off');
 						box.show();
 						upBullet(box);
 						bulletTimer = window.setInterval(function () {
@@ -72,6 +77,7 @@ $(function () {
 					}
 				});
 
+
 			}
 		}
 	});
@@ -80,7 +86,7 @@ $(function () {
 		var p_danIpt = $.trim($('.p-danIpt').val());
 		if (p_danIpt != '') {
 			$.ajax({
-				url: location.protocol + '//' + location.host + '/share/comment/add',
+				url: location.protocol + '//' + location.host + '/share/comment/add?token=' + token,
 				type: 'POST',
 				dataType: 'json',
 				contentType: 'application/json;charset=UTF-8',
@@ -104,20 +110,21 @@ $(function () {
 	// 点赞
 	$('#mind-up-btn').on('touchend',function(){
 		if (likestepArr.indexOf('like') == -1) {
+			likestepArr.push('like');
+			likestepLine(++likeNum,stepNum);
 			$.ajax({
-				url: location.protocol + '//' + location.host + ' /share/detail/like_step',
+				url: location.protocol + '//' + location.host + ' /share/detail/like_step?token=' + token,
 				type: 'POST',
 				dataType: 'json',
 				contentType: 'application/json;charset=UTF-8',
 				data: JSON.stringify({
 					shareId: getQueryStringArgs().shareId,
-					uid: '',
+					uid: uid,
 					type: 1
 				}),
 				success: function(d){
 					if (d.code == 0) {
-						praiseArr.push('like');
-						likestepLine(d.data.likeNum,d.data.stepNum);
+
 					}
 				}
 			})
@@ -126,20 +133,21 @@ $(function () {
 	// 踩
 	$('#mind-down-btn').on('touchend',function(){
 		if (likestepArr.indexOf('step') == -1) {
+			likestepArr.push('step');
+			likestepLine(likeNum,++stepNum);
 			$.ajax({
-				url: location.protocol + '//' + location.host + ' /share/detail/like_step',
+				url: location.protocol + '//' + location.host + ' /share/detail/like_step?token=' + token,
 				type: 'POST',
 				dataType: 'json',
 				contentType: 'application/json;charset=UTF-8',
 				data: JSON.stringify({
 					shareId: getQueryStringArgs().shareId,
-					uid: '',
+					uid: uid,
 					type: 2
 				}),
 				success: function(d){
 					if (d.code == 0) {
-						praiseArr.push('step');
-						likestepLine(d.data.likeNum,d.data.stepNum);
+
 					}
 				}
 			})
@@ -161,7 +169,7 @@ function upBullet(box) {
 		obj.show().attr('top',obj.attr('top') - step);
 		if(l<maxN){ var opp = op[i+(maxN-l)];}
 		else {var opp = op[i];}
-		if($(this).find('.unit').hasClass('on')){ opp = 0.2;}
+		if($(this).find('.unit').hasClass('on')){ opp = 0.4;}
 
 		obj.attr('style','-webkit-transition: -webkit-transform 0.5s ease-in, opacity 0.5s ease; transition: transform 0.5s ease-in, opacity 0.5s ease;-webkit-transform:translate3d(0, '+obj.attr('top')+'px, 0); transform:translate3d(0, '+obj.attr('top')+'px, 0); opacity:'+ opp +';');
 	});
@@ -176,11 +184,13 @@ function upBullet(box) {
 }
 
 // 生成桃心
-function moveHeart() {
+function moveHeart(obj) {
 	var heart = $('<i class="heart"></i>');
+	// var t = heart;
+
 	heart.attr({
-		left: parseFloat(this.parentNode.offsetLeft),
-		top: parseFloat(this.parentNode.offsetTop + Number(this.parentNode.getAttribute('top')))
+		left: parseFloat(obj.parentNode.offsetLeft),
+		top: parseFloat(obj.parentNode.offsetTop + Number(obj.parentNode.getAttribute('top')))
 	}).css({
 		left: heart.attr('left') + 'px',
 		top: heart.attr('top') + 'px'
@@ -231,7 +241,11 @@ function getQueryStringArgs() {
 
 // 刷新赞踩比率条
 function likestepLine(l,r){
-	var lineLInt = parseInt(l / (l+r) * 100);
+	var lr = l+r;
+	if (l+r == 0) {
+		lr = 1;
+	}
+	var lineLInt = parseInt(l / lr * 100);
 	var lineRInt = 100 - lineLInt;
 	var lineLRate = lineLInt + '%';
 	$('.line-l').css('width',lineLRate);
@@ -239,16 +253,17 @@ function likestepLine(l,r){
 	$('.line-r-n').html(r + '('+ lineRInt +'%)');
 }
 
+
 // 创建DOM结构
 function ajaxBuildDom() {
 	$.ajax({
-		// url: location.protocol + '//' + location.host + '/share/detail',
-		url: './js/data/mind_detail_data.json',
+		url: location.protocol + '//' + location.host + '/share/detail?token=' + token,
+		// url: './js/data/mind_detail_data.json',
 		type: 'POST',
 		dataType: 'json',
 		contentType: 'application/json;charset=UTF-8',
 		data: JSON.stringify({
-			// shareId: getQueryStringArgs().shareId
+			shareId: getQueryStringArgs().shareId
 		}),
 		success: function(d){
 			if (d.code == 0) {
@@ -257,6 +272,11 @@ function ajaxBuildDom() {
 				$('.user-img img').attr('src',data.background); //封面
 				$('.mind-txt').html(data.content); //描述
 				$('.mind-award').find('em').html(data.rewardNum); //打赏人数
+				$('.mind-talkShow').html(data.talkShow);
+				$('.mind-award .p-btn').html(data.buttonTitle);
+				$('.mind-vote h3').html('【'+ data.tellMe +'】');
+				$('#mind-up-btn').html(data.likeText);
+				$('#mind-down-btn').html(data.stepText);
 
 				var rewardHeadLength = data.headUrl.length > 21? 21: data.headUrl.length;
 				var str = "";
@@ -266,7 +286,9 @@ function ajaxBuildDom() {
 				}
 				$('.mind-face').append(str);
 
-				likestepLine(data.likeNum,data.stepNum);
+				likeNum = data.likeNum;
+				stepNum = data.stepNum;
+				likestepLine(likeNum,stepNum);
 
 				getRecommend();
 			}
@@ -279,13 +301,13 @@ function ajaxBuildDom() {
 
 function getRecommend() {
 	$.ajax({
-		// url: location.protocol + '//' + location.host + '/share/detail',
-		url: location.protocol + '//' + location.host + '/LEO/js/data/recommend_list_data.json',
+		url: location.protocol + '//' + location.host + '/share/recommend_list?token=' + token,
+		// url: './js/data/recommend_list_data.json',
 		type: 'POST',
 		dataType: 'json',
 		contentType: 'application/json;charset=UTF-8',
 		data: JSON.stringify({
-			// shareId: getQueryStringArgs().shareId
+			shareId: getQueryStringArgs().shareId
 		}),
 		success: function(d){
 			if (d.code == 0) {
@@ -295,7 +317,7 @@ function getRecommend() {
 					var index = recommend[i];
 					ulRecommend.append('' +
 						'<li>' +
-						'<a href="'+ index.url +'">' +
+						'<a href="'+ index.url + '?token='+ token +'&shareId=' + index.hotId +'">' +
 						'<figure>' +
 						'<img src="'+ index.background +'" alt="">' +
 						'</figure>' +
@@ -316,7 +338,7 @@ function getRecommend() {
 function praiseAjax(unitId) {
 	if (praiseArr.indexOf(unitId) == -1) {
 		$.ajax({
-			url: location.protocol + '//' + location.host + '/share/comment/praise',
+			url: location.protocol + '//' + location.host + '/share/comment/praise?token=' + token,
 			type: 'POST',
 			dataType: 'json',
 			contentType: 'application/json;charset=UTF-8',
@@ -330,3 +352,25 @@ function praiseAjax(unitId) {
 	}
 
 }
+
+function connectWebViewJavascriptBridge(callback) {
+	if (window.WebViewJavascriptBridge) {
+		callback(WebViewJavascriptBridge)
+	} else {
+		document.addEventListener('WebViewJavascriptBridgeReady', function() {
+			callback(WebViewJavascriptBridge)
+		}, false)
+	}
+}
+
+connectWebViewJavascriptBridge(function(bridge) {
+	bridge.init();
+
+	$(function(){
+		$('.mind-award .p-btn').on('touchend', function(){
+			bridge.callHandler('zanShang',{},function(d){
+				// location.reload();
+			});
+		})
+	})
+});

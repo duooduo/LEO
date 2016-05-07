@@ -23,21 +23,7 @@ function getQueryStringArgs() {
 }
 
 $(function(){
-	$.ajax({
-		// url: location.protocol + '//' + location.host + '',
-		type: 'POST',
-		dataType: 'json',
-		contentType: 'application/json;charset=UTF-8',
-		data: JSON.stringify({
-
-		}),
-		success: function(d){
-			if (d.code == 0) {
-				// ...
-			}
-		},
-		error: function(e){
-			// alert(JSON.stringify(e));
-		}
-	})
+	var code = getQueryStringArgs().inviteCode;
+	if(code == undefined){ code = "";}
+	$('.s-code span').html('我的邀请码:'+code);
 });

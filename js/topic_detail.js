@@ -30,7 +30,7 @@ $(function(){
 		dataType: 'json',
 		contentType: 'application/json;charset=UTF-8',
 		data: JSON.stringify({
-			// keyId: getQueryStringArgs().keyid
+			keyId: getQueryStringArgs().keyId
 		}),
 		success: function(d){
 			if (d.code == 0) {

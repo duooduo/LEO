@@ -1,0 +1,35 @@
+{
+	"code": 0,
+	"message": "success",
+	"data": {
+		"uid": 10001,
+		"name": "自卑的小土豆",
+		"background": "images/temp/c_cover.jpg",
+		"sex": 2,
+		"head": "images/temp/c_cover.jpg",
+		"listenNum": 344,
+		"listenTime": 333,
+		"praiseRate": 98,
+		"beatRate": 89,
+		"level": 2,
+		"profile": "我哥哥是骄傲的小土豆~",
+		"goodAt": [
+			0,
+			1,
+			2
+		],
+		"exp": 122,
+		"honor": "乐于助人",
+		"price": 5,
+		"tag": "",
+		"marry": 2,
+		"age": 2,
+		"profession": "国家二级心理咨询师",
+		"hotlist": [
+			{
+				"content": "",
+				"title": "如何去好好爱一个人?"
+			}
+		]
+	}
+}

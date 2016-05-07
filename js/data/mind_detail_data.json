@@ -8,9 +8,11 @@
     "headUrl": ["images/temp/c_cover.jpg","images/temp/c_cover.jpg","images/temp/c_cover.jpg"],
     "likeNum": 1,
     "stepNum": 3,
-    "talkShow":"",
-    "buttonTitle":"",
-    "tellMe":""
+    "talkShow":"哇哇哇",
+    "buttonTitle":"赞赏嘿嘿",
+    "tellMe":"你怎么看啦啦",
+    "likeText":"赞",
+    "stepText":"踩"
   },
   "message": "成功"
 }

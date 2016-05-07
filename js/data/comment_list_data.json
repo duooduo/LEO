@@ -1,0 +1,60 @@
+{
+	"code" : 0,
+	"message" : "success",
+	"data" : [
+		{
+			"uid" : "123",
+			"text":"哈哈哈",
+			"createTime" : "2015.9.8 12:13",
+			"degree": "1",
+			"nickName":"啦啦啦",
+			"headUrl":"images/temp/c_cover.jpg"
+
+		},
+		{
+			"uid" : "123",
+			"text":"哈哈哈",
+			"createTime" : "2015.9.8 12:13",
+			"degree": "1",
+			"nickName":"啦啦啦",
+			"headUrl":"images/temp/c_cover.jpg"
+
+		},
+		{
+			"uid" : "123",
+			"text":"哈哈哈",
+			"createTime" : "2015.9.8 12:13",
+			"degree": "1",
+			"nickName":"啦啦啦",
+			"headUrl":"images/temp/c_cover.jpg"
+
+		},
+		{
+			"uid" : "123",
+			"text":"哈哈哈",
+			"createTime" : "2015.9.8 12:13",
+			"degree": "1",
+			"nickName":"啦啦啦",
+			"headUrl":"images/temp/c_cover.jpg"
+
+		},
+		{
+			"uid" : "123",
+			"text":"哈哈哈",
+			"createTime" : "2015.9.8 12:13",
+			"degree": "1",
+			"nickName":"啦啦啦",
+			"headUrl":"images/temp/c_cover.jpg"
+
+		},
+		{
+			"uid" : "123",
+			"text":"哈哈哈",
+			"createTime" : "2015.9.8 12:13",
+			"degree": "-1",
+			"nickName":"啦啦啦",
+			"headUrl":"images/temp/c_cover.jpg"
+
+		}
+	]
+}
