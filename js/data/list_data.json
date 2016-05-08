@@ -4,29 +4,34 @@
   "data": {
     "list":[
       {
-        "id": 88880,
+        "keyId": 88880,
         "text": "12345678901234567890123456789012345678901234567890",
-        "praiseNum": 78
+        "praiseNum": 78,
+        "headUrl": "images/temp/c_cover.jpg"
       },
       {
-        "id": 88881,
+        "keyId": 88881,
         "text": "哎呦我真是醉了奥11111:smile:",
-        "praiseNum": 78
+        "praiseNum": 78,
+        "headUrl": "images/temp/c_cover.jpg"
       },
       {
-        "id": 88882,
+        "keyId": 88882,
         "text": "哎呦我真是醉了奥22222",
-        "praiseNum": 78
+        "praiseNum": 78,
+        "headUrl": "images/temp/c_cover.jpg"
       },
       {
-        "id": 88883,
+        "keyId": 88883,
         "text": "哎呦我真是醉了奥33333",
-        "praiseNum": 78
+        "praiseNum": 78,
+        "headUrl": "images/temp/c_cover.jpg"
       },
       {
-        "id": 88884,
+        "keyId": 88884,
         "text": "哎呦我真是醉了奥44444",
-        "praiseNum": 78
+        "praiseNum": 78,
+        "headUrl": "images/temp/c_cover.jpg"
       }
     ]
   }

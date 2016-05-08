@@ -1,106 +1,130 @@
 'use strict';
 var arrN = 0;
 var listJson;
+var listJson1;
+var listJson2;
 var praiseArr = [];
 var likestepArr = [];
 var bulletTimer = null;
 var box = $('.p-bullet-box');
 var hN = 1;
-var likeNum=0,stepNum=0;
+var likeNum,stepNum;
 
+var downloadUrl = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.forhappy';
 var token = getQueryStringArgs().token == undefined? '' : getQueryStringArgs().token;
 var uid = getQueryStringArgs().uid == undefined? '' : getQueryStringArgs().uid;
 
 $(function () {
 	// ajax创建DOM结构
 	ajaxBuildDom();
-	// 弹幕
+	var shareIdJson = {
+		shareId: getQueryStringArgs().shareId    //分享对话id
+		// start: 0,            //起始位置
+		// size: 10            //请求数量
+	};
 	$.ajax({
-		// url: location.protocol + '//' + location.host + '/share/comment/list?token=' + token,
-		url: './js/data/list_data.json',
+		url: location.protocol + '//' + location.host + '/share/comment/toplist?token=' + token,
+		// url: './js/data/list_data.json',
 		type: 'POST',
 		dataType: 'json',
 		contentType: 'application/json;charset=UTF-8',
-		data: JSON.stringify({
-			shareId: getQueryStringArgs().shareId    //分享对话id
-			// start: 0,            //起始位置
-			// size: 10            //请求数量
-		}),
-		success: function(d){
-			if (d.code == 0) {
-				listJson = d.data.list;
-				// 弹幕
-				box.step = 50;
-				upBullet(box);
-				bulletTimer = window.setInterval(function () {
-					upBullet(box);
-				}, 1500);
-
-				// 弹幕点击
-				var hN = 1;
-				$('.unit').live('touchend', function(){
-
-					// 伸缩效果
-					var obj = $(this);
-					var unitId = this.dataset.id;
-					obj.addClass('active');
-					if(!obj.hasClass('on')){
-						obj.addClass('on');
-						praiseAjax(unitId);   // 点赞调取后台接口
-					}
-					window.setTimeout(function () {
-						obj.removeClass('active');
-					}, 300);
-
-					// 桃心轨迹
-					moveHeart(this);
-					return false;
-				});
-
-				// 弹幕开关
-				$('.p-danChange').on('touchend', function () {
-					if(this.dataset.onoff == 'on'){
-						this.dataset.onoff = 'off';
-						$(this).addClass('off');
-						clearInterval(bulletTimer);
-						box.html('');
-						return false;
-					} else {
-						this.dataset.onoff = 'on';
-						$(this).removeClass('off');
-						box.show();
+		data: JSON.stringify(shareIdJson),
+		success: function(a) {
+			listJson = a.data.list;
+			var shareIdJson = {
+				shareId: getQueryStringArgs().shareId    //分享对话id
+				// start: 0,            //起始位置
+				// size: 10            //请求数量
+			};
+			// 弹幕
+			$.ajax({
+				url: location.protocol + '//' + location.host + '/share/comment/list?token=' + token,
+				// url: './js/data/list_data.json',
+				type: 'POST',
+				dataType: 'json',
+				contentType: 'application/json;charset=UTF-8',
+				data: JSON.stringify(shareIdJson),
+				success: function(d){
+					if (d.code == 0) {
+						listJson2 = d.data.list;
+						listJson = listJson.concat(listJson2);
+						// 弹幕
+						// box.step = 50;
 						upBullet(box);
 						bulletTimer = window.setInterval(function () {
 							upBullet(box);
 						}, 1500);
-						return false;
+
+						// 弹幕点击
+						var hN = 1;
+						$('.unit').live('touchend', function(){
+
+							// 伸缩效果
+							var obj = $(this);
+							var unitId = this.dataset.id;
+							obj.addClass('active');
+							if(!obj.hasClass('on')){
+								obj.addClass('on');
+								praiseAjax(unitId);   // 点赞调取后台接口
+							}
+							window.setTimeout(function () {
+								obj.removeClass('active');
+							}, 300);
+
+							// 桃心轨迹
+							moveHeart(this);
+							return false;
+						});
+
+						// 弹幕开关
+						$('.p-danChange').on('touchend', function () {
+							if(this.dataset.onoff == 'on'){
+								this.dataset.onoff = 'off';
+								$(this).addClass('off');
+								clearInterval(bulletTimer);
+								box.html('');
+								return false;
+							} else {
+								this.dataset.onoff = 'on';
+								$(this).removeClass('off');
+								upBullet(box);
+								bulletTimer = window.setInterval(function () {
+									upBullet(box);
+								}, 1500);
+								return false;
+							}
+						});
+
+
 					}
-				});
+				}
+			});
 
-
-			}
 		}
 	});
 	// 发送评论
 	$('.p-danBtn').on('touchend', function(){
 		var p_danIpt = $.trim($('.p-danIpt').val());
 		if (p_danIpt != '') {
+			var danIptJson = {
+				shareId: getQueryStringArgs().shareId,
+				text: p_danIpt
+			};
 			$.ajax({
 				url: location.protocol + '//' + location.host + '/share/comment/add?token=' + token,
 				type: 'POST',
 				dataType: 'json',
 				contentType: 'application/json;charset=UTF-8',
-				data: JSON.stringify({
-					shareId: getQueryStringArgs().shareId,
-					text: p_danIpt
-				}),
+				data: JSON.stringify(danIptJson),
 				success: function(d){
 					if (d.code == 0) {
 						var p_alert = $('.p-alert');
 						p_alert.css({'opacity':'1', 'z-index': '200'});
 						setTimeout(function () {
-							p_alert.css({'opacity':'0', 'z-index': '0'});
+							p_alert.css({'opacity':'0', 'z-index': '-10'});
+
 						}, 2000);
+
 					}
 				}
 			})
@@ -109,19 +133,20 @@ $(function () {
 	});
 	// 点赞
 	$('#mind-up-btn').on('touchend',function(){
+		var likeJson = {
+			shareId: getQueryStringArgs().shareId,
+			uid: uid,
+			type: 1
+		};
 		if (likestepArr.indexOf('like') == -1) {
 			likestepArr.push('like');
 			likestepLine(++likeNum,stepNum);
 			$.ajax({
-				url: location.protocol + '//' + location.host + ' /share/detail/like_step?token=' + token,
+				url: location.protocol + '//' + location.host + '/share/detail/like_step?token=' + token,
 				type: 'POST',
 				dataType: 'json',
 				contentType: 'application/json;charset=UTF-8',
-				data: JSON.stringify({
-					shareId: getQueryStringArgs().shareId,
-					uid: uid,
-					type: 1
-				}),
+				data: JSON.stringify(likeJson),
 				success: function(d){
 					if (d.code == 0) {
 
@@ -132,27 +157,36 @@ $(function () {
 	});
 	// 踩
 	$('#mind-down-btn').on('touchend',function(){
+		var stepJson = {
+			shareId: getQueryStringArgs().shareId,
+			uid: uid,
+			type: 2};
 		if (likestepArr.indexOf('step') == -1) {
 			likestepArr.push('step');
 			likestepLine(likeNum,++stepNum);
 			$.ajax({
-				url: location.protocol + '//' + location.host + ' /share/detail/like_step?token=' + token,
+				url: location.protocol + '//' + location.host + '/share/detail/like_step?token=' + token,
 				type: 'POST',
 				dataType: 'json',
 				contentType: 'application/json;charset=UTF-8',
-				data: JSON.stringify({
-					shareId: getQueryStringArgs().shareId,
-					uid: uid,
-					type: 2
-				}),
+				data: JSON.stringify(stepJson),
 				success: function(d){
 					if (d.code == 0) {
 
 					}
+				},
+				error: function(e,d){
+					// alert(JSON.stringify(e));
+					// alert(d);
 				}
 			})
 		}
-	})
+	});
+
+	var str = location.href + '#';
+	// var str = arr[0]+ '?shareId=0&token=' + token + '&uid=' + uid;
+	// $('.mind-award .p-btn').attr('href', str);
+
 });
 
 // 弹幕刷新
@@ -175,8 +209,8 @@ function upBullet(box) {
 	});
 	var tureText = listJson[arrN%listJson.length].text.substring(0,38);
 	var $unit = $('<section class="unitbox" top="0" style="-webkit-transform:translate3d(0, 0, 0); transform:translate3d(0, 0, 0); opacity: 0;">' +
-		'<div class="unit" data-id="'+ listJson[arrN%listJson.length].id +'">' +
-		'<img class="face" src="images/temp/c_cover.jpg" alt="">' +
+		'<div class="unit" data-id="'+ listJson[arrN%listJson.length].keyId +'">' +
+		'<img class="face" src="'+ listJson[arrN%listJson.length].headUrl +'" alt="">' +
 		'<p class="text">'+ tureText + '</p>' +
 		'</div></section>');
 	box.append($unit);
@@ -256,15 +290,16 @@ function likestepLine(l,r){
 
 // 创建DOM结构
 function ajaxBuildDom() {
+	var shareIdJson = {
+		shareId: getQueryStringArgs().shareId
+	};
 	$.ajax({
-		url: location.protocol + '//' + location.host + '/share/detail?token=' + token,
-		// url: './js/data/mind_detail_data.json',
+		// url: location.protocol + '//' + location.host + '/share/detail?token=' + token,
+		url: './js/data/mind_detail_data.json',
 		type: 'POST',
 		dataType: 'json',
 		contentType: 'application/json;charset=UTF-8',
-		data: JSON.stringify({
-			shareId: getQueryStringArgs().shareId
-		}),
+		data: JSON.stringify(shareIdJson),
 		success: function(d){
 			if (d.code == 0) {
 				var data = d.data;
@@ -291,6 +326,12 @@ function ajaxBuildDom() {
 				likestepLine(likeNum,stepNum);
 
 				getRecommend();
+
+				if (token == '') {
+					$('a').attr('href',downloadUrl);
+					$('.p-btmfix-s-1').show();
+					$('.p-wrap:before').show();
+				}
 			}
 		},
 		error: function(e){
@@ -300,15 +341,16 @@ function ajaxBuildDom() {
 }
 
 function getRecommend() {
+	var shareIdJson = {
+		shareId: getQueryStringArgs().shareId
+	};
 	$.ajax({
 		url: location.protocol + '//' + location.host + '/share/recommend_list?token=' + token,
 		// url: './js/data/recommend_list_data.json',
 		type: 'POST',
 		dataType: 'json',
 		contentType: 'application/json;charset=UTF-8',
-		data: JSON.stringify({
-			shareId: getQueryStringArgs().shareId
-		}),
+		data: JSON.stringify(shareIdJson),
 		success: function(d){
 			if (d.code == 0) {
 				var recommend = d.data.list;
@@ -337,14 +379,15 @@ function getRecommend() {
 // 弹幕点赞提交
 function praiseAjax(unitId) {
 	if (praiseArr.indexOf(unitId) == -1) {
+		var unitIdJson = {
+			commentId: unitId
+		};
 		$.ajax({
 			url: location.protocol + '//' + location.host + '/share/comment/praise?token=' + token,
 			type: 'POST',
 			dataType: 'json',
 			contentType: 'application/json;charset=UTF-8',
-			data: JSON.stringify({
-				commentId: unitId
-			}),
+			data: JSON.stringify(unitIdJson),
 			success: function(d){
 				praiseArr.push(unitId);
 			}
@@ -353,24 +396,4 @@ function praiseAjax(unitId) {
 
 }
 
-function connectWebViewJavascriptBridge(callback) {
-	if (window.WebViewJavascriptBridge) {
-		callback(WebViewJavascriptBridge)
-	} else {
-		document.addEventListener('WebViewJavascriptBridgeReady', function() {
-			callback(WebViewJavascriptBridge)
-		}, false)
-	}
-}
 
-connectWebViewJavascriptBridge(function(bridge) {
-	bridge.init();
-
-	$(function(){
-		$('.mind-award .p-btn').on('touchend', function(){
-			bridge.callHandler('zanShang',{},function(d){
-				// location.reload();
-			});
-		})
-	})
-});
