@@ -13,12 +13,13 @@ var likeNum,stepNum;
 var downloadUrl = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.forhappy';
 var token = getQueryStringArgs().token == undefined? '' : getQueryStringArgs().token;
 var uid = getQueryStringArgs().uid == undefined? '' : getQueryStringArgs().uid;
+var shareId = getQueryStringArgs().shareId == undefined? '' : getQueryStringArgs().shareId;
 
 $(function () {
 	// ajax创建DOM结构
 	ajaxBuildDom();
 	var shareIdJson = {
-		shareId: getQueryStringArgs().shareId    //分享对话id
+		shareId: shareId    //分享对话id
 		// start: 0,            //起始位置
 		// size: 10            //请求数量
 	};
@@ -32,7 +33,7 @@ $(function () {
 		success: function(a) {
 			listJson = a.data.list;
 			var shareIdJson = {
-				shareId: getQueryStringArgs().shareId    //分享对话id
+				shareId: shareId    //分享对话id
 				// start: 0,            //起始位置
 				// size: 10            //请求数量
 			};
@@ -107,7 +108,7 @@ $(function () {
 		var p_danIpt = $.trim($('.p-danIpt').val());
 		if (p_danIpt != '') {
 			var danIptJson = {
-				shareId: getQueryStringArgs().shareId,
+				shareId: shareId,
 				text: p_danIpt
 			};
 			$.ajax({
@@ -118,6 +119,7 @@ $(function () {
 				data: JSON.stringify(danIptJson),
 				success: function(d){
 					if (d.code == 0) {
+						$('.p-danIpt').val('');
 						var p_alert = $('.p-alert');
 						p_alert.css({'opacity':'1', 'z-index': '200'});
 						setTimeout(function () {
@@ -291,11 +293,11 @@ function likestepLine(l,r){
 // 创建DOM结构
 function ajaxBuildDom() {
 	var shareIdJson = {
-		shareId: getQueryStringArgs().shareId
+		shareId: shareId
 	};
 	$.ajax({
-		// url: location.protocol + '//' + location.host + '/share/detail?token=' + token,
-		url: './js/data/mind_detail_data.json',
+		url: location.protocol + '//' + location.host + '/share/detail?token=' + token,
+		// url: './js/data/mind_detail_data.json',
 		type: 'POST',
 		dataType: 'json',
 		contentType: 'application/json;charset=UTF-8',
@@ -327,10 +329,11 @@ function ajaxBuildDom() {
 
 				getRecommend();
 
+				//如果app外 跳下载
 				if (token == '') {
 					$('a').attr('href',downloadUrl);
 					$('.p-btmfix-s-1').show();
-					$('.p-wrap:before').show();
+					$('.p-wrap').prepend('<div style="width: 100%; height: 50px;"></div>');
 				}
 			}
 		},
@@ -342,7 +345,7 @@ function ajaxBuildDom() {
 
 function getRecommend() {
 	var shareIdJson = {
-		shareId: getQueryStringArgs().shareId
+		shareId: shareId
 	};
 	$.ajax({
 		url: location.protocol + '//' + location.host + '/share/recommend_list?token=' + token,

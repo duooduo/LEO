@@ -2,20 +2,22 @@
     "code": 0,
     "message": "success",
     "data": {
-        "imageUrl" : "images/temp/c_cover.jpg",
+        "background" : "images/temp/c_cover.jpg",
         "title" : "如何找到一个女朋友",
         "content" : "找女朋友其实没有那么难，我认为有简单的三个步骤。第一点：穿着时尚大方、体味清香怡人。男人可以长得不帅，但是你的穿着会涉及到你给人的第一印象，按照产品经理的思维，这就是用户体验的问题。",
-        "proficient":[
-          {"title":"如何去好好的爱一个人？",
+        "list":[
+          {"keyId":123,
+              "title":"如何去好好的爱一个人？",
             "content":"爱，要学会怎么相处。如果不好好修炼自己，学会相处，那么碰到真正你喜欢也喜欢你的人也会离去。没呛过水怎么学会游泳，只是呛了水准备游时，你却要上岸。我好难过。",
             "headUrl":"images/temp/c_cover.jpg",
             "nickName":"詹姆斯",
-            "uid":"123"},
-          {"title":"如何去好好的爱一个人？",
+            "uid":"456"},
+          {"keyId":123,
+              "title":"如何去好好的爱一个人？",
             "content":"爱，要学会怎么相处。如果不好好修炼自己，学会相处，那么碰到真正你喜欢也喜欢你的人也会离去。没呛过水怎么学会游泳，只是呛了水准备游时，你却要上岸。我好难过。",
             "headUrl":"images/temp/c_cover.jpg",
             "nickName":"詹姆斯",
-            "uid":"123"}
+            "uid":"456"}
         ]
     }
 }

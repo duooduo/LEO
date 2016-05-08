@@ -32,7 +32,7 @@ function getQueryStringArgs() {
 $(function(){
 	var keyIdJson = {"keyId" : keyId };
 	$.ajax({
-		url: location.protocol + '//' + location.host + '/meeting/detail?token=' + token,
+		url: location.protocol + '//' + location.host + '/course/detail?token=' + token,
 		// url: './js/data/discovery_data.json',
 		type : 'POST',
 		dataType: 'json',
@@ -51,7 +51,7 @@ $(function(){
 				var $shareLi = $('.dis-share-ul li');
 				// $shareLi.eq(0).find('p').html(data.profile);   //关于主持人
 				$shareLi.eq(1).find('p').html(data.content);   //分享会内容
-				$('.p-btmfix a').attr('href','#session='+data.groupId);
+				$('.p-btmfix a').attr('href','#course='+data.groupId);
 
 
 				//如果app外 跳下载

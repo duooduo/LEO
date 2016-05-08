@@ -17,6 +17,11 @@ var goodAtData = {
 	"n13":"个人成长"
 };
 
+var downloadUrl = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.forhappy';
+var token = getQueryStringArgs().token == undefined? '' : getQueryStringArgs().token;
+var uid = getQueryStringArgs().uid == undefined? '' : getQueryStringArgs().uid;
+var shareId = getQueryStringArgs().shareId == undefined? '' : getQueryStringArgs().shareId;
+
 //url地址段最后带参数，例如：'?keyid=1111'
 //获取查询字符串参数
 function getQueryStringArgs() {
@@ -39,18 +44,17 @@ function getQueryStringArgs() {
 	return args;
 }
 
-var token = getQueryStringArgs().token==undefined? '' : getQueryStringArgs().token;
-
 $(function(){
+	var uidJson = {
+		uid: uid
+	};
 	$.ajax({
-		// url: location.protocol + '//' + location.host + '/listener/info?token=' + token,
-		url: './js/data/listener_info_data.json',
+		url: location.protocol + '//' + location.host + '/listener/info?token=' + token,
+		// url: './js/data/listener_info_data.json',
 		type: 'POST',
 		dataType: 'json',
 		contentType: 'application/json;charset=UTF-8',
-		data: JSON.stringify({
-			uid: getQueryStringArgs().uid
-		}),
+		data: JSON.stringify(uidJson),
 		success: function(d){
 			if (d.code == 0) {
 				// alert(JSON.stringify(d));
@@ -73,9 +77,10 @@ $(function(){
 					$('.user-label').html(goodAtDom);
 				}
 
-				//todo
+
 				$('.user-edu.edu01').find('.m span').html(data.profession);
 				$('.user-edu.edu02').find('.m').html(data.profile);
+
 			}
 		},
 		error: function(e){
@@ -84,14 +89,12 @@ $(function(){
 	});
 
 	$.ajax({
-		// url: location.protocol + '//' + location.host + '/symposium/newlist?token=' + token,
-		url: './js/data/newlist_data.json',
+		url: location.protocol + '//' + location.host + '/symposium/newlist?token=' + token,
+		// url: './js/data/newlist_data.json',
 		type: 'POST',
 		dataType: 'json',
 		contentType: 'application/json;charset=UTF-8',
-		data: JSON.stringify({
-			uid: getQueryStringArgs().uid
-		}),
+		data: JSON.stringify(uidJson),
 		success: function(d) {
 			if(d.code == 0) {
 				var data = d.data;
@@ -100,7 +103,7 @@ $(function(){
 					//newlist
 					for(var i=0; i<data.length; i++) {
 						var index = data[i];
-						var url = 'topic_detail.html?keyId=' + index.keyId;
+						var url = 'topic_detail.html?keyId=' + index.keyId+ '&token='+token;
 						hotlistDom+='<div class="user-tip"><a href="'+ url +'"><div class="tit">'+ index.title +'</div><p>'+ index.content +'</p></a></div>';
 					}
 					$('.user-tip-box').html(hotlistDom);
@@ -110,14 +113,12 @@ $(function(){
 	});
 
 	$.ajax({
-		// url: location.protocol + '//' + location.host + '//listener/comment_list?token=' + token,
-		url: './js/data/comment_list_data.json',
+		url: location.protocol + '//' + location.host + '/listener/comment_list?token=' + token,
+		// url: './js/data/comment_list_data.json',
 		type: 'POST',
 		dataType: 'json',
 		contentType: 'application/json;charset=UTF-8',
-		data: JSON.stringify({
-			uid: getQueryStringArgs().uid
-		}),
+		data: JSON.stringify(uidJson),
 		success: function(d) {
 			if(d.code == 0) {
 				var data = d.data;
@@ -128,24 +129,24 @@ $(function(){
 					for(var i=0; i< 3; i++) {
 						var index = data[i];
 						var h = "";
-						if(index.degree == '-1') {
-							h = "<i></i>";
-						}else if(index.degree == '0') {
+						if(index.degree == '满意') {
 							h = "<i></i><i></i><i></i>";
-						}else if(index.degree == '1') {
+						}else if(index.degree == '非常满意') {
 							h = "<i></i><i></i><i></i><i></i><i></i>";
+						} else if(index.degree == '差评') {
+							h = "<i></i>";
 						}
 						topThreeDom+='<li><div class="user-heart">'+ h +'</div><p>'+ index.text +'</p><div class="user-comm-info"><figure><img src="'+ index.headUrl +'" alt=""></figure><span>'+ index.nickName +'</span><i>'+ index.createTime +'</i></div></li>';
 					}
 					for (var i=4; i< data.length; i++) {
 						var index = data[i];
 						var h = "";
-						if(index.degree == '-1') {
-							h = "<i></i>";
-						}else if(index.degree == '0') {
+						if(index.degree == '满意') {
 							h = "<i></i><i></i><i></i>";
-						}else if(index.degree == '1') {
+						}else if(index.degree == '非常满意') {
 							h = "<i></i><i></i><i></i><i></i><i></i>";
+						} else if(index.degree == '差评') {
+							h = "<i></i>";
 						}
 						othorDom+='<li><div class="user-heart">'+ h +'</div><p>'+ index.text +'</p><div class="user-comm-info"><figure><img src="'+ index.headUrl +'" alt=""></figure><span>'+ index.nickName +'</span><i>'+ index.createTime +'</i></div></li>';
 					}
@@ -154,12 +155,12 @@ $(function(){
 					for(var i=0; i< data.length; i++) {
 						var index = data[i];
 						var h = "";
-						if(index.degree == '-1') {
-							h = "<i></i>";
-						}else if(index.degree == '0') {
+						if(index.degree == '满意') {
 							h = "<i></i><i></i><i></i>";
-						}else if(index.degree == '1') {
+						}else if(index.degree == '非常满意') {
 							h = "<i></i><i></i><i></i><i></i><i></i>";
+						} else if(index.degree == '差评') {
+							h = "<i></i>";
 						}
 						topThreeDom+='<li><div class="user-heart">'+ h +'</div><p>'+ index.text +'</p><div class="user-comm-info"><figure><img src="'+ index.headUrl +'" alt=""></figure><span>'+ index.nickName +'</span><i>'+ index.createTime +'</i></div></li>';
 					}
@@ -168,7 +169,13 @@ $(function(){
 				$('.user-comm-more a').on('touchend',function(){
 					$(this).hide();
 					$('.user-comm').append(othorDom);
-				})
+				});
+				//如果app外 跳下载
+				if (token == '') {
+					$('a').attr('href',downloadUrl);
+					$('.p-btmfix-s-1').show();
+					$('.p-wrap').prepend('<div style="width: 100%; height: 50px;"></div>');
+				}
 
 			}
 		}
