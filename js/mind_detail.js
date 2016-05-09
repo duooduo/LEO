@@ -23,6 +23,8 @@ $(function () {
 		// start: 0,            //起始位置
 		// size: 10            //请求数量
 	};
+
+	// 拉取弹幕
 	$.ajax({
 		url: location.protocol + '//' + location.host + '/share/comment/toplist?token=' + token,
 		// url: './js/data/list_data.json',
@@ -49,12 +51,26 @@ $(function () {
 					if (d.code == 0) {
 						listJson2 = d.data.list;
 						listJson = listJson.concat(listJson2);
-						// 弹幕
-						// box.step = 50;
-						upBullet(box);
-						bulletTimer = window.setInterval(function () {
-							upBullet(box);
-						}, 1500);
+
+						// 弹幕开关
+						$('.p-danChange').on('touchend', function () {
+							if(this.dataset.onoff == 'on'){
+								this.dataset.onoff = 'off';
+								$(this).addClass('off');
+								clearInterval(bulletTimer);
+								box.html('');
+								return false;
+							} else {
+								this.dataset.onoff = 'on';
+								$(this).removeClass('off');
+								if(listJson.length <= 0) { return false;}
+								upBullet(box);
+								bulletTimer = window.setInterval(function () {
+									upBullet(box);
+								}, 1500);
+								return false;
+							}
+						});
 
 						// 弹幕点击
 						var hN = 1;
@@ -77,25 +93,13 @@ $(function () {
 							return false;
 						});
 
-						// 弹幕开关
-						$('.p-danChange').on('touchend', function () {
-							if(this.dataset.onoff == 'on'){
-								this.dataset.onoff = 'off';
-								$(this).addClass('off');
-								clearInterval(bulletTimer);
-								box.html('');
-								return false;
-							} else {
-								this.dataset.onoff = 'on';
-								$(this).removeClass('off');
-								upBullet(box);
-								bulletTimer = window.setInterval(function () {
-									upBullet(box);
-								}, 1500);
-								return false;
-							}
-						});
-
+						// 弹幕
+						if(listJson.length <= 0) { return false;}
+						// box.step = 50;
+						upBullet(box);
+						bulletTimer = window.setInterval(function () {
+							upBullet(box);
+						}, 1500);
 
 					}
 				}
@@ -103,6 +107,7 @@ $(function () {
 
 		}
 	});
+
 	// 发送评论
 	$('.p-danBtn').on('touchend', function(){
 		var p_danIpt = $.trim($('.p-danIpt').val());
@@ -133,6 +138,7 @@ $(function () {
 		}
 		return false;
 	});
+
 	// 点赞
 	$('#mind-up-btn').on('touchend',function(){
 		var likeJson = {
@@ -157,6 +163,7 @@ $(function () {
 			})
 		}
 	});
+
 	// 踩
 	$('#mind-down-btn').on('touchend',function(){
 		var stepJson = {
@@ -184,10 +191,6 @@ $(function () {
 			})
 		}
 	});
-
-	var str = location.href + '#';
-	// var str = arr[0]+ '?shareId=0&token=' + token + '&uid=' + uid;
-	// $('.mind-award .p-btn').attr('href', str);
 
 });
 
@@ -289,7 +292,6 @@ function likestepLine(l,r){
 	$('.line-r-n').html(r + '('+ lineRInt +'%)');
 }
 
-
 // 创建DOM结构
 function ajaxBuildDom() {
 	var shareIdJson = {
@@ -343,6 +345,7 @@ function ajaxBuildDom() {
 	})
 }
 
+// 为你推荐
 function getRecommend() {
 	var shareIdJson = {
 		shareId: shareId
