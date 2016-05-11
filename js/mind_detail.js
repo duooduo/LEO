@@ -112,9 +112,11 @@ $(function () {
 	$('.p-danBtn').on('touchend', function(){
 		var p_danIpt = $.trim($('.p-danIpt').val());
 		if (p_danIpt != '') {
+			// val = twemoji.parse(p_danIpt);
+			$('.p-danIpt').val('');
 			var danIptJson = {
 				shareId: shareId,
-				text: p_danIpt
+				text: twemoji.parse(p_danIpt)
 			};
 			$.ajax({
 				url: location.protocol + '//' + location.host + '/share/comment/add?token=' + token,
@@ -124,12 +126,11 @@ $(function () {
 				data: JSON.stringify(danIptJson),
 				success: function(d){
 					if (d.code == 0) {
-						$('.p-danIpt').val('');
+						// $('.p-danIpt').val('');
 						var p_alert = $('.p-alert');
 						p_alert.css({'opacity':'1', 'z-index': '200'});
 						setTimeout(function () {
 							p_alert.css({'opacity':'0', 'z-index': '-10'});
-
 						}, 2000);
 
 					}
@@ -212,7 +213,7 @@ function upBullet(box) {
 
 		obj.attr('style','-webkit-transition: -webkit-transform 0.5s ease-in, opacity 0.5s ease; transition: transform 0.5s ease-in, opacity 0.5s ease;-webkit-transform:translate3d(0, '+obj.attr('top')+'px, 0); transform:translate3d(0, '+obj.attr('top')+'px, 0); opacity:'+ opp +';');
 	});
-	var tureText = listJson[arrN%listJson.length].text.substring(0,38);
+	var tureText = listJson[arrN%listJson.length].text;
 	var $unit = $('<section class="unitbox" top="0" style="-webkit-transform:translate3d(0, 0, 0); transform:translate3d(0, 0, 0); opacity: 0;">' +
 		'<div class="unit" data-id="'+ listJson[arrN%listJson.length].keyId +'">' +
 		'<img class="face" src="'+ listJson[arrN%listJson.length].headUrl +'" alt="">' +
