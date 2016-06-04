@@ -12,30 +12,23 @@
 <div class="p-wrap">
 	<div class="cmt-wrap">
 		<div class="cmt-head">
-			<figure><img src="images/temp/c_cover.jpg" alt=""></figure>
-			<div class="ovh"><h4>没伞的孩子<i>楼主</i></h4><p>10分钟前</p></div>
+			<figure><img src="" alt=""></figure>
+			<div class="ovh c-landlord"><h4><i>楼主</i></h4><p>10分钟前</p></div>
 			<a class="cmt-head-a btn-arr" href="#"></a>
 		</div>
 		<div class="cmt-text">
-			<p>
-				<span>男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该</span>
-				...<a class="cmt-text-a" href="javascript:;">[展开]</a>
-			</p>
-			<figure><img src="images/temp/c_cover.jpg" alt=""></figure>
+			<p class="c-landlord-text"></p>
 		</div>
 	</div>
 
 	<h3 class="cmt-h3">评论</h3>
 	<div class="cmt-main">
-		<div class="cmt-box emp">
-			<i class="cmt-empImg"></i>
-			<p class="cmt-empP">智慧如你，不想<a class="addcmt" href="javascript:;">发布一点想法</a>吖</p>
-		</div>
-		<div class="cmt-box">
+		<!--<div class="cmt-box">
 			<div class="cmt-head">
 				<figure><img src="images/temp/c_cover.jpg" alt=""></figure>
 				<div class="ovh"><h4>没伞的孩子<i>楼主</i></h4><p>10分钟前</p></div>
 				<a class="cmt-zan" href="#"><em>10</em></a>
+				<a href="javascript:;" class="cmt-reply-btn">回复</a>
 			</div>
 			<div class="cmt-text">
 				<p>
@@ -105,23 +98,21 @@
 					<a class="more" href="javascript:;">查看更多评论</a>
 				</div>
 			</div>
-		</div>
+		</div>-->
 	</div>
 </div>
 <!-- 底部浮层 -->
 <div class="p-btmfix p-h50">
 	<!--<a href="javascript:;" class="p-imgupload"></a>-->
 	<div class="p-danFix">
-		<input class="p-danIpt" type="text" placeholder="请输入评论" maxlength="38">
-		<a class="p-danBtn" href="javascript:;">发送</a>
+		<input id="c-input" class="p-danIpt" type="text" placeholder="请输入评论" maxlength="38">
+		<a id="c-sendreply" class="p-danBtn" href="javascript:;">发送</a>
 	</div>
 </div>
 <!-- 大图展示 -->
-<div class="p-float">
-	<img style="height: 100%;" src="images/temp/1.png" alt="">
-	<img style="width: 100%;" src="images/temp/c_cover.jpg" alt="">
-</div>
+<div class="p-float" style="display: none"></div>
 <script src="js/zepto.min.js"></script>
+<script src="js/comment.js"></script>
 
 </body>
 </html>

@@ -373,10 +373,11 @@ img.emoji { height: 1em; width: 1em; margin: 0 .05em 0 .1em; vertical-align: -0.
 	&.btn-arr:before { content: ''; margin: 9px auto 0; display: block; width: 16px; height: 9px; @extend %icons; background-position: -100px -75px;}
 }
 
-.cmt-zan { position: absolute; right: 8px; top: 50%; display: block; height: 24px; margin-top: -12px;
+.cmt-zan { position: absolute; right: 8px; top: 50%; display: block; height: 24px; margin-top: -18px;
 	&:before { content: ''; display: inline-block; vertical-align: top; width: 23px; height: 23px; padding-right: 5px; margin: 0 auto 0; @extend %icons; background-position: -100px -51px;}
 	em { display: inline-block; padding: 8px 2px 0 0; line-height: 16px; font-size: 13px; color: #666; vertical-align: top;}
 }
+.cmt-reply-btn { position: absolute; right: 14px; top: 50%; margin-top: 10px; font-size: 14px; color: #0092ff;}
 
 .cmt-text { padding: 10px 12px; line-height: 23px; font-size: 13px; color: #999; border-top: 1px solid #e5e5e5;
 	p { word-break: break-all;}

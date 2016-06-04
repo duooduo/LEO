@@ -25,6 +25,7 @@ function fnResize(){
 	<p class="d-p">千万女性的情感浓汤宝</p>
 	<a class="d-btn" id="download-btn" href="">免费体验</a>
 </div>
+<script src="js/zepto.min.js"></script>
 <script>
 // 安卓下载链接：http://imfakaixin.com/download/android.apk
 // IOS下载链接：https://itunes.apple.com/cn/app/fa-kai-xin-peng-you-quan-bu/id1077657593
@@ -36,6 +37,17 @@ window.onload = function () {
 	if(isAndroid()) {
 		btn.setAttribute('href', 'http://imfakaixin.com/download/android.apk');
 	}
+	$.ajax({
+		url: '',//todo
+		dataType: 'json',
+		data:{},
+		success: function(){
+
+		},
+		error: function(){
+
+		}
+	})
 };
 function isIos() {
 	return navigator.userAgent.match(/iphone|ipod|ios|ipad/i);

@@ -1,0 +1,82 @@
+{
+	"code": 0,
+	"message":"success",
+	"data": {
+		"list": [
+			{
+				"commentId": 38888,
+				"fromId": 123,
+				"nickName": "孩子",
+				"head": "images/temp/c_cover.jpg",
+				"replyText": "男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该",
+				"praiseNum": "3",
+				"imageArray": [],
+				"sonReply": [
+					{
+						"id" : "123",
+						"name": "name",
+						"toname": "lalala",
+						"text": "谢谢!",
+						"img" : "images/temp/c_cover.jpg"
+					},
+					{
+						"id" : "111",
+						"name": "name",
+						"toname": "lalala",
+						"text": "谢谢!"
+					}
+				],
+				"time" : "10分钟前"
+
+			},
+			{
+				"commentId": 398989,
+				"fromId": 123,
+				"nickName": "大蘑菇",
+				"head": "images/temp/c_cover.jpg",
+				"replyText": "男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该",
+				"praiseNum": "3",
+				"imageArray":["images/temp/c_cover.jpg"],
+				"sonReply": [
+					{
+						"id" : "123",
+						"name": "name",
+						"toname": "lalala",
+						"text": "谢谢!",
+						"img" : "images/temp/c_cover.jpg"
+					},
+					{
+						"id" : "111",
+						"name": "name",
+						"toname": "lalala",
+						"text": "谢谢!"
+					},
+					{
+						"id" : "111",
+						"name": "name",
+						"toname": "lalala",
+						"text": "谢谢!"
+					}
+				],
+				"time" : "2016-06-04 23:08:34"
+			},
+			{
+				"commentId": 38888,
+				"fromId": 123,
+				"nickName": "吃吃吃",
+				"head": "images/temp/c_cover.jpg",
+				"replyText": "友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该男朋友好像出轨了我该",
+				"praiseNum": "0",
+				"imageArray":[
+					"images/temp/c_cover.jpg",
+					"images/temp/c_cover.jpg",
+					"images/temp/c_cover.jpg",
+					"images/temp/c_cover.jpg",
+					"images/temp/c_cover.jpg"
+				],
+				"sonReply": [],
+				"time" : ""
+			}
+		]
+	}
+}
