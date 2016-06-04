@@ -1,0 +1,15 @@
+@charset "utf-8";
+@import "base";
+
+body { background: #244676 url("../images/d-bg.jpg") no-repeat center 0; background-size: 100% auto; }
+
+.d-main { width: 100%; min-height: rem(1300);}
+
+.d-logo { position: absolute; top: rem(150); left: 50%; display: block; width: rem(190); height: rem(190); margin-left: rem(-95); border-radius: 50%;
+	-webkit-box-shadow: 0 rem(5) rem(10) rgba(0, 0, 0, 0.5);box-shadow: 0 rem(5) rem(10) rgba(0, 0, 0, 0.5);}
+
+.d-text { position: absolute; left: 50%; top: rem(540); display: block; width: rem(338); margin-left: rem(-169);}
+
+.d-p { position: absolute; top: rem(1020); left: rem(60); right: rem(60); line-height: rem(44); font-size: rem(30); text-align: center; color: #fff;}
+
+.d-btn { position: absolute; left: 50%; top: rem(1090); display: block; width: rem(442); height: rem(110); margin-left: rem(-221); line-height: rem(100); text-align: center; font-size: rem(36); color: #0092ff; background: url("../images/d-btn.png") no-repeat center 0; background-size: 100%;}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui">
+<meta name="format-detection" content="telephone=no"/>
+<title>下载</title>
+<script>
+fnResize();
+window.addEventListener("resize", function () {fnResize()}, false);
+function fnResize(){
+	var docWidth = document.documentElement.clientWidth,
+			body = document.getElementsByTagName('html')[0];
+	if(docWidth >= 750) docWidth = 750;
+	body.style.fontSize = docWidth / 15 + 'px';
+}
+</script>
+<link rel="stylesheet" href="css/down.css">
+</head>
+<body>
+<div class="d-main">
+	<img src="images/logo_200x200.png" alt="" class="d-logo">
+	<img src="images/d-text.png" alt="" class="d-text">
+	<p class="d-p">千万女性的情感浓汤宝</p>
+	<a class="d-btn" id="download-btn" href="">免费体验</a>
+</div>
+<script>
+// 安卓下载链接：http://imfakaixin.com/download/android.apk
+// IOS下载链接：https://itunes.apple.com/cn/app/fa-kai-xin-peng-you-quan-bu/id1077657593
+window.onload = function () {
+	var btn = document.getElementById('download-btn');
+	if(isIos()) {
+		btn.setAttribute('href', 'https://itunes.apple.com/cn/app/fa-kai-xin-peng-you-quan-bu/id1077657593');
+	}
+	if(isAndroid()) {
+		btn.setAttribute('href', 'http://imfakaixin.com/download/android.apk');
+	}
+};
+function isIos() {
+	return navigator.userAgent.match(/iphone|ipod|ios|ipad/i);
+}
+function isAndroid() {
+	return navigator.userAgent.match(/android/i);
+}
+</script>
+</body>
+</html>
