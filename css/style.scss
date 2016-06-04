@@ -57,6 +57,10 @@ img.emoji { height: 1em; width: 1em; margin: 0 .05em 0 .1em; vertical-align: -0.
 		.p-danBtn { position: absolute; right: 10px; top: 11px; display: block; width: 60px; height: 28px; line-height: 28px; text-align: center; background: #0092ff; color: #fff; border-radius: 5px;}
 	}
 }
+// float
+.p-float { position: absolute; left: 0; top: 0; right: 0; bottom: 0; width: 100%; height: 100%; background: rgba(0,0,0,.8); z-index: 100;
+	img { display: block; position: absolute; left: 50%; top: 50%; -webkit-transform: translate3d(-50%, -50%, 0); transform: translate3d(-50%, -50%, 0);}
+}
 // --- 专题
 .topic-box { padding: 13px 12px 50px; background: #fff;
 	h3 { font-size: 16px; line-height: 21px; text-align: center; color: #0092ff;}
