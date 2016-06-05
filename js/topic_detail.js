@@ -1,7 +1,15 @@
 'use strict';
 
 var downloadUrl = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.forhappy';
-var token = getQueryStringArgs().token == undefined? '' : getQueryStringArgs().token;
+// var token = getQueryStringArgs().token == undefined? '' : getQueryStringArgs().token;
+var token,isnotapp;
+if(getQueryStringArgs().token == undefined){
+	token = '';
+	isnotapp = true;
+} else {
+	token = getQueryStringArgs().token;
+	isnotapp = false;
+}
 var uid = getQueryStringArgs().uid == undefined? '' : getQueryStringArgs().uid;
 var shareId = getQueryStringArgs().shareId == undefined? '' : getQueryStringArgs().shareId;
 var keyId = getQueryStringArgs().keyId == undefined? '' : getQueryStringArgs().keyId;
@@ -48,7 +56,7 @@ $(function(){
 
 				$('.p-btmfix a').attr('href','user_center.html?token='+token+'&uid='+uid);
 				//如果app外 跳下载
-				if (token == '') {
+				if (isnotapp) {
 					$('a').attr('href',downloadUrl);
 					$('.p-btmfix-s-1').show();
 					$('.p-wrap').prepend('<div style="width: 100%; height: 50px;"></div>');

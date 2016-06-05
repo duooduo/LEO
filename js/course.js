@@ -2,7 +2,18 @@
 
 
 var downloadUrl = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.forhappy';
-var token = getQueryStringArgs().token == undefined? '' : getQueryStringArgs().token;
+// var token = getQueryStringArgs().token == undefined? '' : getQueryStringArgs().token;
+// var isapp = getQueryStringArgs().token == undefined ? true:false;
+
+var token,isnotapp;
+if(getQueryStringArgs().token == undefined){
+	token = '';
+	isnotapp = true;
+} else {
+	token = getQueryStringArgs().token;
+	isnotapp = false;
+}
+
 var uid = getQueryStringArgs().uid == undefined? '' : getQueryStringArgs().uid;
 var shareId = getQueryStringArgs().shareId == undefined? '' : getQueryStringArgs().shareId;
 var keyId = getQueryStringArgs().keyId == undefined? '' : getQueryStringArgs().keyId;
@@ -55,7 +66,7 @@ $(function(){
 
 
 				//如果app外 跳下载
-				if (token == '') {
+				if (isnotapp) {
 					$('a').attr('href',downloadUrl);
 					$('.p-btmfix-s-1').show();
 					$('.p-wrap').prepend('<div style="width: 100%; height: 50px;"></div>');
@@ -85,16 +96,25 @@ $(function(){
 				var $shareLi = $('.dis-share-ul li');
 				$shareLi.eq(0).find('p').html(data.profile);   //关于主持人
 				var $speakerLi = $('.dis-speaker-ul li');
-				$speakerLi.eq(0).find('a').attr('href','user_center.html?token='+token+'&uid=' + data.uid);
+				$speakerLi.eq(0).find('a').attr({'data-href':'user_center.html?token='+token+'&uid=' + data.uid,'data-uid': data.uid,'data-name': data.name,'data-price': data.price,'data-url': data.head});
 				$speakerLi.eq(0).find('img').attr('src',data.head);
 				$speakerLi.eq(0).find('h3').html(data.name);
 				$speakerLi.eq(0).find('span').html(data.profession);
 				$speakerLi.eq(0).find('p').html(data.profile);
 
+				$speakerLi.eq(0).find('a').on('touchend',function(){
+					var $this = $(this);
+					if(OCModel && OCModel.getTheInnerUserInfo) {
+						OCModel.getTheInnerUserInfo({'uid': $this.attr('data-uid'),'name':$this.attr('data-name'),'price':$this.attr('data-price'),'url': $this.attr('data-url')});
+					}
 
+				})
 			}
 		}
 	})
 });
 
+function getTheInnerUserInfoResult(){
+	location.href = $('.dis-share-ul li a').attr('data-href');
+}
 

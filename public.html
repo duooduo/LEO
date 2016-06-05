@@ -9,35 +9,61 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="p-wrap">
-	<!-- 白色标题条 -->
-	<section class="p-header">
-		<a class="p-header-bck" href="javascript:;">返回</a>
-		<h2 class="p-header-h2">标题</h2>
-		<a class="p-header-shr" href="javascript:;">分享</a>
-	</section>
-	<div id="log"></div>
-	<div class="emojstext" id="emojstext">:smile::rabbit::ok_hand::+1:</div>
-</div>
-<div class="p-bullet-box">
-	<section class="unitbox" top="0" style="-webkit-transform: translate3d(0, 30%, 0); transform: translate3d(0, 30%, 0); opacity: 0;">
-		<div class="unit">
-			<img class="face" src="images/temp/c_cover.jpg" alt="">
-			<p class="text">弹幕~~弹幕~~弹幕~~弹幕~~弹幕~~弹幕~~弹幕~~弹幕~~</p>
-		</div>
-	</section>
-	<i class="heart"></i>
-</div>
-<!-- 底部浮层 -->
-<div class="p-btmfix p-lr13">
-	<a href="#" class="p-btn">预约该专家</a>
+<!--<div class="p-wrap">-->
+	<!--&lt;!&ndash; 白色标题条 &ndash;&gt;-->
+	<!--<section class="p-header">-->
+		<!--<a class="p-header-bck" href="javascript:;">返回</a>-->
+		<!--<h2 class="p-header-h2">标题</h2>-->
+		<!--<a class="p-header-shr" href="javascript:;">分享</a>-->
+	<!--</section>-->
+	<!--<div id="log"></div>-->
+	<!--<div class="emojstext" id="emojstext">:smile::rabbit::ok_hand::+1:</div>-->
+<!--</div>-->
+<!--<div class="p-bullet-box">-->
+	<!--<section class="unitbox" top="0" style="-webkit-transform: translate3d(0, 30%, 0); transform: translate3d(0, 30%, 0); opacity: 0;">-->
+		<!--<div class="unit">-->
+			<!--<img class="face" src="images/temp/c_cover.jpg" alt="">-->
+			<!--<p class="text">弹幕~~弹幕~~弹幕~~弹幕~~弹幕~~弹幕~~弹幕~~弹幕~~</p>-->
+		<!--</div>-->
+	<!--</section>-->
+	<!--<i class="heart"></i>-->
+<!--</div>-->
+<!--&lt;!&ndash; 底部浮层 &ndash;&gt;-->
+<!--<div class="p-btmfix p-lr13">-->
+	<!--<a href="#" class="p-btn">预约该专家</a>-->
+<!--</div>-->
+
+
+<div style="margin-top: 100px">
+	<h1>Test how to use objective-c call js</h1>
+	<input type="button" value="Call ObjC system camera" onclick="OCModel.callSystemCamera()">
+	<input type="button" value="Call ObjC system alert" onclick="OCModel.showAlertMsg('js title', 'js message')">
 </div>
 
-<!--<script src="js/zepto.min.js"></script>-->
-<script src="js/lib/jquery-2.2.3.min.js"></script>
-<script src="js/lib/emoji.js"></script>
+<div>
+	<input type="button" value="Call ObjC func with JSON " onclick="OCModel.callWithDict({'name': 'testname', 'age': 10, 'height': 170})">
+	<input type="button" value="Call ObjC func with JSON and ObjC call js func to pass args." onclick="OCModel.jsCallObjcAndObjcCallJsWithDict({'name': 'testname', 'age': 10, 'height': 170})">
+</div>
+
+<div>
+	<span id="jsParamFuncSpan" style="color: red; font-size: 50px;"></span>
+</div>
+<script src="js/zepto.min.js"></script>
+<!--<script src="js/lib/jquery-2.2.3.min.js"></script>-->
+<!--<script src="js/lib/emoji.js"></script>-->
 <script>
-	$('.emojstext').eq(0).emoji();
+//	$('.emojstext').eq(0).emoji();
+
+	$(function(){
+		var jsFunc = function() {
+			alert('Objective-C call js to show alert');
+		};
+
+		var jsParamFunc = function(argument) {
+			document.getElementById('jsParamFuncSpan').innerHTML
+					= argument['name'];
+		}
+	})
 </script>
 
 </body>

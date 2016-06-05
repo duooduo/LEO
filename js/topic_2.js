@@ -1,10 +1,19 @@
 'use strict';
 
 var downloadUrl = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.forhappy';
-var token = getQueryStringArgs().token == undefined? '' : getQueryStringArgs().token;
+// var token = getQueryStringArgs().token == undefined? '' : getQueryStringArgs().token;
+var token,isnotapp;
+if(getQueryStringArgs().token == undefined){
+	token = '';
+	isnotapp = true;
+} else {
+	token = getQueryStringArgs().token;
+	isnotapp = false;
+}
 var uid = getQueryStringArgs().uid == undefined? '' : getQueryStringArgs().uid;
 var shareId = getQueryStringArgs().shareId == undefined? '' : getQueryStringArgs().shareId;
 var keyId = getQueryStringArgs().keyId == undefined? '' : getQueryStringArgs().keyId;
+var toTopicDetailHref,sendToAppDataList;
 
 //url地址段最后带参数，例如：'?keyId=10001'
 //获取查询字符串参数
@@ -28,13 +37,14 @@ function getQueryStringArgs() {
 	return args;
 }
 
+
 $(function(){
 	var keyIdJson = {
 		keyId: keyId
 	};
 	$.ajax({
-		url: location.protocol + '//' + location.host + '/symposium/apply_list?token=' + token,
-		// url: './js/data/topic_2_data.json',
+		// url: location.protocol + '//' + location.host + '/symposium/apply_list?token=' + token,
+		url: './js/data/topic_2_data.json',
 		type: 'POST',
 		dataType: 'json',
 		contentType: 'application/json;charset=UTF-8',
@@ -42,12 +52,13 @@ $(function(){
 		success: function(d){
 			if (d.code == 0) {
 				var data = d.data;
+				sendToAppDataList = data.list;
 				$('.user-img img').attr('src',data.background); //图片
 				// $('.topic-box02 h3').html(data.title);  //标题
 				$('.topic-txt').html( data.content); //内容
 
 				//如果app外 跳下载
-				if (token == '') {
+				if (isnotapp) {
 					$('a').attr('href',downloadUrl);
 					$('.p-btmfix-s-1').show();
 					$('.p-wrap').prepend('<div style="width: 100%; height: 50px;"></div>');
@@ -64,11 +75,20 @@ $(function(){
 									'<img alt="" src="'+ proficient.headUrl +'">' +
 								'</figure>' +
 								'<p class="topic-author-name">'+ proficient.nickName +'</p>' +
-								'<a href="topic_detail.html?token='+token+'&keyId='+proficient.keyId+'&uid='+ proficient.uid +'" class="topic-author-btn">查看详情</a>' +
+								'<a href="javascript:void(0)" data-href="topic_detail.html?token='+token+'&keyId='+proficient.keyId+'&uid='+ proficient.uid +'" data-index="'+ i +'" class="topic-author-btn">查看详情</a>' +
 							'</div>' +
 						'</li>'
 					)
 				}
+
+				$('.topic-author-btn').on('touchend',function(){
+					var $this = $(this);
+					toTopicDetailHref = $this.attr('data-href');
+					if(OCModel && OCModel.getTheInnerUserInfo) {
+						OCModel.getTheInnerUserInfo(sendToAppDataList[$this.attr('data-index')]);
+					}
+
+				})
 
 			}
 		},
@@ -77,5 +97,9 @@ $(function(){
 		}
 	})
 });
+
+function getTheInnerUserInfoResult(){
+	location.href = toTopicDetailHref;
+}
 
 

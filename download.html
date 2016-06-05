@@ -25,6 +25,7 @@ function fnResize(){
 	<p class="d-p">千万女性的情感浓汤宝</p>
 	<a class="d-btn" id="download-btn" href="javascript:;">免费体验</a>
 </div>
+<div class="loading none"><img src="images/loading.gif" alt=""></div>
 <script src="js/zepto.min.js"></script>
 <script>
 // 安卓下载链接：http://imfakaixin.com/download/android.apk
@@ -38,14 +39,17 @@ window.onload = function () {
 	if(isAndroid()) {
 		url = 'http://imfakaixin.com/download/android.apk';
 	}
-	$('#download-btn').on('click',function(){
+	$('#download-btn').on('touchend',function(){
 		if(url == ''){
-			alert(111);
+			alert('正在紧张开发中...');
 			return;
 		}
+		$('.loading').show();
 		$.ajax({
-			url: '',//todo
+			url: location.protocol + '//' + location.host + '/statis/clickNum',
+			type : 'POST',
 			dataType: 'json',
+			contentType: 'application/json;charset=UTF-8',
 			data:{},
 			success: function(){
 				location.href = url;

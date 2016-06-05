@@ -11,7 +11,17 @@ var hN = 1;
 var likeNum,stepNum;
 
 var downloadUrl = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.forhappy';
-var token = getQueryStringArgs().token == undefined? '' : getQueryStringArgs().token;
+
+// var token = getQueryStringArgs().token == undefined? '' : getQueryStringArgs().token;
+// var isnotLoginToken = getQueryStringArgs().token == undefined ? true:false;
+var token,isnotapp;
+if(getQueryStringArgs().token == undefined){
+	token = '';
+	isnotapp = true;
+} else {
+	token = getQueryStringArgs().token;
+	isnotapp = false;
+}
 var uid = getQueryStringArgs().uid == undefined? '' : getQueryStringArgs().uid;
 var shareId = getQueryStringArgs().shareId == undefined? '' : getQueryStringArgs().shareId;
 
@@ -110,36 +120,41 @@ $(function () {
 
 	// 发送评论
 	$('.p-danBtn').on('touchend', function(){
+		if(token == ''){
+			if(OCModel && OCModel.userClickedSendBarrage) {
+				OCModel.userClickedSendBarrage();
+			}
+		}else {
+			var p_danIpt = $.trim($('.p-danIpt').val());
+			if (p_danIpt != '') {
+				// val = twemoji.parse(p_danIpt);
+				$('.p-danIpt').val('');
+				$('.p-danIpt').blur();
+				var danIptJson = {
+					shareId: shareId,
+					text: p_danIpt
+				};
+				$.ajax({
+					url: location.protocol + '//' + location.host + '/share/comment/add?token=' + token,
+					type: 'POST',
+					dataType: 'json',
+					contentType: 'application/json;charset=UTF-8',
+					data: JSON.stringify(danIptJson),
+					success: function(d){
+						if (d.code == 0) {
+							// $('.p-danIpt').val('');
+							var p_alert = $('.p-alert');
+							p_alert.css({'opacity':'1', 'z-index': '200'});
+							setTimeout(function () {
+								p_alert.css({'opacity':'0', 'z-index': '-10'});
+							}, 2000);
 
-		var p_danIpt = $.trim($('.p-danIpt').val());
-		if (p_danIpt != '') {
-			// val = twemoji.parse(p_danIpt);
-			$('.p-danIpt').val('');
-			$('.p-danIpt').blur();
-			var danIptJson = {
-				shareId: shareId,
-				text: twemoji.parse(p_danIpt)
-			};
-			$.ajax({
-				url: location.protocol + '//' + location.host + '/share/comment/add?token=' + token,
-				type: 'POST',
-				dataType: 'json',
-				contentType: 'application/json;charset=UTF-8',
-				data: JSON.stringify(danIptJson),
-				success: function(d){
-					if (d.code == 0) {
-						// $('.p-danIpt').val('');
-						var p_alert = $('.p-alert');
-						p_alert.css({'opacity':'1', 'z-index': '200'});
-						setTimeout(function () {
-							p_alert.css({'opacity':'0', 'z-index': '-10'});
-						}, 2000);
-
+						}
 					}
-				}
-			})
+				})
+			}
+			return false;
 		}
-		return false;
 	});
 
 	// 点赞
@@ -335,7 +350,7 @@ function ajaxBuildDom() {
 				getRecommend();
 
 				//如果app外 跳下载
-				if (token == '') {
+				if (isnotapp) {
 					$('a').attr('href',downloadUrl);
 					$('.p-btmfix-s-1').show();
 					$('.p-wrap').prepend('<div style="width: 100%; height: 50px;"></div>');
