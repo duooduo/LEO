@@ -23,7 +23,7 @@ function fnResize(){
 	<img src="images/logo_200x200.png" alt="" class="d-logo">
 	<img src="images/d-text.png" alt="" class="d-text">
 	<p class="d-p">千万女性的情感浓汤宝</p>
-	<a class="d-btn" id="download-btn" href="">免费体验</a>
+	<a class="d-btn" id="download-btn" href="javascript:;">免费体验</a>
 </div>
 <script src="js/zepto.min.js"></script>
 <script>
@@ -31,23 +31,30 @@ function fnResize(){
 // IOS下载链接：https://itunes.apple.com/cn/app/fa-kai-xin-peng-you-quan-bu/id1077657593
 window.onload = function () {
 	var btn = document.getElementById('download-btn');
+	var url = '';
 	if(isIos()) {
-		btn.setAttribute('href', 'https://itunes.apple.com/cn/app/fa-kai-xin-peng-you-quan-bu/id1077657593');
+		url = 'https://itunes.apple.com/cn/app/fa-kai-xin-peng-you-quan-bu/id1077657593';
 	}
 	if(isAndroid()) {
-		btn.setAttribute('href', 'http://imfakaixin.com/download/android.apk');
+		url = 'http://imfakaixin.com/download/android.apk';
 	}
-	$.ajax({
-		url: '',//todo
-		dataType: 'json',
-		data:{},
-		success: function(){
-
-		},
-		error: function(){
-
+	$('#download-btn').on('click',function(){
+		if(url == ''){
+			alert(111);
+			return;
 		}
-	})
+		$.ajax({
+			url: '',//todo
+			dataType: 'json',
+			data:{},
+			success: function(){
+				location.href = url;
+			},
+			error: function(){
+
+			}
+		})
+	});
 };
 function isIos() {
 	return navigator.userAgent.match(/iphone|ipod|ios|ipad/i);

@@ -64,15 +64,19 @@ img.emoji { height: 1em; width: 1em; margin: 0 .05em 0 .1em; vertical-align: -0.
 // --- 专题
 .topic-box { padding: 13px 12px 50px; background: #fff;
 	h3 { font-size: 16px; line-height: 21px; text-align: center; color: #0092ff;}
-	.topic-txt { padding-top: 15px; line-height: 21px; font-size: 12px; color: #666;
-		p { }
+	.topic-txt { padding-top: 15px; line-height: 21px; font-size: 12px; color: #666; word-break: break-all;
+		//p { }
+		* { max-width: 100% !important;}
+		img { display: block !important; max-width: 100% !important; margin: 0 auto !important;}
 	}
 }
 .topic-box02 { background: #fff;
 	margin-bottom: 16px;
 	h3 { padding: 0 0 0 12px; font-size: 16px; line-height: 44px; color: #0092ff; border-bottom: 1px solid #d2d2d2;}
-	.topic-txt { padding: 5px 10px 9px 10px; font-size: 12px; line-height: 20px; color: #666;
-		p { padding-bottom: 20px;}
+	.topic-txt { padding: 5px 10px 9px 10px; font-size: 12px; line-height: 20px; color: #666; word-break: break-all;
+		//p { padding-bottom: 20px;}
+		* { max-width: 100% !important;}
+		img { display: block !important; max-width: 100% !important; margin: 0 auto !important;}
 	}
 }
 .topic-box03 { padding: 3px 10px 14px; background: #ffffff;
@@ -245,7 +249,8 @@ img.emoji { height: 1em; width: 1em; margin: 0 .05em 0 .1em; vertical-align: -0.
 .p-btmfix-s-1 { display: none; position: fixed; left: 0; top: 0; right: 0; width: 100%; height: 50px; line-height: 50px; background: #ecf7ff; text-align: center; font-size: 18px; color: #fe4d4d; z-index: 10;
 	&:before { content: ''; position: absolute; left: 50%; top: 50%; display: block; width: 19px; height: 22px; margin: -12px 0 0 -120px; background: url("../images/s-icon.png") no-repeat 0 0; background-size: 100% 100%;}
 }
-// 心事
+// 心事 todo
+.mind-title { padding: 15px 10px 0; font-size: 20px; line-height: 28px; color: #000; background: #fff; word-break: break-all;}
 .mind-box { background: #fff; padding-bottom: 24px;}
 .mind-txt { padding: 15px 10px; word-break: break-all;
 	* { max-width: 100% !important;}

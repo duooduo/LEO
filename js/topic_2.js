@@ -43,8 +43,8 @@ $(function(){
 			if (d.code == 0) {
 				var data = d.data;
 				$('.user-img img').attr('src',data.background); //图片
-				$('.topic-box02 h3').html(data.title);  //标题
-				$('.topic-txt').append('<p>'+ data.content +'</p>'); //内容
+				// $('.topic-box02 h3').html(data.title);  //标题
+				$('.topic-txt').html( data.content); //内容
 
 				//如果app外 跳下载
 				if (token == '') {

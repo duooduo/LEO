@@ -110,10 +110,12 @@ $(function () {
 
 	// 发送评论
 	$('.p-danBtn').on('touchend', function(){
+
 		var p_danIpt = $.trim($('.p-danIpt').val());
 		if (p_danIpt != '') {
 			// val = twemoji.parse(p_danIpt);
 			$('.p-danIpt').val('');
+			$('.p-danIpt').blur();
 			var danIptJson = {
 				shareId: shareId,
 				text: twemoji.parse(p_danIpt)
@@ -308,8 +310,8 @@ function ajaxBuildDom() {
 		success: function(d){
 			if (d.code == 0) {
 				var data = d.data;
-				$('.p-header-h2').html(data.title); //标题
-				$('.user-img img').attr('src',data.background); //封面
+				$('.mind-title').html(data.title); //标题
+				// $('.user-img img').attr('src',data.background); //封面
 				$('.mind-txt').html(data.content); //描述
 				$('.mind-award').find('em').html(data.rewardNum); //打赏人数
 				$('.mind-talkShow').html(data.talkShow);
