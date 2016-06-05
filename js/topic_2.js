@@ -43,8 +43,8 @@ $(function(){
 		keyId: keyId
 	};
 	$.ajax({
-		// url: location.protocol + '//' + location.host + '/symposium/apply_list?token=' + token,
-		url: './js/data/topic_2_data.json',
+		url: location.protocol + '//' + location.host + '/symposium/apply_list?token=' + token,
+		// url: './js/data/topic_2_data.json',
 		type: 'POST',
 		dataType: 'json',
 		contentType: 'application/json;charset=UTF-8',
@@ -83,7 +83,9 @@ $(function(){
 
 				$('.topic-author-btn').on('touchend',function(){
 					var $this = $(this);
+
 					toTopicDetailHref = $this.attr('data-href');
+					// getTheInnerUserInfoResult();
 					if(OCModel && OCModel.getTheInnerUserInfo) {
 						OCModel.getTheInnerUserInfo(sendToAppDataList[$this.attr('data-index')]);
 					}
