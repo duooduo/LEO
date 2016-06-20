@@ -8,7 +8,8 @@ var shareId = getQueryStringArgs().shareId == undefined? '' : getQueryStringArgs
 var keyId = getQueryStringArgs().keyId == undefined? '' : getQueryStringArgs().keyId;
 var worryId = getQueryStringArgs().worryId == undefined? '' : getQueryStringArgs().worryId;
 var replySendJson = {};
-var louzhu = '';
+var louzhuId = '';
+var louzhuNickName='';
 
 
 //url地址段最后带参数，例如：'?shareId=10001'
@@ -70,15 +71,18 @@ $(function(){
 			console.log(d);
 			if (d.code == 0) {
 				var data = d.data;
-				louzhu = data.fromid;
+				louzhuId = '' + data.toId;	//楼主id12312
+				louzhuNickName = '' + data.toNickName;
 				replySendJson = {
-					"replycommentId":'',
+					"replyCommentId":'',
 					"worryId": worryId,
 					"fromId": uid,
-					"told": louzhu
+					"toId": louzhuId,
+					"toNickName": louzhuNickName
 				};
-				$('.cmt-head img').attr('src',data.fromHead);  //头像
-				$('.c-landlord h4').prepend(data.fromNickName);  //昵称
+				console.log(replySendJson);
+				$('.cmt-head img').attr('src',data.toHead);  //头像
+				$('.c-landlord h4').prepend(data.toNickName);  //昵称
 				$('.c-landlord p').html(data.textCreateTime);	// 时间?
 
 				// 截取140字
@@ -88,11 +92,11 @@ $(function(){
 				}else if(landlordText.length == 2){
 					$('.c-landlord-text').html('<span>'+ landlordText[0] +'</span><i>...</i><a data-hide-text="'+ landlordText[1] +'" data-mark="0" class="cmt-text-a" href="javascript:;">[展开]</a>');
 				}*/
-				$('.c-landlord-text').html('<span>'+ data.Text +'</span>');
+				$('.c-landlord-text').html('<span>'+ data.Text +'</span>');	//文字
 
-				if(data.images){
+				if(data.images){	//图片
 					for(var i=0;i<data.images.length; i++){
-						$('.c-landlord-text').append('<figure><img src="'+ data.images +'" alt="" class="c-showImg"></figure>');
+						$('.c-landlord-text').append('<figure><img src="'+ data.images[i] +'" alt="" class="c-showImg"></figure>');
 					}
 				}
 			/*}
@@ -122,10 +126,11 @@ $(function(){
 						$('#c-input').focus().val('');
 
 						replySendJson = {
-							"replycommentId":'',
+							"replyCommentId":'',
 							"worryId": worryId,
 							"fromId": uid,
-							"told": louzhu
+							"toId": louzhuId,
+							"toNickName": louzhuNickName
 						};
 						console.log(replySendJson);
 					})
@@ -135,15 +140,15 @@ $(function(){
 						dom += '<div class="cmt-box">';
 						// face
 						var louzhustr = '';
-						if(data.list[i].fromId == louzhu) {
+						if(data.list[i].fromId == louzhuId) {
 							louzhustr = '<i>楼主</i>';
 						}
 						dom += '<div class="cmt-head">' +
 							'<figure>' +
-								'<img src="'+ data.list[i].head +'" alt="">' +
+								'<img src="'+ data.list[i].fromHead +'" alt="">' +
 							'</figure>' +
 							'<div class="ovh">' +
-								'<h4>'+ data.list[i].nickName + louzhustr +'</h4>' +
+								'<h4>'+ data.list[i].fromNickName + louzhustr +'</h4>' +
 								'<p>'+ data.list[i].commentCreateTime +'</p>' +
 							'</div>' +
 							'<a class="cmt-zan" href="#" data-commentId="'+ data.list[i].commentId +'"><em>'+ data.list[i].praiseNum +'</em></a></div>';
@@ -155,7 +160,7 @@ $(function(){
 						}else if(landlordText.length == 2){
 							dom += '<div class="cmt-text"><p><span>'+ landlordText[0] +'</span><i>...</i><a data-hide-text="'+ landlordText[1] +'" data-mark="0" class="cmt-text-a" href="javascript:;">[展开]</a></p>';
 						}*/
-						dom += '<div class="cmt-text"><p class="reply-btn" data-id="'+data.list[i].fromId+'" data-nickname="'+ data.list[i].nickName +'"><span>'+ data.list[i].replyText +'</span></p>';
+						dom += '<div class="cmt-text"><p class="reply-btn" data-commentid="'+ data.list[i].commentId +'" data-id="'+data.list[i].fromId+'" data-nickname="'+ data.list[i].fromNickName +'"><span>'+ data.list[i].replyText +'</span></p>';
 						// img
 						// var imgDom = '';
 						// for(var j=0; j<data.list[i].imageArray.length; j++) {
@@ -179,7 +184,7 @@ $(function(){
 							// 	img = '<figure><img src="'+ s.img +'" alt="" class="c-showImg"></figure>';
 							// }
 
-							son += '<li data-name="'+ s.nickName +'" data-id="'+ s.fromId +'" data-replycommentid="'+ s.replycommentId +'"><div class="name">'+ s.nickName +'：</div> <div class="ovh"> <b>@'+ s.toNickName +'</b>'+ s.replyText + '</div></li>';
+							son += '<li data-name="'+ s.fromNickName +'" data-id="'+ s.fromId +'" data-replycommentid="'+ data.list[i].commentId +'" data-commentid="'+ s.commentId +'"><div class="name">'+ s.fromNickName +'：</div> <div class="ovh"> <b>@'+ s.toNickName +'</b>'+ s.replyText + '</div></li>';
 						}
 						if(son!= ''){
 							dom += '<div class="cmt-reply clearfix"><ul>' + son + '</ul>'+ btnmore +'</div></div>';
@@ -205,7 +210,8 @@ $(function(){
 					}
 				});*/
 
-				$('.cmt-zan').on('touchend',function(){
+				$('.cmt-zan').on('touchend',function(e){
+					e.preventDefault();
 					var $this = $(this);
 					if(!$this.attr('data-mark')){
 						var commentId = $this.attr('data-commentId');
@@ -234,43 +240,51 @@ $(function(){
 					// var nickname = $(this).get(0).dataset.nickname;
 					$('#c-input').focus().val('');
 					replySendJson = {
-						"replycommentId":'',
+						"replyCommentId":'',
 						"worryId": worryId,
 						"fromId": uid,
-						"told": louzhu
+						"toId": louzhuId,
+						"toNickName": louzhuNickName
 					};
-
+					console.log(replySendJson);
 				});
 				// 回复评论一级
 				$('.reply-btn').on('touchend',function(e){
 					e.preventDefault();
-					var toldUid = $(this).get(0).dataset.id;
+					var replycommentId = $(this).get(0).dataset.commentid;
+					var toId = $(this).get(0).dataset.id;
 					var nickname = $(this).get(0).dataset.nickname;
 					$('#c-input').focus().val('@'+nickname +' ').attr('data-nickname','@'+nickname);
 					replySendJson = {
-						"replycommentId":'',
+						"replyCommentId": replycommentId,
 						"worryId": worryId,
 						"fromId": uid,
-						"told": toldUid
+						"toId": toId,
+						"toNickName": nickname
 					};
+					console.log(replySendJson);
 				});
 				// 回复评论二级
 				$('.cmt-reply li').on('touchend',function(e){
 					e.preventDefault();
 					var replycommentId = this.dataset.replycommentid;
-					var toldUid = this.dataset.id;
+					var toId = this.dataset.id;
+					var nickname = this.dataset.name;
 					// var nickname = $(this).get(0).dataset.nickname;
-					$('#c-input').focus().val('@'+ this.dataset.name +' ').attr('data-nickname','@'+ this.dataset.name);
+					$('#c-input').focus().val('@'+ nickname +' ').attr('data-nickname','@'+ nickname);
 					replySendJson = {
-						"replycommentId": replycommentId,
+						"replyCommentId": replycommentId,
 						"worryId": worryId,
 						"fromId": uid,
-						"told": toldUid
+						"toId": toId,
+						"toNickName": nickname
 					};
+					console.log(replySendJson);
 				});
 
 				var $float = $('.p-float');
-				$('.c-showImg').on('touchend',function(){
+				$('.c-showImg').on('click',function(e){
+					e.preventDefault();
 					var $this = $(this);
 					var imgUrl = $this.attr('src');
 
@@ -284,10 +298,12 @@ $(function(){
 					tempImg.remove();
 					$float.show();
 				});
-				$float.on('touchend', function () {
+				$float.on('touchend', function (e) {
+					e.preventDefault();
 					$float.hide();
 				});
-				$float.find('img').on('touchend', function () {
+				$float.find('img').on('touchend', function (e) {
+					e.preventDefault();
 					$float.hide();
 				});
 			}
@@ -295,7 +311,8 @@ $(function(){
 	});
 
 	// 发送按钮
-	$('#c-sendreply').on('touchend',function(){
+	$('#c-sendreply').on('touchend',function(e){
+		e.preventDefault();
 		if(token == ''){
 			if(OCModel && OCModel.userClickedSendBarrage) {
 				OCModel.userClickedSendBarrage();
@@ -303,7 +320,7 @@ $(function(){
 		}else {
 			// var sendReplyJson = {"worryId": worryId,"fromId": uid,"told": louzhu,"replyText": value};
 			var value = $.trim($('#c-input').val());
-			var nickname = this.dataset.nickname;
+			var nickname = $('#c-input').get(0).dataset.nickname;
 
 			var str = "";
 			var n = value.indexOf(nickname);
@@ -318,6 +335,7 @@ $(function(){
 			if (str != '') {
 				replySendJson['replyText'] = str;
 				$('#c-input').val('');
+				console.log(replySendJson);
 				$.ajax({
 					url: location.protocol + '//' + location.host + '/worry/forum_add?token=' + token,
 					// url: './js/data/worry_forumlist_data.json',
@@ -327,6 +345,7 @@ $(function(){
 					contentType: 'application/json;charset=UTF-8',
 					data: JSON.stringify(replySendJson),
 					success: function (d) {
+						console.log(d);
 						alert('评论成功!');
 					}
 				})

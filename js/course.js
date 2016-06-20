@@ -96,7 +96,7 @@ $(function(){
 				var $shareLi = $('.dis-share-ul li');
 				$shareLi.eq(0).find('p').html(data.profile);   //关于主持人
 				var $speakerLi = $('.dis-speaker-ul li');
-				$speakerLi.eq(0).find('a').attr({'data-href':'user_center.html?token='+token+'&uid=' + data.uid,'data-uid': data.uid,'data-name': data.name,'data-price': data.price,'data-url': data.head});
+				$speakerLi.eq(0).find('a').attr({'data-href':location.protocol + '//' + location.host + '/front/user_center.html?token='+token+'&uid=' + data.uid,'data-uid': data.uid,'data-name': data.name,'data-price': data.price,'data-url': data.head});
 				$speakerLi.eq(0).find('img').attr('src',data.head);
 				$speakerLi.eq(0).find('h3').html(data.name);
 				$speakerLi.eq(0).find('span').html(data.profession);
@@ -105,7 +105,8 @@ $(function(){
 				$speakerLi.eq(0).find('a').on('touchend',function(){
 					var $this = $(this);
 					if(OCModel && OCModel.getTheInnerUserInfo) {
-						OCModel.getTheInnerUserInfo({'uid': $this.attr('data-uid'),'name':$this.attr('data-name'),'price':$this.attr('data-price'),'url': $this.attr('data-url')});
+						var UserInfo = {'uid': $this.attr('data-uid'),'name':$this.attr('data-name'),'price':$this.attr('data-price'),'url': $this.attr('data-url')};
+						OCModel.getTheInnerUserInfo(JSON.stringify(UserInfo));
 					}
 
 				})

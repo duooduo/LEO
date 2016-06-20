@@ -81,7 +81,7 @@ $(function(){
 				// }else if(landlordText.length == 2){
 				// 	$('.c-landlord-text').html('<span>'+ landlordText[0] +'</span><i>...</i><a data-hide-text="'+ landlordText[1] +'" data-mark="0" class="cmt-text-a" href="javascript:;">[展开]</a>');
 				// }
-				$('.c-landlord-text').html('<span>'+ data.list[index].Text +'</span>').attr({'data-id':data.list[i].fromId, 'data-nickname':data.list[i].nickName});
+				$('.c-landlord-text').html('<span>'+ data.list[index].replyText +'</span>').attr({'data-id':data.list[i].fromId, 'data-nickname':data.list[i].fromNickName, 'data-commentid': data.list[i].commentId});
 
 				// // img todo 接口不全imageArray
 				// var imgDom = '';
@@ -103,7 +103,7 @@ $(function(){
 					// 	img = '<figure><img src="'+ s.img +'" alt="" class="c-showImg"></figure>';
 					// }
 
-					son += '<li data-name="'+ s.nickName +'" data-id="'+ s.fromId +'" data-replycommentid="'+ s.replycommentId +'"><div class="name">'+ s.nickName +'：</div> <div class="ovh"> <b>@'+ s.toNickName +'</b>'+ s.replyText + '</div></li>';
+					son += '<li data-name="'+ s.fromNickName +'" data-id="'+ s.fromId +'" data-replycommentid="'+ data.list[index].commentId +'" data-commentid="'+ s.commentId +'"><div class="name">'+ s.fromNickName +'：</div> <div class="ovh"> <b>@'+ s.toNickName +'</b>'+ s.replyText + '</div></li>';
 				}
 				if(son!= ''){
 					$('.cmt-reply ul').append(son);
@@ -112,29 +112,35 @@ $(function(){
 				// 回复评论一级
 				$('.c-landlord-text').on('touchend',function(e){
 					e.preventDefault();
-					var toldUid = $(this).get(0).dataset.id;
+					var replycommentId = $(this).get(0).dataset.commentid;
+					var toId = $(this).get(0).dataset.id;
 					var nickname = $(this).get(0).dataset.nickname;
 					$('#c-input').focus().val('@'+nickname +' ').attr('data-nickname','@'+nickname);
 					replySendJson = {
-						"replycommentId":'',
+						"replyCommentId": replycommentId,
 						"worryId": worryId,
 						"fromId": uid,
-						"told": toldUid
+						"toId": toId,
+						"toNickName": nickname
 					};
+					console.log(replySendJson);
 				});
 				// 回复评论二级
 				$('.cmt-reply li').on('touchend',function(e){
 					e.preventDefault();
 					var replycommentId = this.dataset.replycommentid;
-					var toldUid = this.dataset.id;
+					var toId = this.dataset.id;
+					var nickname = this.dataset.name;
 					// var nickname = $(this).get(0).dataset.nickname;
-					$('#c-input').focus().val('@'+ this.dataset.name +' ').attr('data-nickname','@'+ this.dataset.name);
+					$('#c-input').focus().val('@'+ nickname +' ').attr('data-nickname','@'+ nickname);
 					replySendJson = {
-						"replycommentId": replycommentId,
+						"replyCommentId": replycommentId,
 						"worryId": worryId,
 						"fromId": uid,
-						"told": toldUid
+						"toId": toId,
+						"toNickName": nickname
 					};
+					console.log(replySendJson);
 				});
 			}
 		},
@@ -144,7 +150,8 @@ $(function(){
 	});
 
 	// 发送按钮
-	$('#c-sendreply').on('touchend',function(){
+	$('#c-sendreply').on('touchend',function(e){
+		e.preventDefault();
 		if(token == ''){
 			if(OCModel && OCModel.userClickedSendBarrage) {
 				OCModel.userClickedSendBarrage();
@@ -152,7 +159,7 @@ $(function(){
 		}else {
 			// var sendReplyJson = {"worryId": worryId,"fromId": uid,"told": louzhu,"replyText": value};
 			var value = $.trim($('#c-input').val());
-			var nickname = this.dataset.nickname;
+			var nickname = $('#c-input').get(0).dataset.nickname;
 
 			var str = "";
 			var n = value.indexOf(nickname);
@@ -167,6 +174,7 @@ $(function(){
 			if (str != '') {
 				replySendJson['replyText'] = str;
 				$('#c-input').val('');
+				console.log(replySendJson);
 				$.ajax({
 					url: location.protocol + '//' + location.host + '/worry/forum_add?token=' + token,
 					// url: './js/data/worry_forumlist_data.json',

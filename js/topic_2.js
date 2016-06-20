@@ -75,7 +75,7 @@ $(function(){
 									'<img alt="" src="'+ proficient.headUrl +'">' +
 								'</figure>' +
 								'<p class="topic-author-name">'+ proficient.nickName +'</p>' +
-								'<a href="javascript:void(0)" data-href="topic_detail.html?token='+token+'&keyId='+proficient.keyId+'&uid='+ proficient.uid +'" data-index="'+ i +'" class="topic-author-btn">查看详情</a>' +
+								'<a href="javascript:void(0)" data-href="'+ location.protocol + '//' + location.host +'/front/topic_detail.html?token='+token+'&keyId='+proficient.keyId+'&uid='+ proficient.uid +'" data-index="'+ i +'" class="topic-author-btn">查看详情</a>' +
 							'</div>' +
 						'</li>'
 					)
@@ -87,7 +87,8 @@ $(function(){
 					toTopicDetailHref = $this.attr('data-href');
 					// getTheInnerUserInfoResult();
 					if(OCModel && OCModel.getTheInnerUserInfo) {
-						OCModel.getTheInnerUserInfo(sendToAppDataList[$this.attr('data-index')]);
+						var UserInfo = sendToAppDataList[$this.attr('data-index')];
+						OCModel.getTheInnerUserInfo(JSON.stringify(UserInfo));
 					}
 
 				})
