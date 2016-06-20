@@ -45,12 +45,13 @@ window.onload = function () {
 			return;
 		}
 		$('.loading').show();
+		var ajaxJson = {};
 		$.ajax({
 			url: location.protocol + '//' + location.host + '/statis/clickNum',
 			type : 'POST',
 			dataType: 'json',
 			contentType: 'application/json;charset=UTF-8',
-			data:{},
+			data:JSON.stringify(ajaxJson),
 			success: function(){
 				location.href = url;
 			},
