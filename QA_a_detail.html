@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui">
+<meta name="format-detection" content="telephone=no"/>
+<title>秒答二级页面</title>
+<script>
+fnResize();
+window.addEventListener("resize", function() {fnResize();}, false);
+function fnResize(){
+	var docWidth = document.documentElement.clientWidth,
+			body = document.getElementsByTagName('html')[0];
+	if(docWidth >= 750) docWidth = 750;
+	body.style.fontSize = docWidth / 15 + 'px';
+}
+</script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="p-bodyfff">
+<div class="p-wrap">
+
+</div>
+<script src="js/zepto.min.js"></script>
+</body>
+</html>

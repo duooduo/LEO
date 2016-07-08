@@ -1,6 +1,7 @@
 @charset "utf-8";
 @import "base";
 html,body { width: 100%; height: 100%; overflow: hidden;}
+.p-bodyfff { background: #fff;}
 .s-body { background: #3eabfd;}
 .p-lr13 { padding: 0 13px;}
 .p-pb15 { padding-bottom: 15px;}
@@ -9,7 +10,7 @@ html,body { width: 100%; height: 100%; overflow: hidden;}
 %icons { background: url("../images/icons.png") no-repeat; background-size: 154px auto;}
 img.emoji { height: 1em; width: 1em; margin: 0 .05em 0 .1em; vertical-align: -0.1em; }
 
-.p-wrap { width: 100%; height: 100%; overflow: auto; position: relative; -webkit-overflow-scrolling: touch; z-index: 1;
+.p-wrap { width: 100%; height: 100%; overflow: auto; position: relative; -webkit-overflow-scrolling: touch; z-index: 1; max-width: 640px; margin: 0 auto;
 	&:after { content: ''; display: block; width: 100%; height: 70px;}
 	//&:before { content: ''; display: none; height: 50px; width: 100%;}
 	&.p-after0:after { height: 0;}
@@ -176,43 +177,12 @@ img.emoji { height: 1em; width: 1em; margin: 0 .05em 0 .1em; vertical-align: -0.
 			span { float: left; padding-left: 12px; font-size: 12px; color: #999;}
 			i { float: right; padding-top: 15px; line-height: 12px; font-size: 9px; color: #999;}
 		}
-
-
 	}
 }
 .user-comm-more { padding: 0 0 8px 0; text-align: right; line-height: 10px;
 	a { font-size: 9px; color: #00b8df;}
 }
-// --- share
-//.s-img { width: 100%; margin-top: 9%; position: relative;
-//	img { display: inline-block; width: 52.8%; }
-//	.s-img-t { position: absolute; top: 6.6%; width: 118px; color: #fff;
-//		h3 { float: left; width: 20px; line-height: 1em; padding: 12px 7px 10px; margin: 0 20px 0 0; font-size: 20px; text-align: left; background: url("../images/s-h3.png") no-repeat 0 0; background-size: 100% 100%;}
-//		p { float: left; width: 21px; padding-top: 16px; line-height: 1em; font-size: 12px; text-align: left;}
-//	}
-//
-//	&.s-img-l { text-align: left;
-//		.s-img-t { right: 2.6%;}
-//		.s-img-t h3 { margin: 0 20px 0 0;}
-//	}
-//	&.s-img-r { text-align: right;
-//		.s-img-t { left: 3.9%;}
-//		.s-img-t h3 { margin: 0 0 0 13px;}
-//	}
-//}
-//.s-txt { width: 100%; margin-top: 16px; overflow: hidden; position: relative;
-//	&:before { content: ''; position: absolute; left: 25px; right: 25px; top: 0; border-top: 1px dashed rgba(255,255,255,.4);}
-//}
-//.s-logo { float: left; padding: 30px 0 0 10%; width: 70px;
-//	img { display: block; width: 70px; height: 70px;}
-//	figcaption { display: block; padding: 20px 0 13px; height: 29px; line-height: 29px; text-align: center; font-size: 18px; color: #fff;}
-//}
-//.s-box { position: absolute; top: 0; right: 5px; padding: 25px 0 0 0; width: 200px;
-//	p { line-height: 23px; font-size: 13px; color: #fff;}
-//	.s-code { padding-top: 24px; font-size: 0;
-//		span { display: inline-block; padding: 0 16px; height: 30px; line-height: 30px; background: #fe9595; font-size: 13px; color: #fff;}
-//	}
-//}
+
 // --- share rem
 .s-img { width: 100%; margin-top: rem(68); position: relative;
 	img { display: inline-block; width: rem(395); height: rem(680); }
@@ -249,7 +219,7 @@ img.emoji { height: 1em; width: 1em; margin: 0 .05em 0 .1em; vertical-align: -0.
 .p-btmfix-s-1 { display: none; position: fixed; left: 0; top: 0; right: 0; width: 100%; height: 50px; line-height: 50px; background: #ecf7ff; text-align: center; font-size: 18px; color: #fe4d4d; z-index: 10;
 	&:before { content: ''; position: absolute; left: 50%; top: 50%; display: block; width: 19px; height: 22px; margin: -12px 0 0 -120px; background: url("../images/s-icon.png") no-repeat 0 0; background-size: 100% 100%;}
 }
-// 心事 todo
+// 心事
 .mind-title { padding: 15px 10px 0; font-size: 20px; line-height: 28px; color: #000; background: #fff; word-break: break-all;}
 .mind-box { background: #fff; padding-bottom: 24px;}
 .mind-txt { padding: 15px 10px; word-break: break-all;
@@ -431,3 +401,65 @@ img.emoji { height: 1em; width: 1em; margin: 0 .05em 0 .1em; vertical-align: -0.
 }
 
 .cmt-more-page { padding-top: 15px;}
+
+// --- QA 秒问秒答
+.qa_person { padding: 15px 20px 5px; background: #fff;
+	.qa_face { -webkit-box-sizing: border-box; box-sizing: border-box; width: 60px; height: 60px; margin: 0 auto; border: 1px solid #b5b5b5; border-radius: 50%; overflow: hidden;
+		img { display: block; width: 100%; height: 100%;}
+	}
+	.qa_name { padding: 10px 0; line-height: 20px; text-align: center; font-size: 15px; color: #666;}
+	.qa_info { padding: 5px 0; line-height: 16px; font-size: 13px; color: #666666; word-break: break-all;}
+	.qa_writeBox { padding-top: 12px;
+		.qa_textarea { display: block; -webkit-box-sizing: border-box; box-sizing: border-box; width: 100%; height: 110px; border: 1px solid #ddd; background: #f9f9f9; font-size: 13px; padding: 6px 13px; line-height: 20px;}
+		.qa_price { padding: 10px; font-size: 18px; color: #eb4f38; text-align: center;}
+		.qa_q_btn { display: block; width: 150px; height: 44px; margin: 0 auto 15px; line-height: 44px; text-align: center; font-size: 15px; color: #fff; background: #fe9595; border-radius: 22px;}
+	}
+}
+.qa_tit01 { padding: 10px; line-height: 24px; font-size: 13px; color: #666; background: #f6f6f7;}
+.qa_list01 { background: #fff;
+	li { padding: 0 0 14px; border-bottom: 1px solid #f6f6f7; position: relative;
+		&:last-of-type { border-bottom: 0;}
+	}
+	.qa_issue { padding: 8px 12px; font-size: 15px; color: #333; word-break: break-all;}
+	.qa_name { padding: 8px 12px; font-size: 12px; color: #666; word-break: break-all;
+		em { padding: 0 3px;}
+	}
+	.qa_re { height: 40px; width: 100%; position: relative;
+		.qa_listenBox { width: 50%; padding: 0 0 0 72px; }
+		.qa_listen { display: block; -webkit-box-sizing: border-box; box-sizing: border-box; width: 100%; height: 40px; padding: 0 10px 0 40px; line-height: 40px; color: #fff; text-align: center; background: #0092ff; border-radius: 3px; position: relative; word-break: break-all;
+			&:after { content: ''; display: block; width: 15px; height: 18px; position: absolute; left: 13px; top: 50%; margin-top: -9px; @extend %icons; background-position: -35px -54px;}
+			&:before { content: ''; display: block; width: 11px; height: 13px; position: absolute; left: -10px; top: 50%; margin-top: -6px; @extend %icons; background-position: -51px -54px;}
+		}
+	}
+	.qa_face { position: absolute; left: 12px; top: 0; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #666;
+		img { display: block; width: 100%; height: 100%;}
+	}
+	.qa_renke,.qa_tingguo { position: absolute; right: 12px; width: rem(180); word-break: break-all; overflow: hidden; text-align: right;}
+	.qa_renke { top: 0; font-size: 12px; color: #eb4f38;}
+	.qa_tingguo { bottom: 0; font-size: 11px; color: #999999;}
+
+	&.list02 {
+		.qa_re .qa_listenBox { width: 40%; padding: 0 0 0 72px;
+			span { float: right; width: 45px; line-height: 40px; text-align: center; font-size: 12px; color: #999; overflow: hidden; -webkit-transform: translate3d(100%,-100%,0);}
+		}
+	}
+}
+.qa_nav01 { padding: 3px 80px 0; border-bottom: 1px solid #eee; background: #fff; -webkit-box-shadow: inset 0 -1px 0 #c4c4c4; box-shadow: inset 0 -1px 0 #c4c4c4; font-size: 0;
+	a { display: inline-block; width: 50%; height: 40px; text-align: center; line-height: 40px; font-size: 16px; color: #666;
+		em { display: inline-block; height: 38px; padding: 0 3px; }
+		&.cur { color: #0092ff;
+			em { border-bottom: 2px solid #0092ff;}
+		}
+	}
+}
+// --- 富文本盒子
+.rich-text { padding: 15px 10px; word-break: break-all; background: #fff;
+	* { max-width: 100% !important;}
+	img { display: block !important; max-width: 100% !important; margin: 0 auto !important;}
+}
+.qa_detail { background: #f0efef; padding: 18px 10px; position: relative;
+	h3 { padding: 0 0 18px 90px; font-size: 18px; color: #333; font-weight: bold; line-height: 31px; word-break: break-all;}
+	.qa_a_btn { display: block; width: 130px; height: 35px; margin: 0 auto; line-height: 35px; text-align: center; background: #fe9595; font-size: 15px; color: #fff; border-radius: 4px;}
+	p { text-align: center; line-height: 28px; font-size: 12px; color: #202020;}
+	.qa_detail_img { position: absolute; left: 22px; top: 26px; display: block; width: 57px; height: 57px;}
+}

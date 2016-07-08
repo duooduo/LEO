@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui">
+<meta name="format-detection" content="telephone=no"/>
+<title>个人主页</title>
+<script>
+fnResize();
+window.addEventListener("resize", function() {fnResize();}, false);
+function fnResize(){
+	var docWidth = document.documentElement.clientWidth,
+			body = document.getElementsByTagName('html')[0];
+	if(docWidth >= 750) docWidth = 750;
+	body.style.fontSize = docWidth / 15 + 'px';
+}
+</script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="p-bodyfff">
+<div class="p-wrap p-after0">
+	<div class="qa_person">
+		<div class="qa_face"><img src="images/temp/c_cover.jpg" alt=""></div>
+		<h2 class="qa_name">蒙奇·D·主任</h2>
+		<p class="qa_info">个人简介:国家二级心理咨询师。擅长解决女性情感问题处理过多起家庭纠纷引起的心理问题，国家二级心理咨询师国家二级心理咨询师国家二级心理咨询师</p>
+		<div class="qa_writeBox">
+			<textarea class="qa_textarea" placeholder="提问："></textarea>
+			<div class="qa_price">￥10</div>
+			<a class="qa_q_btn" href="javascript:;">写好了</a>
+		</div>
+	</div>
+	<div class="qa_tit01">回答了33个问题，共收入1000元。</div>
+
+	<ul class="qa_list01">
+		<li>
+			<div class="qa_issue">老是想和老婆超级想离婚怎么办</div>
+			<div class="qa_re">
+				<div class="qa_listenBox"><a class="qa_listen" href="javascript:;">1元听</a></div>
+				<div class="qa_face"><img src="images/temp/c_cover.jpg" alt=""></div>
+				<div class="qa_renke">200人认可</div>
+				<div class="qa_tingguo">150人听过</div>
+			</div>
+		</li>
+		<li>
+			<div class="qa_issue">老是想和老婆超级想离婚怎么办</div>
+			<div class="qa_re">
+				<div class="qa_listenBox"><a class="qa_listen" href="javascript:;">1元听</a></div>
+				<div class="qa_face"></div>
+				<div class="qa_renke">200人认可</div>
+				<div class="qa_tingguo">150人听过</div>
+			</div>
+		</li>
+	</ul>
+</div>
+<script src="js/zepto.min.js"></script>
+</body>
+</html>
