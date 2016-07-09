@@ -2,20 +2,29 @@
   "code" : 0,
   "message" : "success",
   "data":{
-    "content":"回答了XX个问题，总共收入XX元",
-    "list":[{
-    "worryId":12,      		//心事id
-    "text":" ",			//心事内容
-    "listenerHead":" ",		//咨询师的头像
-    "voiceUrl":" ",		//语音路径
-    "voiceId":1,             //语音的id
-    "price":0.8,			//多少元听  double类型   值=0时，限时免费听，值=-1.0时，已经购买过，点击播放
-    "listenNum":1,		//多少人听过
-    "praiseNum":1		//多少人认同
-
-
-
-    }]
+    "content":"回答了233个问题，总共收入2333元",
+    "list":[
+      {
+        "worryId":12,
+        "text":"哈哈哈哈哈哈啦啦啦啦啦了哇哇哇哇哇哇呀呀呀呀呀",
+        "listenerHead":"images/temp/c_cover.jpg",
+        "voiceUrl":"images/temp/voice.mp3",
+        "voiceId":123,
+        "price":-1,
+        "listenNum":150,
+        "praiseNum":300
+      },
+      {
+        "worryId":12,
+        "text":"哈哈哈哈哈哈啦啦啦啦啦了哇哇哇哇哇哇呀呀呀呀呀",
+        "listenerHead":"images/temp/c_cover.jpg",
+        "voiceUrl":"images/temp/sound.mp3",
+        "voiceId":123,
+        "price":0.8,
+        "listenNum":54,
+        "praiseNum":789
+      }
+    ]
 
 
   }

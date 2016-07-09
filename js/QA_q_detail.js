@@ -63,18 +63,35 @@ function toPlayVioce(type){
 	}
 
 	$willClick.on('click',function(){
+		var willCost = $(this).attr('data-price');
 		var that = this;
-		// console.log(thatIndex);
-		pauseAllAudio(that);
-		var audio = $(this).next().get(0);
-		// console.log($audio);
-		// $audio.get(0).play();
-		if(audio.paused){
-			audio.play();//播放
-		 }else if(audio.played){
-			audio.pause();//暂停
-		 }
+		if(willCost == 0 || willCost == -1 || willCost == -1.0){
+			// console.log(thatIndex);
+			pauseAllAudio(that);
+			var audio = $(this).next().get(0);
+			// console.log($audio);
+			// $audio.get(0).play();
+			if(audio.paused){
+				audio.play();//播放
+			}else if(audio.played){
+				audio.pause();//暂停
+			}
+		}else {
+			pauseAllAudio(that);
+			//todo 跳支付
+		}
 	});
+}
+
+function canListen(index) {
+	var price = index.price;
+	if(price == -1 || price == -1.0) {
+		return '点击播放';
+	}else if(price == 0) {
+		return '限时免费听';
+	}else{
+		return (price + '元听');
+	}
 }
 
 function getHotAndNew(type){
@@ -94,7 +111,8 @@ function getHotAndNew(type){
 				var dom = '';
 				for(var i=0; i<listArr.length; i++) {
 					var index = listArr[i];
-					dom += '<li><div class="qa_name">'+ index.listenerNickName +'<em>|</em>'+ index.listenerProfession +'</div><div class="qa_re"><div class="qa_listenBox"><a data-listenerId="'+ index.listenerId +'" class="qa_listen" href="javascript:;">'+ index.price +'元听</a><audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio><span>60s</span></div><div class="qa_face"><img src="'+ index.listenerHead +'" alt=""></div><div class="qa_renke">'+ index.listenNum +'人认可</div><div class="qa_tingguo">'+ index.praiseNum +'人听过</div></div></li>';//todo 时间从后台获取？
+					var realPrice = canListen(index);
+					dom += '<li><div class="qa_name">'+ index.listenerNickName +'<em>|</em>'+ index.listenerProfession +'</div><div class="qa_re"><div class="qa_listenBox"><a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio><span>60s</span></div><div class="qa_face"><img src="'+ index.listenerHead +'" alt=""></div><div class="qa_renke">'+ index.listenNum +'人认可</div><div class="qa_tingguo">'+ index.praiseNum +'人听过</div></div></li>';//todo 时间从后台获取？
 				}
 				if(type == 1) {
 					$('.list-hot').html(dom);
@@ -107,13 +125,13 @@ function getHotAndNew(type){
 			}
 		},
 		error: function (e) {
-
+			console.log(e);
 		}
 	})
 }
 
 function buildMainDom(){
-	//todo 创建主要DOM结构 没接口
+	//todo 创建主要DOM结构 app接口
 }
 
 $(function() {

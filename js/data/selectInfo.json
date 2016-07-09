@@ -1,0 +1,38 @@
+{
+  "code" : 0,
+  "message" : "success",
+  "data":{
+    "title":"标题标题标题哇哇哇",
+    "content":"哈哈哈哈啦啦啦啦嘛嘛嘛嘛",
+    "listenerHead":"images/temp/c_cover.jpg",
+    "voiceUrl":"images/temp/sound.mp3",
+    "price":0.5,
+    "listenNum":1,
+    "praiseNum":1,
+    "stepNum":1,
+    "listenerId":12,
+    "listenerNickName":"LEO",
+    "listenerProfession":"作家，职业规划师",
+    "list":[{
+      "title":"标题标题标题哇哇哇",
+      "content":"哈哈哈哈啦啦啦啦嘛嘛嘛嘛",
+      "listenerHead":"images/temp/c_cover.jpg",
+      "voiceUrl":"images/temp/sound.mp3",
+      "price":0,
+      "listenerId":12,
+      "listenerNickName":"LEO",
+      "listenerProfession":"作家，职业规划师"
+    },
+      {
+        "title":"标题标题标题哇哇哇",
+        "content":"哈哈哈哈啦啦啦啦嘛嘛嘛嘛",
+        "listenerHead":"images/temp/c_cover.jpg",
+        "voiceUrl":"images/temp/sound.mp3",
+        "price":0.5,
+        "listenerId":12,
+        "listenerNickName":"LEO",
+        "listenerProfession":"作家，职业规划师"
+      }]
+  }
+
+}
