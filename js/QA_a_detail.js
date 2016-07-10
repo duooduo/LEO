@@ -72,7 +72,12 @@ function toPlayVioce(){
 			}
 		}else {
 			pauseAllAudio(that);
-			//todo 跳支付
+			var thisVoiceId = $(this).attr('data-voiceId');
+			var thisPrice = $(this).attr('data-price');
+			if(OCModel && OCModel.payForVoice) {
+				var voiceInfo = {'voiceId': thisVoiceId,'price': thisPrice};
+				OCModel.payForVoice(JSON.stringify(voiceInfo));
+			}
 		}
 	});
 }
@@ -84,7 +89,7 @@ function canListen(index) {
 	}else if(price == 0) {
 		return '限时免费听';
 	}else{
-		return (price + '元听');
+		return (price + '元悄悄听');
 	}
 }
 
@@ -107,11 +112,55 @@ function toSendOperation(type) {
 	})
 }
 
-function buildMainDom(){
-	var idJson = {"topicId": topicId,"voiceId": voiceId};
+function toSelectRandom(){
 	$.ajax({
-		// url: location.protocol + '//' + location.host + '/voice/selectInfo?token=' + token,
-		url: './js/data/selectInfo.json',
+		url: location.protocol + '//' + location.host + '/voice/selectRandom?token=' + token,
+		// url: './js/data/selectRandom.json',
+		type: 'POST',
+		dataType: 'json',
+		// headers: {"Content-type": "application/json;charset=UTF-8"},
+		contentType: 'application/json;charset=UTF-8',
+		// data: ,
+		success: function (d) {
+			console.log(d);
+			if(d.code == 0) {
+				var data = d.data;
+				$('.qa_list02 a').attr('href','QA_a_detail.html?token=' + token + '&worryId=' + data.worryId);
+				$('.qa_list02 p').html(data.text);
+				$('.qa_list02 .qa_name em').html(data.listenerNickName);
+				$('.qa_list02 .qa_name i').html(data.listenerProfession);
+				$('.qa_list02 li span').html(data.praiseNum + '人认可');
+
+				$('.qa_btn').on('click',function(){
+					if(OCModel && OCModel.meWantToBeTheAnswerOwner) {
+						// var TopicInfo = {'topicId': topicId};
+						OCModel.meWantToBeTheAnswerOwner();
+					}
+				})
+			}
+
+			//如果app外 跳下载
+			if (isnotapp) {
+				$('a').attr('href',downloadUrl);
+				$('.p-btmfix-s-1').show();
+				$('.p-wrap').prepend('<div style="width: 100%; height: 50px;"></div>');
+			}
+
+		}
+	})
+}
+
+function buildMainDom(){
+	var idJson = {};
+	if(worryId == '' && topicId != ''){
+		idJson = {"topicId": topicId,"voiceId": voiceId};
+	}else if(worryId != '' && topicId == ''){
+		idJson = {"worryId": worryId};
+	}
+	// console.log(idJson)
+	$.ajax({
+		url: location.protocol + '//' + location.host + '/voice/selectInfo?token=' + token,
+		// url: './js/data/selectInfo.json',
 		type: 'POST',
 		dataType: 'json',
 		// headers: {"Content-type": "application/json;charset=UTF-8"},
@@ -122,7 +171,7 @@ function buildMainDom(){
 			if(d.code == 0){
 				$('.qa_qner .qa_face img').attr('src',d.data.listenerHead);
 				$('.qa_qner .qa_name').html(d.data.listenerNickName);
-				//$('.qa_price') todo
+				$('.qa_qner .qa_price').html('价值￥' + (d.data.acceptMoney == ''? 0:d.data.acceptMoney));
 				var $span = $('.qa_bar .fr span');
 				$span.eq(0).html(d.data.listenNum + '人听过');
 				$span.eq(1).html(d.data.praiseNum + '人认可');
@@ -143,17 +192,17 @@ function buildMainDom(){
 				var list = d.data.list;
 				if(list.length == 1){
 					var realPrice = canListen(list[0]);
-					var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].content +'</div><div class="qa_re"><div class="qa_listenBox"><span>60s</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><img src="'+ list[0].listenerHead +'" alt=""></div><img src="images/qa-used.png" alt="" class="qa_a_used"></div></li>';
+					var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].content +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><img src="'+ list[0].listenerHead +'" alt=""></div><img src="images/qa-used.png" alt="" class="qa_a_used"></div></li>';
 					$('.qa_list01').html(li);
 				}else {
 					var dom ='';
 					for(var i=0; i<list.length; i++){
 						var index = list[i];
 						var realPrice = canListen(index);
-						dom += '<li><div class="qa_issue">'+ index.content +'</div><div class="qa_re"><div class="qa_listenBox"><span>60s</span><a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><img src="'+ index.listenerHead +'" alt=""></div><img src="images/qa-used.png" alt="" class="qa_a_used"></div></li>';
+						dom += '<li><div class="qa_issue">'+ index.content +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ index.voiceTime +'&prime;&prime;</span><a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><img src="'+ index.listenerHead +'" alt=""></div></div></li>';
 					}
 					$('.qa_list01').html(dom);
-					$('.qa_list01 li').eq(0).append('<a class="qa_hide_more" href="javascript:;">【更多】</a>').addClass('qa_a_head');
+					$('.qa_list01 li').eq(0).append('<a class="qa_hide_more" href="javascript:;">【更多】</a>').addClass('qa_a_head').find('.qa_re').append('<img src="images/qa-used.png" alt="" class="qa_a_used">');
 					$('.qa_hide_more').on('click',function(){
 						$('.qa_a_main').removeClass('qa_hide');
 					})
@@ -164,7 +213,15 @@ function buildMainDom(){
 				$('.qa_a_info .qa_face img').attr('src',d.data.listenerHead);
 				$('.qa_a_info .ovh h3').html(d.data.listenerNickName);
 				$('.qa_a_info .ovh p').html(d.data.listenerProfession);
-				$('.qa_a_info .qa_infoMain').attr('data-listenerId',d.data.listenerId); //todo href?
+				$('.qa_a_info .qa_infoMain').attr('href','QA_home.html?token='+token+'&uid=' + d.data.listenerId);
+				$('.qa_info_btn').on('click',function(){
+					if(OCModel && OCModel.rewordForTheSecondAskDetail) {
+						// var TopicInfo = {'topicId': topicId};
+						OCModel.rewordForTheSecondAskDetail();
+					}
+				});
+
+				toSelectRandom();
 
 			}
 		},
@@ -177,11 +234,6 @@ function buildMainDom(){
 $(function() {
 	buildMainDom();
 
-	//如果app外 跳下载    todo 明确哪些跳下载
-	if (isnotapp) {
-		$('a').attr('href',downloadUrl);
-		$('.p-btmfix-s-1').show();
-		$('.p-wrap').prepend('<div style="width: 100%; height: 50px;"></div>');
-	}
+
 
 });

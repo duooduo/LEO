@@ -116,6 +116,6 @@ $(function(){
 });
 
 function getTheInnerUserInfoResult(){
-	location.href = $('.dis-share-ul li a').attr('data-href');
+	location.href = $('.dis-speaker-ul li a').attr('data-href');
 }
 

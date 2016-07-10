@@ -184,7 +184,13 @@ $(function(){
 					contentType: 'application/json;charset=UTF-8',
 					data: JSON.stringify(replySendJson),
 					success: function (d) {
-						alert('评论成功!');
+						console.log(d);
+						var p_alert = $('.p-alert');
+						p_alert.css({'opacity':'1', 'z-index': '200'});
+						setTimeout(function () {
+							p_alert.css({'opacity':'0', 'z-index': '-10'});
+							location.reload();
+						}, 2000);
 					}
 				})
 			}

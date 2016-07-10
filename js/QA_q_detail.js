@@ -90,15 +90,15 @@ function canListen(index) {
 	}else if(price == 0) {
 		return '限时免费听';
 	}else{
-		return (price + '元听');
+		return (price + '元悄悄听');
 	}
 }
 
 function getHotAndNew(type){
 	var selectHotAndNewJson = {"topicId": topicId,"type": type};
 	$.ajax({
-		// url: location.protocol + '//' + location.host + '/voice/selectHotAndNew?token=' + token,
-		url: './js/data/selectHotAndNew.json',
+		url: location.protocol + '//' + location.host + '/voice/selectHotAndNew?token=' + token,
+		// url: './js/data/selectHotAndNew.json',
 		type: 'POST',
 		dataType: 'json',
 		// headers: {"Content-type": "application/json;charset=UTF-8"},
@@ -112,7 +112,7 @@ function getHotAndNew(type){
 				for(var i=0; i<listArr.length; i++) {
 					var index = listArr[i];
 					var realPrice = canListen(index);
-					dom += '<li><div class="qa_name">'+ index.listenerNickName +'<em>|</em>'+ index.listenerProfession +'</div><div class="qa_re"><div class="qa_listenBox"><a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio><span>60s</span></div><div class="qa_face"><img src="'+ index.listenerHead +'" alt=""></div><div class="qa_renke">'+ index.listenNum +'人认可</div><div class="qa_tingguo">'+ index.praiseNum +'人听过</div></div></li>';//todo 时间从后台获取？
+					dom += '<li><a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" href="QA_a_detail.html?token='+ token +'&topicId='+ topicId +'&voiceId='+ index.voiceId +'"><div class="qa_name">'+ index.listenerNickName +'<em>|</em>'+ index.listenerProfession +'</div><div class="qa_re"><div class="qa_listenBox"><div class="qa_listen">'+ realPrice +'</div><span>'+ index.voiceTime +'&prime;&prime;</span></div><div class="qa_face"><img src="'+ index.listenerHead +'" alt=""></div><div class="qa_renke">'+ index.listenNum +'人认可</div><div class="qa_tingguo">'+ index.praiseNum +'人听过</div></div></a></li>';
 				}
 				if(type == 1) {
 					$('.list-hot').html(dom);
@@ -121,7 +121,13 @@ function getHotAndNew(type){
 					$('.list-new').html(dom);
 					NewTag = true;
 				}
-				toPlayVioce(type);
+				// toPlayVioce(type);
+				//如果app外 跳下载
+				if (isnotapp) {
+					$('a').attr('href',downloadUrl);
+					$('.p-btmfix-s-1').show();
+					$('.p-wrap').prepend('<div style="width: 100%; height: 50px;"></div>');
+				}
 			}
 		},
 		error: function (e) {
@@ -131,12 +137,37 @@ function getHotAndNew(type){
 }
 
 function buildMainDom(){
-	//todo 创建主要DOM结构 app接口
+	var topicIdJson = {"topicId": topicId};
+	$.ajax({
+		url: location.protocol + '//' + location.host + '/voice/selectSymposium?token=' + token,
+		// url: './js/data/selectHotAndNew.json',
+		type: 'POST',
+		dataType: 'json',
+		// headers: {"Content-type": "application/json;charset=UTF-8"},
+		contentType: 'application/json;charset=UTF-8',
+		data: JSON.stringify(topicIdJson),
+		success: function (d) {
+			console.log(d);
+			if(code == 0){
+				$('.qa_detail_img').attr('src',d.data.topicImg);
+				$('.qa_h2').html(d.data.title);
+				$('.rich-text').html(d.data.content);
+				$('.qa_a_btn').on('click',function(){
+					if(OCModel && OCModel.IAlseComeToAnswerTheQuestion) {
+						var TopicInfo = {'topicId': topicId};
+						OCModel.IAlseComeToAnswerTheQuestion(JSON.stringify(TopicInfo));
+					}
+				});
+				getHotAndNew(1);
+			}
+		}
+	});
+	//创建主要DOM结构 app接口
 }
 
 $(function() {
 	buildMainDom();
-	getHotAndNew(1);
+
 	$('.hn-button').on('click',function(){
 		var that = this;
 		pauseAllAudio(that);
@@ -160,11 +191,6 @@ $(function() {
 		}
 	});
 
-	//如果app外 跳下载    todo 明确哪些跳下载
-	if (isnotapp) {
-		$('a').attr('href',downloadUrl);
-		$('.p-btmfix-s-1').show();
-		$('.p-wrap').prepend('<div style="width: 100%; height: 50px;"></div>');
-	}
+
 
 });

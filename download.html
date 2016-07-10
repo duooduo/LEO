@@ -39,7 +39,7 @@ window.onload = function () {
 	if(isAndroid()) {
 		url = 'http://imfakaixin.com/download/android.apk';
 	}
-	$('#download-btn').on('touchend',function(){
+	function locationHref(){
 		if(url == ''){
 			alert('正在紧张开发中...');
 			return;
@@ -59,6 +59,14 @@ window.onload = function () {
 
 			}
 		})
+	}
+
+	setTimeout(function(){
+		locationHref();
+	},2000);
+
+	$('#download-btn').on('touchend',function(){
+		locationHref();
 	});
 };
 function isIos() {

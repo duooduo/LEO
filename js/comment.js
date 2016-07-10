@@ -336,6 +336,7 @@ $(function(){
 				replySendJson['replyText'] = str;
 				$('#c-input').val('');
 				console.log(replySendJson);
+
 				$.ajax({
 					url: location.protocol + '//' + location.host + '/worry/forum_add?token=' + token,
 					// url: './js/data/worry_forumlist_data.json',
@@ -346,7 +347,12 @@ $(function(){
 					data: JSON.stringify(replySendJson),
 					success: function (d) {
 						console.log(d);
-						alert('评论成功!');
+						var p_alert = $('.p-alert');
+						p_alert.css({'opacity':'1', 'z-index': '200'});
+						setTimeout(function () {
+							p_alert.css({'opacity':'0', 'z-index': '-10'});
+							location.reload();
+						}, 2000);
 					}
 				})
 			}

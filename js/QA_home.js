@@ -81,7 +81,7 @@ function canListen(index) {
 	}else if(price == 0) {
 		return '限时免费听';
 	}else{
-		return (price + '元听');
+		return (price + '元悄悄听');
 	}
 }
 
@@ -90,8 +90,8 @@ function getList(){
 		uid: uid
 	};
 	$.ajax({
-		// url: location.protocol + '//' + location.host + '/listener/listenerQuestion?token=' + token,
-		url: './js/data/listenerQuestion.json',
+		url: location.protocol + '//' + location.host + '/listener/listenerQuestion?token=' + token,
+		// url: './js/data/listenerQuestion.json',
 		type: 'POST',
 		dataType: 'json',
 		// headers: {"Content-type": "application/json;charset=UTF-8"},
@@ -105,10 +105,10 @@ function getList(){
 				for(var i=0; i<d.data.list.length; i++){
 					var index = d.data.list[i];
 					var realPrice = canListen(index);
-					dom += '<li><div class="qa_issue">'+ index.text +'</div><div class="qa_re"><div class="qa_listenBox"><a data-worryId="'+ index.worryId +'" data-voiceId="'+ index.voiceId +'" data-price="'+ index.price +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><img src="'+ index.listenerHead +'" alt=""></div><div class="qa_renke">'+ index.praiseNum +'人认可</div><div class="qa_tingguo">'+ index.listenNum +'人听过</div></div></li>';
+					dom += '<li><a data-worryId="'+ index.worryId +'" data-voiceId="'+ index.voiceId +'" data-price="'+ index.price +'" href="QA_a_detail.html?token='+ token +'&worryId='+ index.worryId + '"><div class="qa_issue">'+ index.text +'</div><div class="qa_re"><div class="qa_listenBox"><div class="qa_listen">'+ realPrice +'</div></div><div class="qa_face"><img src="'+ index.listenerHead +'" alt=""></div><div class="qa_renke">'+ index.praiseNum +'人认可</div><div class="qa_tingguo">'+ index.listenNum +'人听过</div></div></a></li>';
 				}
 				$('.qa_list01').html(dom);
-				toPlayVioce();
+				// toPlayVioce();
 			}
 		},
 		error: function (e) {
@@ -122,8 +122,8 @@ function getUserInfo(){
 		uid: uid
 	};
 	$.ajax({
-		// url: location.protocol + '//' + location.host + '/listener/info?token=' + token,
-		url: './js/data/listener_info_data.json',
+		url: location.protocol + '//' + location.host + '/listener/info?token=' + token,
+		// url: './js/data/listener_info_data.json',
 		type: 'POST',
 		dataType: 'json',
 		// headers: {"Content-type": "application/json;charset=UTF-8"},
@@ -136,9 +136,14 @@ function getUserInfo(){
 				$('.qa_face img').attr('src',data.head);
 				$('.qa_name').html(data.name);
 				$('.qa_info').html(data.profile);
+				$('.qa_price').html('￥' + data.price);
 				$('.qa_q_btn').on('click',function(){
 					var text = $('.qa_textarea').val();
-					//todo 跳支付 并把输入内容传给app
+					if(OCModel && OCModel.someOneAskedMeAQuestion) {
+						var testJson = {'text': text};
+						OCModel.someOneAskedMeAQuestion(JSON.stringify(testJson));
+					}
+					//跳支付 并把输入内容传给app
 				})
 			}
 		},
@@ -158,3 +163,7 @@ $(function(){
 		$('.p-wrap').prepend('<div style="width: 100%; height: 50px;"></div>');
 	}
 });
+
+function getTextareaResult(t){
+	$('.qa_textarea').val(t);
+}
