@@ -1,0 +1,47 @@
+{
+  "code" : 0,
+  "message" : "success",
+  "data":{
+    "list":[
+      {
+        "listenerId":12,
+        "listenerNickName":"LEO",
+        "listenerProfession":"作家，职业规划师",
+        "listenerHead":"images/temp/c_cover.jpg",
+        "voiceUrl":"images/temp/voice.mp3",
+        "price":0,
+        "listenNum":150,
+        "praiseNum":200
+      },
+      {
+        "listenerId":12,
+        "listenerNickName":"LEO",
+        "listenerProfession":"作家，职业规划师",
+        "listenerHead":"images/temp/c_cover.jpg",
+        "voiceUrl":"images/temp/sound.mp3",
+        "price":-1.0,
+        "listenNum":150,
+        "praiseNum":200
+      },
+      {
+        "listenerId":12,
+        "listenerNickName":"LEO",
+        "listenerProfession":"作家，职业规划师",
+        "listenerHead":"images/temp/c_cover.jpg",
+        "voiceUrl":"images/temp/Notify.mp3",
+        "price":0.5,
+        "listenNum":150,
+        "praiseNum":200
+      },
+      {
+        "listenerId":12,
+        "listenerNickName":"LEO",
+        "listenerProfession":"作家，职业规划师",
+        "listenerHead":"images/temp/c_cover.jpg",
+        "voiceUrl":"images/temp/Notify.mp3",
+        "price":0,
+        "listenNum":150,
+        "praiseNum":200
+      }]
+  }
+}
