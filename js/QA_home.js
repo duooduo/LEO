@@ -158,7 +158,7 @@ function getUserInfo(){
 $(function(){
 	getUserInfo();
 	getList();
-	//如果app外 跳下载    todo 明确哪些跳下载
+	//如果app外 跳下载 
 	if (isnotapp) {
 		$('a').attr('href',downloadUrl);
 		$('.p-btmfix-s-1').show();

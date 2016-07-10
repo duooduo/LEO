@@ -149,7 +149,7 @@ function buildMainDom(){
 		data: JSON.stringify(topicIdJson),
 		success: function (d) {
 			console.log(d);
-			if(code == 0){
+			if(d.code == 0){
 				$('.qa_detail_img').attr('src',d.data.topicImg);
 				$('.qa_h2').html(d.data.title);
 				$('.rich-text').html(d.data.content);
