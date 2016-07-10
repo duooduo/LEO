@@ -90,6 +90,7 @@ function canListen(index) {
 		return '限时免费听';
 	}else{
 		return (price + '元悄悄听');
+
 	}
 }
 
@@ -145,7 +146,16 @@ function toSelectRandom(){
 				$('.p-btmfix-s-1').show();
 				$('.p-wrap').prepend('<div style="width: 100%; height: 50px;"></div>');
 			}
+			if(token == ''){
+				$('a').unbind('click').on('click', function () {
+					console.log('未登录');
+					if(OCModel && OCModel.userClickedSendBarrage) {
+						OCModel.userClickedSendBarrage();
+					}
+					return false;
+				});
 
+			}
 		}
 	})
 }
@@ -177,15 +187,42 @@ function buildMainDom(){
 				$span.eq(1).html(d.data.praiseNum + '人认可');
 				$span.eq(2).html(d.data.stepNum + '人呵呵');
 				$('.qa_like').on('click',function(){
-					if(!likeordislike.like){
-						likeordislike.like = true;
-						toSendOperation(1);
+					if(list[0].price == -1 || list[0].price == -1.0 || list[0].price == 0){
+						if(!likeordislike.like){
+							likeordislike.like = true;
+							var p_alert = $('.p-alert2');
+							p_alert.html('您认同了此回答，并让回答价值+0.1元').show().addClass('show');
+							setTimeout(function () {
+								p_alert.hide().removeClass('show');
+							}, 3000);
+							toSendOperation(1);
+						}
+					}else {
+						var p_alert = $('.p-alert2');
+						p_alert.html('悄悄听后才能点哦').show().addClass('show');
+						setTimeout(function () {
+							p_alert.hide().removeClass('show');
+						}, 3000);
 					}
+
 				});
 				$('.qa_dislike').on('click',function(){
-					if(!likeordislike.dislike){
-						likeordislike.dislike = true;
-						toSendOperation(2);
+					if(list[0].price == -1 || list[0].price == -1.0 || list[0].price == 0){
+						if(!likeordislike.dislike){
+							likeordislike.dislike = true;
+							var p_alert = $('.p-alert2');
+							p_alert.html('您呵呵了此回答， 并让回答价值-0.1元').show().addClass('show');
+							setTimeout(function () {
+								p_alert.hide().removeClass('show');
+							}, 3000);
+							toSendOperation(2);
+						}
+					}else {
+						var p_alert = $('.p-alert2');
+						p_alert.html('悄悄听后才能点哦').show().addClass('show');
+						setTimeout(function () {
+							p_alert.hide().removeClass('show');
+						}, 3000);
 					}
 				});
 
@@ -204,7 +241,16 @@ function buildMainDom(){
 					$('.qa_list01').html(dom);
 					$('.qa_list01 li').eq(0).append('<a class="qa_hide_more" href="javascript:;">【更多】</a>').addClass('qa_a_head').find('.qa_re').append('<img src="images/qa-used.png" alt="" class="qa_a_used">');
 					$('.qa_hide_more').on('click',function(){
-						$('.qa_a_main').removeClass('qa_hide');
+						if(list[0].price == -1 || list[0].price == -1.0 || list[0].price == 0){
+							$('.qa_a_main').removeClass('qa_hide');
+						}else {
+							var p_alert = $('.p-alert2');
+							p_alert.html('悄悄听后才能点哦').show().addClass('show');
+							setTimeout(function () {
+								p_alert.hide().removeClass('show');
+							}, 3000);
+						}
+
 					})
 				}
 				toPlayVioce();
