@@ -129,6 +129,16 @@ function getHotAndNew(type){
 					$('.p-btmfix-s-1').show();
 					$('.p-wrap').prepend('<div style="width: 100%; height: 50px;"></div>');
 				}
+				if(token == ''){
+					$('a').unbind('click').on('click', function () {
+						// console.log('未登录');
+						if(OCModel && OCModel.userClickedSendBarrage) {
+							OCModel.userClickedSendBarrage();
+						}
+						return false;
+					});
+
+				}
 			}
 		},
 		error: function (e) {
@@ -176,19 +186,18 @@ $(function() {
 		var dataType = $(this).attr('data-type');
 		$(this).addClass('cur');          //选中
 		if(dataType == 1){              //判断热门
-			if(HotTag) {
-				$('.list-new').addClass('none');
-				$('.list-hot').removeClass('none');
-			}else {
+			if(!HotTag) {
 				getHotAndNew(dataType);
 			}
+			$('.list-new').addClass('none');
+			$('.list-hot').removeClass('none');
+
 		}else if (dataType == 0) {          //判断最新
-			if(NewTag) {
-				$('.list-hot').addClass('none');
-				$('.list-new').removeClass('none');
-			}else {
+			if(!NewTag) {
 				getHotAndNew(dataType);
 			}
+			$('.list-hot').addClass('none');
+			$('.list-new').removeClass('none');
 		}
 	});
 

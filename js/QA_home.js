@@ -142,7 +142,7 @@ function getUserInfo(){
 				$('.qa_q_btn').on('click',function(){
 					var text = $('.qa_textarea').val();
 					if(OCModel && OCModel.someOneAskedMeAQuestion) {
-						var testJson = {'text': text};
+						var testJson = {'text': text, 'uid': uid};
 						OCModel.someOneAskedMeAQuestion(JSON.stringify(testJson));
 					}
 					//跳支付 并把输入内容传给app
@@ -158,7 +158,7 @@ function getUserInfo(){
 $(function(){
 	getUserInfo();
 	getList();
-	//如果app外 跳下载 
+	//如果app外 跳下载
 	if (isnotapp) {
 		$('a').attr('href',downloadUrl);
 		$('.p-btmfix-s-1').show();

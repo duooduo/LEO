@@ -114,6 +114,7 @@ function toSendOperation(type) {
 }
 
 function toSelectRandom(){
+	var dataJson = {};
 	$.ajax({
 		url: location.protocol + '//' + location.host + '/voice/selectRandom?token=' + token,
 		// url: './js/data/selectRandom.json',
@@ -121,7 +122,7 @@ function toSelectRandom(){
 		dataType: 'json',
 		// headers: {"Content-type": "application/json;charset=UTF-8"},
 		contentType: 'application/json;charset=UTF-8',
-		// data: ,
+		data: JSON.stringify(dataJson),
 		success: function (d) {
 			console.log(d);
 			if(d.code == 0) {
@@ -148,7 +149,7 @@ function toSelectRandom(){
 			}
 			if(token == ''){
 				$('a').unbind('click').on('click', function () {
-					console.log('未登录');
+					// console.log('未登录');
 					if(OCModel && OCModel.userClickedSendBarrage) {
 						OCModel.userClickedSendBarrage();
 					}
@@ -263,8 +264,8 @@ function buildMainDom(){
 				$('.qa_a_info .qa_infoMain').attr('href','QA_home.html?token='+token+'&uid=' + firstData.listenerId);
 				$('.qa_info_btn').on('click',function(){
 					if(OCModel && OCModel.rewordForTheSecondAskDetail) {
-						// var TopicInfo = {'topicId': topicId};
-						OCModel.rewordForTheSecondAskDetail();
+						var VoiceInfo = {'voiceId': firstData.voiceId};
+						OCModel.rewordForTheSecondAskDetail(JSON.stringify(VoiceInfo));
 					}
 				});
 

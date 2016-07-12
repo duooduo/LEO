@@ -54,7 +54,7 @@ $(function(){
 				$('.topic-box').find('h3').html(data.title);
 				$('.topic-txt').find('p').html(data.content);
 
-				$('.p-btmfix a').attr('href','user_center.html?token='+token+'&uid='+uid);
+				$('.p-btmfix a').attr('href','QA_home.html?token='+token+'&uid='+uid);
 				//如果app外 跳下载
 				if (isnotapp) {
 					$('a').attr('href',downloadUrl);
