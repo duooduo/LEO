@@ -106,7 +106,7 @@ function getList(){
 				for(var i=0; i<d.data.list.length; i++){
 					var index = d.data.list[i];
 					var realPrice = canListen(index);
-					dom += '<li><a data-worryId="'+ index.worryId +'" data-voiceId="'+ index.voiceId +'" data-price="'+ index.price +'" href="QA_a_detail.html?token='+ token +'&worryId='+ index.worryId + '"><div class="qa_issue">'+ index.text +'</div><div class="qa_re"><div class="qa_listenBox"><div class="qa_listen">'+ realPrice +'</div></div><div class="qa_face"><img src="'+ index.listenerHead +'" alt=""></div><div class="qa_renke">'+ index.praiseNum +'人认可</div><div class="qa_tingguo">'+ index.listenNum +'人听过</div></div></a></li>';
+					dom += '<li><a data-worryId="'+ index.worryId +'" data-voiceId="'+ index.voiceId +'" data-price="'+ index.price +'" href="QA_a_detail.html?token='+ token +'&worryId='+ index.worryId + '&uid='+ uid + '"><div class="qa_issue">'+ index.text +'</div><div class="qa_re"><div class="qa_listenBox"><div class="qa_listen">'+ realPrice +'</div></div><div class="qa_face"><img src="'+ index.listenerHead +'" alt=""></div><div class="qa_renke">'+ index.praiseNum +'人认可</div><div class="qa_tingguo">'+ index.listenNum +'人听过</div></div></a></li>';
 				}
 				$('.qa_list01').html(dom);
 				// toPlayVioce();

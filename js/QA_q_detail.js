@@ -96,7 +96,10 @@ function canListen(index) {
 }
 
 function getHotAndNew(type){
-	var selectHotAndNewJson = {"topicId": topicId,"type": type};
+	var selectHotAndNewJson = {"topicId": topicId,"type": type,"uid": uid};
+	if(token == ''){
+		selectHotAndNewJson["uid"] = 0;
+	}
 	$.ajax({
 		url: location.protocol + '//' + location.host + '/voice/selectHotAndNew?token=' + token,
 		// url: './js/data/selectHotAndNew.json',
@@ -113,7 +116,7 @@ function getHotAndNew(type){
 				for(var i=0; i<listArr.length; i++) {
 					var index = listArr[i];
 					var realPrice = canListen(index);
-					dom += '<li><a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" href="QA_a_detail.html?token='+ token +'&topicId='+ topicId +'&voiceId='+ index.voiceId +'"><div class="qa_name">'+ index.listenerNickName +'<em>|</em>'+ index.listenerProfession +'</div><div class="qa_re"><div class="qa_listenBox"><div class="qa_listen">'+ realPrice +'</div><span>'+ index.voiceTime +'&prime;&prime;</span></div><div class="qa_face"><img src="'+ index.listenerHead +'" alt=""></div><div class="qa_renke">'+ index.listenNum +'人认可</div><div class="qa_tingguo">'+ index.praiseNum +'人听过</div></div></a></li>';
+					dom += '<li><a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" href="QA_a_detail.html?token='+ token +'&topicId='+ topicId +'&voiceId='+ index.voiceId +'&uid='+ uid +'"><div class="qa_name">'+ index.listenerNickName +'<em>|</em>'+ index.listenerProfession +'</div><div class="qa_re"><div class="qa_listenBox"><div class="qa_listen">'+ realPrice +'</div><span>'+ index.voiceTime +'&prime;&prime;</span></div><div class="qa_face"><img src="'+ index.listenerHead +'" alt=""></div><div class="qa_renke">'+ index.listenNum +'人认可</div><div class="qa_tingguo">'+ index.praiseNum +'人听过</div></div></a></li>';
 				}
 				if(type == 1) {
 					$('.list-hot').html(dom);
@@ -148,7 +151,10 @@ function getHotAndNew(type){
 }
 
 function buildMainDom(){
-	var topicIdJson = {"topicId": topicId};
+	var topicIdJson = {"topicId": topicId,"uid": uid};
+	if(token == ''){
+		topicIdJson["uid"] = 0;
+	}
 	$.ajax({
 		url: location.protocol + '//' + location.host + '/voice/selectSymposium?token=' + token,
 		// url: './js/data/selectHotAndNew.json',

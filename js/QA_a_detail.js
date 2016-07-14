@@ -22,6 +22,7 @@ var worryId = getQueryStringArgs().worryId == undefined? '' : getQueryStringArgs
 var topicId = getQueryStringArgs().topicId == undefined? '' : getQueryStringArgs().topicId;
 var voiceId = getQueryStringArgs().voiceId == undefined? '' : getQueryStringArgs().voiceId;
 var likeordislike = {'like': false, 'dislike': false};
+var voiceIdJsonList = {};
 
 //url地址段最后带参数，例如：'?shareId=10001'
 //获取查询字符串参数
@@ -55,11 +56,49 @@ function pauseAllAudio(that){
 	});
 }
 
+function toFreeListenNum(willVoiceId){
+	if(voiceIdJsonList[willVoiceId] != willVoiceId){
+		var willVoiceIdJson = {"voiceId":willVoiceId,"uid": uid};
+		if(token == ''){
+			willVoiceIdJson["uid"] = 0;
+		}
+		$.ajax({
+			url: location.protocol + '//' + location.host + '/voice/free_listen_num?token=' + token,
+			// url: './js/data/operation.json',
+			type: 'POST',
+			dataType: 'json',
+			// headers: {"Content-type": "application/json;charset=UTF-8"},
+			contentType: 'application/json;charset=UTF-8',
+			data: JSON.stringify(willVoiceIdJson),
+			success: function (d) {
+				console.log(d);
+				voiceIdJsonList[willVoiceId] = willVoiceId;
+			},
+			error: function(e){
+				console.log(e);
+			}
+		})
+	}
+}
+
 function toPlayVioce(){
 	$('.qa_listen').on('click',function(){
 		var willCost = $(this).attr('data-price');
+		var willVoiceId = $(this).attr('data-voiceId');
 		var that = this;
-		if(willCost == 0 || willCost == -1 || willCost == -1.0){
+		if(willCost == 0){
+			// console.log(thatIndex);
+			pauseAllAudio(that);
+			var audio = $(this).next().get(0);
+			// console.log($audio);
+			// $audio.get(0).play();
+			if(audio.paused){
+				audio.play();//播放
+			}else if(audio.played){
+				audio.pause();//暂停
+			}
+			toFreeListenNum(willVoiceId);
+		}else if(willCost == -1 || willCost == -1.0){
 			// console.log(thatIndex);
 			pauseAllAudio(that);
 			var audio = $(this).next().get(0);
@@ -90,12 +129,19 @@ function canListen(index) {
 		return '限时免费听';
 	}else{
 		return (price + '元悄悄听');
-
 	}
 }
 
-function toSendOperation(type) {
-	var toSendOperationJson = {"voiceId": voiceId,"type": type};
+function toSendOperation(type,dataVoiceId) {
+	var toSendOperationJson = {};
+	if(voiceId == ''){
+		toSendOperationJson = {"voiceId": dataVoiceId,"type": type,"uid": uid};
+	}else {
+		toSendOperationJson = {"voiceId": voiceId,"type": type,"uid": uid};
+	}
+	if(token == ''){
+		toSendOperationJson['uid'] = 0;
+	}
 	$.ajax({
 		url: location.protocol + '//' + location.host + '/voice/operation?token=' + token,
 		// url: './js/data/operation.json',
@@ -114,7 +160,10 @@ function toSendOperation(type) {
 }
 
 function toSelectRandom(){
-	var dataJson = {};
+	var dataJson = {"uid": uid};
+	if(token == ''){
+		dataJson["uid"] = 0;
+	}
 	$.ajax({
 		url: location.protocol + '//' + location.host + '/voice/selectRandom?token=' + token,
 		// url: './js/data/selectRandom.json',
@@ -164,9 +213,12 @@ function toSelectRandom(){
 function buildMainDom(){
 	var idJson = {};
 	if(worryId == '' && topicId != ''){
-		idJson = {"topicId": topicId,"voiceId": voiceId};
+		idJson = {"topicId": topicId,"voiceId": voiceId,"uid": uid};
 	}else if(worryId != '' && topicId == ''){
-		idJson = {"worryId": worryId};
+		idJson = {"worryId": worryId,"uid": uid};
+	}
+	if(token == ''){
+		idJson["uid"] = 0;
 	}
 	// console.log(idJson)
 	$.ajax({
@@ -197,7 +249,7 @@ function buildMainDom(){
 							setTimeout(function () {
 								p_alert.hide().removeClass('show');
 							}, 3000);
-							toSendOperation(1);
+							toSendOperation(1,firstData.voiceId);
 						}
 					}else {
 						var p_alert = $('.p-alert2');
@@ -217,7 +269,7 @@ function buildMainDom(){
 							setTimeout(function () {
 								p_alert.hide().removeClass('show');
 							}, 3000);
-							toSendOperation(2);
+							toSendOperation(2,firstData.voiceId);
 						}
 					}else {
 						var p_alert = $('.p-alert2');
