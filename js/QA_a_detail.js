@@ -239,8 +239,8 @@ function buildMainDomByWorryId(){
 		success: function (d) {
 			console.log(d);
 			if(d.code == 0){
-				voiceIdJsonList["isOperation"] = d.data.isOperation;
 				var firstData = d.data[0];
+				voiceIdJsonList["isOperation"] = firstData.isOperation;
 				$('.qa_qner .qa_face img').attr('src',firstData.userHead);
 				$('.qa_qner .qa_name').html(firstData.userNickName);
 				$('.qa_qner .qa_price').html('价值￥' + (firstData.acceptMoney == ''? 0:firstData.acceptMoney));
@@ -380,8 +380,8 @@ function buildMainDomByTopicId(){
 		success: function (d) {
 			console.log(d);
 			if(d.code == 0){
-				voiceIdJsonList["isOperation"] = d.data.isOperation;
 				var firstData = d.data[0];
+				voiceIdJsonList["isOperation"] = firstData.isOperation;
 				$('.qa_qner .qa_face img').attr('src',firstData.userHead);
 				$('.qa_qner .qa_name').html(firstData.userNickName);
 				$('.qa_qner .qa_price').html('价值￥' + (firstData.acceptMoney == ''? 0:firstData.acceptMoney));
