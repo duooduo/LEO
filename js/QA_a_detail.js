@@ -152,6 +152,13 @@ function toSendOperation(type,dataVoiceId) {
 		data: JSON.stringify(toSendOperationJson),
 		success: function (d) {
 			console.log(d);
+			if(d.code == 400){
+				var p_alert = $('.p-alert2');
+				p_alert.html(d.message).show().addClass('show');
+				setTimeout(function () {
+					p_alert.hide().removeClass('show');
+				}, 3000);
+			}
 		},
 		error: function(e){
 			console.log(e);
@@ -176,7 +183,7 @@ function toSelectRandom(){
 			console.log(d);
 			if(d.code == 0) {
 				var data = d.data;
-				$('.qa_list02 a').attr('href','QA_a_detail.html?token=' + token + '&worryId=' + data.worryId);
+				$('.qa_list02 a').attr('href','QA_a_detail.html?token=' + token + '&worryId=' + data.worryId + '&uid=' + uid);
 				$('.qa_list02 p').html(data.text);
 				$('.qa_list02 .qa_name em').html(data.listenerNickName);
 				$('.qa_list02 .qa_name i').html(data.listenerProfession);
@@ -210,12 +217,12 @@ function toSelectRandom(){
 	})
 }
 
-function buildMainDom(){
+function buildMainDomByWorryId(){
 	var idJson = {};
 	if(worryId == '' && topicId != ''){
 		idJson = {"topicId": topicId,"voiceId": voiceId,"uid": uid};
 	}else if(worryId != '' && topicId == ''){
-		idJson = {"worryId": worryId,"uid": uid};
+		idJson = {"worryId": worryId,"voiceId": voiceId,"uid": uid};
 	}
 	if(token == ''){
 		idJson["uid"] = 0;
@@ -232,9 +239,10 @@ function buildMainDom(){
 		success: function (d) {
 			console.log(d);
 			if(d.code == 0){
+				voiceIdJsonList["isOperation"] = d.data.isOperation;
 				var firstData = d.data[0];
-				$('.qa_qner .qa_face img').attr('src',firstData.listenerHead);
-				$('.qa_qner .qa_name').html(firstData.listenerNickName);
+				$('.qa_qner .qa_face img').attr('src',firstData.userHead);
+				$('.qa_qner .qa_name').html(firstData.userNickName);
 				$('.qa_qner .qa_price').html('价值￥' + (firstData.acceptMoney == ''? 0:firstData.acceptMoney));
 				var $span = $('.qa_bar .fr span');
 				$span.eq(0).html(firstData.listenNum + '人听过');
@@ -242,14 +250,20 @@ function buildMainDom(){
 				$span.eq(2).html(firstData.stepNum + '人呵呵');
 				$('.qa_like').on('click',function(){
 					if(firstData.price == -1 || firstData.price == -1.0 || firstData.price == 0){
-						if(!likeordislike.like){
-							likeordislike.like = true;
+						if(voiceIdJsonList.isOperation == 0){
+							voiceIdJsonList.isOperation = 1;
 							var p_alert = $('.p-alert2');
 							p_alert.html('您认同了此回答，并让回答价值+0.1元').show().addClass('show');
 							setTimeout(function () {
 								p_alert.hide().removeClass('show');
 							}, 3000);
 							toSendOperation(1,firstData.voiceId);
+						}else {
+							var p_alert = $('.p-alert2');
+							p_alert.html('您已经表过态了').show().addClass('show');
+							setTimeout(function () {
+								p_alert.hide().removeClass('show');
+							}, 3000);
 						}
 					}else {
 						var p_alert = $('.p-alert2');
@@ -262,14 +276,20 @@ function buildMainDom(){
 				});
 				$('.qa_dislike').on('click',function(){
 					if(firstData.price == -1 || firstData.price == -1.0 || firstData.price == 0){
-						if(!likeordislike.dislike){
-							likeordislike.dislike = true;
+						if(voiceIdJsonList.isOperation == 0){
+							voiceIdJsonList.isOperation = 1;
 							var p_alert = $('.p-alert2');
 							p_alert.html('您呵呵了此回答， 并让回答价值-0.1元').show().addClass('show');
 							setTimeout(function () {
 								p_alert.hide().removeClass('show');
 							}, 3000);
 							toSendOperation(2,firstData.voiceId);
+						}else {
+							var p_alert = $('.p-alert2');
+							p_alert.html('您已经表过态了').show().addClass('show');
+							setTimeout(function () {
+								p_alert.hide().removeClass('show');
+							}, 3000);
 						}
 					}else {
 						var p_alert = $('.p-alert2');
@@ -280,10 +300,14 @@ function buildMainDom(){
 					}
 				});
 
+				var qaUsedImg = '';
 				var list = d.data;
 				if(list.length == 1){
 					var realPrice = canListen(list[0]);
-					var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].text +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><img src="'+ list[0].listenerHead +'" alt=""></div><img src="images/qa-used.png" alt="" class="qa_a_used"></div></li>';
+					if(list[0].IsAgree == 1){
+						qaUsedImg = '<img src="images/qa-used.png" alt="" class="qa_a_used">';
+					}
+					var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].text +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><img src="'+ list[0].listenerHead +'" alt=""></div>'+ qaUsedImg +'</div></li>';
 					$('.qa_list01').html(li);
 				}else {
 					var dom ='';
@@ -293,7 +317,10 @@ function buildMainDom(){
 						dom += '<li><div class="qa_issue">'+ index.text +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ index.voiceTime +'&prime;&prime;</span><a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><img src="'+ index.listenerHead +'" alt=""></div></div></li>';
 					}
 					$('.qa_list01').html(dom);
-					$('.qa_list01 li').eq(0).append('<a class="qa_hide_more" href="javascript:;">【更多】</a>').addClass('qa_a_head').find('.qa_re').append('<img src="images/qa-used.png" alt="" class="qa_a_used">');
+					if(list[0].IsAgree == 1){
+						qaUsedImg = '<img src="images/qa-used.png" alt="" class="qa_a_used">';
+					}
+					$('.qa_list01 li').eq(0).append('<a class="qa_hide_more" href="javascript:;">【更多】</a>').addClass('qa_a_head').find('.qa_re').append(qaUsedImg);
 					$('.qa_hide_more').on('click',function(){
 						if(list[0].price == -1 || list[0].price == -1.0 || list[0].price == 0){
 							$('.qa_a_main').removeClass('qa_hide');
@@ -331,8 +358,156 @@ function buildMainDom(){
 	})
 }
 
+function buildMainDomByTopicId(){
+	var idJson = {};
+	if(worryId == '' && topicId != ''){
+		idJson = {"topicId": topicId,"voiceId": voiceId,"uid": uid};
+	}else if(worryId != '' && topicId == ''){
+		idJson = {"worryId": worryId,"voiceId": voiceId,"uid": uid};
+	}
+	if(token == ''){
+		idJson["uid"] = 0;
+	}
+	// console.log(idJson)
+	$.ajax({
+		url: location.protocol + '//' + location.host + '/voice/selectInfo?token=' + token,
+		// url: './js/data/selectInfo.json',
+		type: 'POST',
+		dataType: 'json',
+		// headers: {"Content-type": "application/json;charset=UTF-8"},
+		contentType: 'application/json;charset=UTF-8',
+		data: JSON.stringify(idJson),
+		success: function (d) {
+			console.log(d);
+			if(d.code == 0){
+				voiceIdJsonList["isOperation"] = d.data.isOperation;
+				var firstData = d.data[0];
+				$('.qa_qner .qa_face img').attr('src',firstData.userHead);
+				$('.qa_qner .qa_name').html(firstData.userNickName);
+				$('.qa_qner .qa_price').html('价值￥' + (firstData.acceptMoney == ''? 0:firstData.acceptMoney));
+				var $span = $('.qa_bar .fr span');
+				$span.eq(0).html(firstData.listenNum + '人听过');
+				$span.eq(1).html(firstData.praiseNum + '人认可');
+				$span.eq(2).html(firstData.stepNum + '人呵呵');
+				$('.qa_like').on('click',function(){
+					if(firstData.price == -1 || firstData.price == -1.0 || firstData.price == 0){
+						if(voiceIdJsonList.isOperation == 0){
+							voiceIdJsonList.isOperation = 1;
+							var p_alert = $('.p-alert2');
+							p_alert.html('您认同了此回答，并让回答价值+0.1元').show().addClass('show');
+							setTimeout(function () {
+								p_alert.hide().removeClass('show');
+							}, 3000);
+							toSendOperation(1,firstData.voiceId);
+						}else {
+							var p_alert = $('.p-alert2');
+							p_alert.html('您已经表过态了').show().addClass('show');
+							setTimeout(function () {
+								p_alert.hide().removeClass('show');
+							}, 3000);
+						}
+					}else {
+						var p_alert = $('.p-alert2');
+						p_alert.html('悄悄听后才能点哦').show().addClass('show');
+						setTimeout(function () {
+							p_alert.hide().removeClass('show');
+						}, 3000);
+					}
+
+				});
+				$('.qa_dislike').on('click',function(){
+					if(firstData.price == -1 || firstData.price == -1.0 || firstData.price == 0){
+						if(voiceIdJsonList.isOperation == 0){
+							voiceIdJsonList.isOperation = 1;
+							var p_alert = $('.p-alert2');
+							p_alert.html('您呵呵了此回答， 并让回答价值-0.1元').show().addClass('show');
+							setTimeout(function () {
+								p_alert.hide().removeClass('show');
+							}, 3000);
+							toSendOperation(2,firstData.voiceId);
+						}else {
+							var p_alert = $('.p-alert2');
+							p_alert.html('您已经表过态了').show().addClass('show');
+							setTimeout(function () {
+								p_alert.hide().removeClass('show');
+							}, 3000);
+						}
+					}else {
+						var p_alert = $('.p-alert2');
+						p_alert.html('悄悄听后才能点哦').show().addClass('show');
+						setTimeout(function () {
+							p_alert.hide().removeClass('show');
+						}, 3000);
+					}
+				});
+
+				var qaUsedImg = '';
+				var list = d.data;
+				if(list.length == 1){
+					var realPrice = canListen(list[0]);
+					if(list[0].IsAgree == 1){
+						qaUsedImg = '<img src="images/qa-used.png" alt="" class="qa_a_used">';
+					}
+					var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].title +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><img src="'+ list[0].listenerHead +'" alt=""></div>'+ qaUsedImg +'</div></li>';
+					$('.qa_list01').html(li);
+				}else {
+					var dom ='';
+					for(var i=0; i<list.length; i++){
+						var index = list[i];
+						var realPrice = canListen(index);
+						dom += '<li><div class="qa_issue">'+ index.title +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ index.voiceTime +'&prime;&prime;</span><a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><img src="'+ index.listenerHead +'" alt=""></div></div></li>';
+					}
+					$('.qa_list01').html(dom);
+					if(list[0].IsAgree == 1){
+						qaUsedImg = '<img src="images/qa-used.png" alt="" class="qa_a_used">';
+					}
+					$('.qa_list01 li').eq(0).append('<a class="qa_hide_more" href="javascript:;">【更多】</a>').addClass('qa_a_head').find('.qa_re').append(qaUsedImg);
+					$('.qa_hide_more').on('click',function(){
+						if(list[0].price == -1 || list[0].price == -1.0 || list[0].price == 0){
+							$('.qa_a_main').removeClass('qa_hide');
+						}else {
+							var p_alert = $('.p-alert2');
+							p_alert.html('悄悄听后才能点哦').show().addClass('show');
+							setTimeout(function () {
+								p_alert.hide().removeClass('show');
+							}, 3000);
+						}
+
+					})
+				}
+				toPlayVioce();
+
+				//倾听者信息
+				$('.qa_a_info .qa_face img').attr('src',firstData.listenerHead);
+				$('.qa_a_info .ovh h3').html(firstData.listenerNickName);
+				$('.qa_a_info .ovh p').html(firstData.listenerProfession);
+				$('.qa_a_info .qa_infoMain').attr('href','QA_home.html?token='+token+'&uid=' + firstData.listenerId);
+				$('.qa_info_btn').on('click',function(){
+					if(OCModel && OCModel.rewordForTheSecondAskDetail) {
+						var VoiceInfo = {'voiceId': firstData.voiceId};
+						OCModel.rewordForTheSecondAskDetail(JSON.stringify(VoiceInfo));
+					}
+				});
+
+				toSelectRandom();
+
+			}
+		},
+		error: function(e){
+			console.log(e);
+		}
+	})
+}
+
+
 $(function() {
-	buildMainDom();
+
+	if(worryId == '' && topicId != ''){
+		buildMainDomByTopicId();
+	}else if(worryId != '' && topicId == ''){
+		buildMainDomByWorryId();
+	}
+
 
 
 
