@@ -21,6 +21,7 @@ var keyId = getQueryStringArgs().keyId == undefined? '' : getQueryStringArgs().k
 var worryId = getQueryStringArgs().worryId == undefined? '' : getQueryStringArgs().worryId;
 var topicId = getQueryStringArgs().topicId == undefined? '' : getQueryStringArgs().topicId;
 var voiceId = getQueryStringArgs().voiceId == undefined? '' : getQueryStringArgs().voiceId;
+var IsAgree = getQueryStringArgs().IsAgree == undefined? '' : getQueryStringArgs().IsAgree;
 var likeordislike = {'like': false, 'dislike': false};
 var voiceIdJsonList = {};
 
@@ -304,7 +305,7 @@ function buildMainDomByWorryId(){
 				var list = d.data;
 				if(list.length == 1){
 					var realPrice = canListen(list[0]);
-					if(list[0].IsAgree == 1){
+					if(IsAgree == 1){
 						qaUsedImg = '<img src="images/qa-used.png" alt="" class="qa_a_used">';
 					}
 					var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].text +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><img src="'+ list[0].listenerHead +'" alt=""></div>'+ qaUsedImg +'</div></li>';
@@ -317,7 +318,7 @@ function buildMainDomByWorryId(){
 						dom += '<li><div class="qa_issue">'+ index.text +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ index.voiceTime +'&prime;&prime;</span><a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><img src="'+ index.listenerHead +'" alt=""></div></div></li>';
 					}
 					$('.qa_list01').html(dom);
-					if(list[0].IsAgree == 1){
+					if(IsAgree == 1){
 						qaUsedImg = '<img src="images/qa-used.png" alt="" class="qa_a_used">';
 					}
 					$('.qa_list01 li').eq(0).append('<a class="qa_hide_more" href="javascript:;">【更多】</a>').addClass('qa_a_head').find('.qa_re').append(qaUsedImg);
@@ -445,7 +446,7 @@ function buildMainDomByTopicId(){
 				var list = d.data;
 				if(list.length == 1){
 					var realPrice = canListen(list[0]);
-					if(list[0].IsAgree == 1){
+					if(IsAgree == 1){
 						qaUsedImg = '<img src="images/qa-used.png" alt="" class="qa_a_used">';
 					}
 					var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].title +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><img src="'+ list[0].listenerHead +'" alt=""></div>'+ qaUsedImg +'</div></li>';
@@ -458,7 +459,7 @@ function buildMainDomByTopicId(){
 						dom += '<li><div class="qa_issue">'+ index.title +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ index.voiceTime +'&prime;&prime;</span><a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><img src="'+ index.listenerHead +'" alt=""></div></div></li>';
 					}
 					$('.qa_list01').html(dom);
-					if(list[0].IsAgree == 1){
+					if(IsAgree == 1){
 						qaUsedImg = '<img src="images/qa-used.png" alt="" class="qa_a_used">';
 					}
 					$('.qa_list01 li').eq(0).append('<a class="qa_hide_more" href="javascript:;">【更多】</a>').addClass('qa_a_head').find('.qa_re').append(qaUsedImg);
