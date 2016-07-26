@@ -184,7 +184,7 @@ function toSelectRandom(){
 			console.log(d);
 			if(d.code == 0) {
 				var data = d.data;
-				$('.qa_list02 a').attr('href','QA_a_detail.html?token=' + token + '&worryId=' + data.worryId + '&uid=' + uid + '&voiceId=' + data.voiceId);
+				$('.qa_list02 a').attr('href','QA_a_detail.html?token=' + token + '&worryId=' + data.worryId + '&uid=' + uid + '&voiceId=' + data.voiceId + '&IsAgree=1');
 				$('.qa_list02 p').html(data.text);
 				$('.qa_list02 .qa_name em').html(data.listenerNickName);
 				$('.qa_list02 .qa_name i').html(data.listenerProfession);
