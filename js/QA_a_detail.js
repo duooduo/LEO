@@ -521,13 +521,26 @@ function buildMainDomByIsNotAgree(){
 		data: JSON.stringify(idJson),
 		success: function (d) {
 			console.log(d);
-			if (d.code == 0) {
+			if (d.code == 0 && worryId == '' && topicId != '') {
 				var firstData = d.data[0];
 				$('.qa_qner .qa_face img').attr('src', firstData.userHead);
 				$('.qa_qner .qa_name').html(firstData.userNickName);
 				var list = d.data;
 				var realPrice = canListen(list[0]);
 				var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].title +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><img src="'+ list[0].listenerHead +'" alt=""></div></div></li>';
+				$('.qa_list01').html(li);
+				toPlayVioce();
+				$('.qa_bar').hide();
+				$('.qa_a_info').hide();
+				$('.qa_tit02').hide();
+				$('.qa_list02').hide();
+			}else if(d.code == 0 && worryId != '' && topicId == '') {
+				var firstData = d.data[0];
+				$('.qa_qner .qa_face img').attr('src', firstData.userHead);
+				$('.qa_qner .qa_name').html(firstData.userNickName);
+				var list = d.data;
+				var realPrice = canListen(list[0]);
+				var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].text +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><img src="'+ list[0].listenerHead +'" alt=""></div></div></li>';
 				$('.qa_list01').html(li);
 				toPlayVioce();
 				$('.qa_bar').hide();
