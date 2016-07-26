@@ -81,7 +81,7 @@ function canListen(index) {
 	}else if(price == 0) {
 		return '限时免费听';
 	}else{
-		return (price + '元悄悄听');
+		return ((parseInt(price)/100) + '元悄悄听');
 		
 	}
 }
@@ -137,7 +137,7 @@ function getUserInfo(){
 				$('.qa_face img').attr('src',data.head);
 				$('.qa_name').html(data.name);
 				$('.qa_infoTXT').html(data.profile);
-				$('.qa_price').html('￥' + data.price);
+				$('.qa_price').html('￥' + (parseInt(data.price)/100));
 				$('.qa_textarea').attr('placeholder','向'+ data.name +'提问，等ta语音回答，超过48小时未回答，将全额退款，被回答后可免费追问');
 				$('.qa_q_btn').on('click',function(){
 					var text = $('.qa_textarea').val();

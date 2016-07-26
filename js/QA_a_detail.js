@@ -113,7 +113,7 @@ function toPlayVioce(){
 		}else {
 			pauseAllAudio(that);
 			var thisVoiceId = $(this).attr('data-voiceId');
-			var thisPrice = $(this).attr('data-price');
+			var thisPrice = parseInt($(this).attr('data-price'))/100;
 			if(OCModel && OCModel.payForVoice) {
 				var voiceInfo = {'voiceId': thisVoiceId,'price': thisPrice};
 				OCModel.payForVoice(JSON.stringify(voiceInfo));
@@ -129,7 +129,7 @@ function canListen(index) {
 	}else if(price == 0) {
 		return '限时免费听';
 	}else{
-		return (price + '元悄悄听');
+		return ((parseInt(price)/100) + '元悄悄听');
 	}
 }
 
@@ -244,7 +244,7 @@ function buildMainDomByWorryId(){
 				voiceIdJsonList["isOperation"] = firstData.isOperation;
 				$('.qa_qner .qa_face img').attr('src',firstData.userHead);
 				$('.qa_qner .qa_name').html(firstData.userNickName);
-				$('.qa_qner .qa_price').html('价值￥' + (firstData.acceptMoney == ''? 0:firstData.acceptMoney));
+				$('.qa_qner .qa_price').html('价值￥' + (firstData.acceptMoney == ''? 0:(parseInt(firstData.acceptMoney)/100)));
 				var $span = $('.qa_bar .fr span');
 				$span.eq(0).html(firstData.listenNum + '人听过');
 				$span.eq(1).html(firstData.praiseNum + '人认可');
@@ -385,7 +385,7 @@ function buildMainDomByTopicId(){
 				voiceIdJsonList["isOperation"] = firstData.isOperation;
 				$('.qa_qner .qa_face img').attr('src',firstData.userHead);
 				$('.qa_qner .qa_name').html(firstData.userNickName);
-				$('.qa_qner .qa_price').html('价值￥' + (firstData.acceptMoney == ''? 0:firstData.acceptMoney));
+				$('.qa_qner .qa_price').html('价值￥' + (firstData.acceptMoney == ''? 0:(parseInt(firstData.acceptMoney)/100)));
 				var $span = $('.qa_bar .fr span');
 				$span.eq(0).html(firstData.listenNum + '人听过');
 				$span.eq(1).html(firstData.praiseNum + '人认可');

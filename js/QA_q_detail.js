@@ -90,7 +90,7 @@ function canListen(index) {
 	}else if(price == 0) {
 		return '限时免费听';
 	}else{
-		return (price + '元悄悄听');
+		return ((parseInt(price)/100) + '元悄悄听');
 		
 	}
 }
