@@ -323,6 +323,7 @@ function ajaxBuildDom() {
 		contentType: 'application/json;charset=UTF-8',
 		data: JSON.stringify(shareIdJson),
 		success: function(d){
+			console.log(d);
 			if (d.code == 0) {
 				var data = d.data;
 				$('.mind-title').html(data.title); //标题
@@ -330,7 +331,12 @@ function ajaxBuildDom() {
 				$('.mind-txt').html(data.content); //描述
 				$('.mind-award').find('em').html(data.rewardNum); //打赏人数
 				$('.mind-talkShow').html(data.talkShow);
-				$('.mind-award .p-btn').html(data.buttonTitle);
+				$('.mind-award .p-btn').html(data.buttonTitle).on('click',function(){//todo
+					if(OCModel && OCModel.clickHotPraise) {
+						var Info = {'shareId': shareId};
+						OCModel.clickHotPraise(JSON.stringify(Info));
+					}
+				});
 				$('.mind-vote h3').html('【'+ data.tellMe +'】');
 				$('#mind-up-btn').html(data.likeText);
 				$('#mind-down-btn').html(data.stepText);
