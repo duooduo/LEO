@@ -114,8 +114,9 @@ function toPlayVioce(){
 			pauseAllAudio(that);
 			var thisVoiceId = $(this).attr('data-voiceId');
 			var thisPrice = parseInt($(this).attr('data-price'))/100;
+			var thisListenerId = $(this).attr('data-listenerId');
 			if(OCModel && OCModel.payForVoice) {
-				var voiceInfo = {'voiceId': thisVoiceId,'price': thisPrice};
+				var voiceInfo = {'voiceId': thisVoiceId,'price': thisPrice,'uid': thisListenerId};
 				OCModel.payForVoice(JSON.stringify(voiceInfo));
 			}
 		}
@@ -344,7 +345,7 @@ function buildMainDomByWorryId(){
 				$('.qa_a_info .qa_infoMain').attr('href','QA_home.html?token='+token+'&uid=' + firstData.listenerId);
 				$('.qa_info_btn').on('click',function(){
 					if(OCModel && OCModel.rewordForTheSecondAskDetail) {
-						var VoiceInfo = {'voiceId': firstData.voiceId};
+						var VoiceInfo = {'voiceId': firstData.voiceId,'uid': firstData.listenerId};
 						OCModel.rewordForTheSecondAskDetail(JSON.stringify(VoiceInfo));
 					}
 				});
