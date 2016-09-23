@@ -18,6 +18,7 @@ var shareId = getQueryStringArgs().shareId == undefined? '' : getQueryStringArgs
 var keyId = getQueryStringArgs().keyId == undefined? '' : getQueryStringArgs().keyId;
 var worryId = getQueryStringArgs().worryId == undefined? '' : getQueryStringArgs().worryId;
 var topicId = getQueryStringArgs().topicId == undefined? '' : getQueryStringArgs().topicId;
+var loginUserId = getQueryStringArgs().loginUserId == undefined? '' : getQueryStringArgs().loginUserId;
 
 //url地址段最后带参数，例如：'?shareId=10001'
 //获取查询字符串参数
@@ -88,7 +89,8 @@ function canListen(index) {
 
 function getList(){
 	var uidJson = {
-		uid: uid
+		uid: uid,
+		loginUserId: loginUserId
 	};
 	$.ajax({
 		url: location.protocol + '//' + location.host + '/listener/listenerQuestion?token=' + token,
@@ -120,7 +122,8 @@ function getList(){
 
 function getUserInfo(){
 	var uidJson = {
-		uid: uid
+		uid: uid,
+		loginUserId: loginUserId
 	};
 	$.ajax({
 		url: location.protocol + '//' + location.host + '/listener/info?token=' + token,

@@ -134,7 +134,7 @@ $(function(){
 					console.log(replySendJson);
 				});
 				// 回复评论二级
-				$('.cmt-reply li').on('touchend',function(e){
+				$('.cmt-reply li').on('click',function(e){
 					e.preventDefault();
 					var replycommentId = this.dataset.replycommentid;
 					var toId = this.dataset.id;
@@ -164,7 +164,7 @@ $(function(){
 	});
 
 	// 发送按钮
-	$('#c-sendreply').on('touchend',function(e){
+	$('#c-sendreply').on('click',function(e){
 		e.preventDefault();
 		if(token == ''){
 			if(OCModel && OCModel.userClickedSendBarrage) {

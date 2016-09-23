@@ -69,7 +69,7 @@ $(function(){
 	var worryIdJson = {"worryId" : worryId };
 	$.ajax({
 		url: location.protocol + '//' + location.host + '/worry/forum_list?token=' + token,
-		// url: './js/data/worry_sorrys_data.json',
+		 //url: './js/data/worry_sorrys_data.json',
 		type : 'POST',
 		dataType: 'json',
 		// headers: {"Content-type": "application/json;charset=UTF-8"},
@@ -89,6 +89,7 @@ $(function(){
 					"toNickName": louzhuNickName
 				};
 				console.log(replySendJson);
+				//$('.cmt-head a').attr('href','QA_home.html?token='+token+'&uid=' + louzhuId);	//跳转个人主页
 				$('.cmt-head img').attr('src',data.toHead);  //头像
 				$('.c-landlord h4').prepend(data.toNickName);  //昵称
 				$('.c-landlord p').html(data.textCreateTime);	// 时间?
@@ -129,7 +130,7 @@ $(function(){
 				var data = d.data;*/
 				if(data.list.length == 0) {
 					$('.cmt-main').html('<div class="cmt-box emp"><i class="cmt-empImg"></i><p class="cmt-empP">智慧如你，不想<a class="addcmt" href="javascript:;">发布一点想法</a>吖</p></div>');
-					$('.addcmt').on('touchend',function(e){
+					$('.addcmt').on('click',function(e){
 						e.preventDefault();
 						$('#c-input').focus().val('');
 
@@ -153,7 +154,9 @@ $(function(){
 						}
 						dom += '<div class="cmt-head">' +
 							'<figure>' +
-								'<img src="'+ data.list[i].fromHead +'" alt="">' +
+								//'<a href="QA_home.html?token='+token+'&uid=' + data.list[i].fromId +'">' +
+									'<img src="'+ data.list[i].fromHead +'" alt="">' +
+								//'</a>' +
 							'</figure>' +
 							'<div class="ovh">' +
 								'<h4>'+ data.list[i].fromNickName + louzhustr +'</h4>' +
@@ -177,7 +180,7 @@ $(function(){
 						// if(imgDom != ''){
 						// 	dom += '<ul class="cmt-imgbox">'+imgDom+'</ul>';
 						// }
-						// cmt todo 接口不全sonReply
+						// cmt
 						var son = "";
 						var btnmore = "";
 						var sonLength = data.list[i].sonComment.length;
@@ -218,7 +221,7 @@ $(function(){
 					}
 				});*/
 
-				$('.cmt-zan').on('touchend',function(e){
+				$('.cmt-zan').on('click',function(e){
 					e.preventDefault();
 					var $this = $(this);
 					if(!$this.attr('data-mark')){
@@ -242,7 +245,7 @@ $(function(){
 				});
 
 				// 回复内容
-				$('.c-landlord-text span').on('touchend',function(e){
+				$('.c-landlord-text span').on('click',function(e){
 					e.preventDefault();
 					// var toldUid = $(this).get(0).dataset.id;
 					// var nickname = $(this).get(0).dataset.nickname;
@@ -257,7 +260,7 @@ $(function(){
 					console.log(replySendJson);
 				});
 				// 回复评论一级
-				$('.reply-btn').on('touchend',function(e){
+				$('.reply-btn').on('click',function(e){
 					e.preventDefault();
 					var replycommentId = $(this).get(0).dataset.commentid;
 					var toId = $(this).get(0).dataset.id;
@@ -273,7 +276,7 @@ $(function(){
 					console.log(replySendJson);
 				});
 				// 回复评论二级
-				$('.cmt-reply li').on('touchend',function(e){
+				$('.cmt-reply li').on('click',function(e){
 					e.preventDefault();
 					var replycommentId = this.dataset.replycommentid;
 					var toId = this.dataset.id;
@@ -306,11 +309,11 @@ $(function(){
 					tempImg.remove();
 					$float.show();
 				});
-				$float.on('touchend', function (e) {
+				$float.on('click', function (e) {
 					e.preventDefault();
 					$float.hide();
 				});
-				$float.find('img').on('touchend', function (e) {
+				$float.find('img').on('click', function (e) {
 					e.preventDefault();
 					$float.hide();
 				});
@@ -325,7 +328,7 @@ $(function(){
 	});
 
 	// 发送按钮
-	$('#c-sendreply').on('touchend',function(e){
+	$('#c-sendreply').on('click',function(e){
 		e.preventDefault();
 		if(token == ''){
 			if(OCModel && OCModel.userClickedSendBarrage) {
@@ -353,7 +356,7 @@ $(function(){
 
 				$.ajax({
 					url: location.protocol + '//' + location.host + '/worry/forum_add?token=' + token,
-					// url: './js/data/worry_forumlist_data.json',
+					 //url: './js/data/worry_forumlist_data.json',
 					type: 'POST',
 					dataType: 'json',
 					// headers: {"Content-type": "application/json;charset=UTF-8"},
