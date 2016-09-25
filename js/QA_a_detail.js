@@ -100,6 +100,11 @@ function toPlayVioce(){
 				audio.pause();//暂停
 			}
 			toFreeListenNum(willVoiceId);
+			audio.addEventListener('ended', function () {
+				if(OCModel && OCModel.userDidFinishPlayingTheVoice) {
+					OCModel.userDidFinishPlayingTheVoice();
+				}
+			}, false);
 		}else if(willCost == -1 || willCost == -1.0){
 			// console.log(thatIndex);
 			pauseAllAudio(that);
@@ -111,6 +116,11 @@ function toPlayVioce(){
 			}else if(audio.played){
 				audio.pause();//暂停
 			}
+			audio.addEventListener('ended', function () {
+				if(OCModel && OCModel.userDidFinishPlayingTheVoice) {
+					OCModel.userDidFinishPlayingTheVoice();
+				}
+			}, false);
 		}else {
 			pauseAllAudio(that);
 			var thisVoiceId = $(this).attr('data-voiceId');
@@ -220,6 +230,18 @@ function toSelectRandom(){
 	})
 }
 
+function clickHeadImgToUserCenter(){
+	$('.qa_face').on('click',function(e){
+		e.preventDefault();
+		var userUid = $(this).attr('data-uid');
+		if(OCModel && OCModel.goToPersonalDynamicPage) {
+			var userUidInfo = {'uid': userUid};
+			OCModel.goToPersonalDynamicPage(JSON.stringify(userUidInfo));
+		}
+	})
+}
+
+
 function buildMainDomByWorryId(){
 	var idJson = {};
 	if(worryId == '' && topicId != '' && lqId == ''){
@@ -246,7 +268,8 @@ function buildMainDomByWorryId(){
 			if(d.code == 0){
 				var firstData = d.data[0];
 				voiceIdJsonList["isOperation"] = firstData.isOperation;
-				$('.qa_qner .qa_face a').attr('href','QA_home.html?token='+token+'&uid=' + firstData.userId);
+				//$('.qa_qner .qa_face a').attr('href','QA_home.html?token='+token+'&uid=' + firstData.userId);
+				$('.qa_qner .qa_face').attr('data-uid',firstData.userId);
 				$('.qa_qner .qa_face img').attr('src',firstData.userHead);
 				$('.qa_qner .qa_name').html(firstData.userNickName);
 				$('.qa_qner .qa_price').html('价值￥' + (firstData.acceptMoney == ''? 0:(parseInt(firstData.acceptMoney)/100)));
@@ -313,14 +336,14 @@ function buildMainDomByWorryId(){
 					if(IsAgree == 1){
 						qaUsedImg = '<img src="images/qa-used.png" alt="" class="qa_a_used">';
 					}
-					var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].text +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><a href="QA_home.html?token='+token+'&uid=' + list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""></a></div>'+ qaUsedImg +'</div></li>';
+					var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].text +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face" data-uid="'+ list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""></div>'+ qaUsedImg +'</div></li>';
 					$('.qa_list01').html(li);
 				}else {
 					var dom ='';
 					for(var i=0; i<list.length; i++){
 						var index = list[i];
 						var realPrice = canListen(index);
-						dom += '<li><div class="qa_issue">'+ index.text +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ index.voiceTime +'&prime;&prime;</span><a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><a href="QA_home.html?token='+token+'&uid=' + index.listenerId +'"><img src="'+ index.listenerHead +'" alt=""></a></div></div></li>';
+						dom += '<li><div class="qa_issue">'+ index.text +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ index.voiceTime +'&prime;&prime;</span><a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face" data-uid="'+ index.listenerId +'"><img src="'+ index.listenerHead +'" alt=""></div></div></li>';
 					}
 					$('.qa_list01').html(dom);
 					if(IsAgree == 1){
@@ -343,6 +366,7 @@ function buildMainDomByWorryId(){
 				toPlayVioce();
 
 				//倾听者信息
+				$('.qa_a_info .qa_face').attr('data-uid',firstData.listenerId);
 				$('.qa_a_info .qa_face img').attr('src',firstData.listenerHead);
 				$('.qa_a_info .ovh h3').html(firstData.listenerNickName);
 				$('.qa_a_info .ovh p').html(firstData.listenerProfession);
@@ -355,6 +379,7 @@ function buildMainDomByWorryId(){
 				});
 
 				toSelectRandom();
+				clickHeadImgToUserCenter();
 
 			}
 		},
@@ -390,7 +415,8 @@ function buildMainDomByTopicId(){
 			if(d.code == 0){
 				var firstData = d.data[0];
 				voiceIdJsonList["isOperation"] = firstData.isOperation;
-				$('.qa_qner .qa_face a').attr('href','QA_home.html?token='+token+'&uid=' + firstData.userId);
+				//$('.qa_qner .qa_face a').attr('href','QA_home.html?token='+token+'&uid=' + firstData.userId);
+				$('.qa_a_info .qa_face').attr('data-uid',firstData.userId);
 				$('.qa_qner .qa_face img').attr('src',firstData.userHead);
 				$('.qa_qner .qa_name').html(firstData.userNickName);
 				$('.qa_qner .qa_price').html('价值￥' + (firstData.acceptMoney == ''? 0:(parseInt(firstData.acceptMoney)/100)));
@@ -457,14 +483,14 @@ function buildMainDomByTopicId(){
 					if(IsAgree == 1){
 						qaUsedImg = '<img src="images/qa-used.png" alt="" class="qa_a_used">';
 					}
-					var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].title +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><a href="QA_home.html?token='+token+'&uid=' + list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""></a></div>'+ qaUsedImg +'</div></li>';
+					var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].title +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face" data-uid="'+ list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""></div>'+ qaUsedImg +'</div></li>';
 					$('.qa_list01').html(li);
 				}else {
 					var dom ='';
 					for(var i=0; i<list.length; i++){
 						var index = list[i];
 						var realPrice = canListen(index);
-						dom += '<li><div class="qa_issue">'+ index.title +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ index.voiceTime +'&prime;&prime;</span><a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><a href="QA_home.html?token='+token+'&uid=' + index.listenerId +'"><img src="'+ index.listenerHead +'" alt=""></a></div></div></li>';
+						dom += '<li><div class="qa_issue">'+ index.title +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ index.voiceTime +'&prime;&prime;</span><a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face" data-uid="'+ index.listenerId +'"><img src="'+ index.listenerHead +'" alt=""></div></div></li>';
 					}
 					$('.qa_list01').html(dom);
 					if(IsAgree == 1){
@@ -487,6 +513,7 @@ function buildMainDomByTopicId(){
 				toPlayVioce();
 
 				//倾听者信息
+				$('.qa_a_info .qa_face').attr('data-uid',firstData.listenerId);
 				$('.qa_a_info .qa_face img').attr('src',firstData.listenerHead);
 				$('.qa_a_info .ovh h3').html(firstData.listenerNickName);
 				$('.qa_a_info .ovh p').html(firstData.listenerProfession);
@@ -499,6 +526,7 @@ function buildMainDomByTopicId(){
 				});
 
 				toSelectRandom();
+				clickHeadImgToUserCenter();
 
 			}
 		},
@@ -533,12 +561,13 @@ function buildMainDomByIsNotAgree(){
 			console.log(d);
 			if (d.code == 0 && worryId == '' && topicId != '' && lqId == '') {
 				var firstData = d.data[0];
-				$('.qa_qner .qa_face a').attr('href','QA_home.html?token='+token+'&uid=' + firstData.userId);
+				//$('.qa_qner .qa_face a').attr('href','QA_home.html?token='+token+'&uid=' + firstData.userId);
+				$('.qa_a_info .qa_face').attr('data-uid',firstData.userId);
 				$('.qa_qner .qa_face img').attr('src', firstData.userHead);
 				$('.qa_qner .qa_name').html(firstData.userNickName);
 				var list = d.data;
 				var realPrice = canListen(list[0]);
-				var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].title +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><a href="QA_home.html?token='+token+'&uid=' + list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""></a></div></div></li>';
+				var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].title +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face" data-uid="'+ list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""></div></div></li>';
 				$('.qa_list01').html(li);
 				toPlayVioce();
 				$('.qa_bar').hide();
@@ -547,12 +576,13 @@ function buildMainDomByIsNotAgree(){
 				$('.qa_list02').hide();
 			}else if(d.code == 0 && worryId != '' && topicId == '' && lqId == '') {
 				var firstData = d.data[0];
-				$('.qa_qner .qa_face a').attr('href','QA_home.html?token='+token+'&uid=' + firstData.userId);
+				//$('.qa_qner .qa_face a').attr('href','QA_home.html?token='+token+'&uid=' + firstData.userId);
+				$('.qa_a_info .qa_face').attr('data-uid',firstData.userId);
 				$('.qa_qner .qa_face img').attr('src', firstData.userHead);
 				$('.qa_qner .qa_name').html(firstData.userNickName);
 				var list = d.data;
 				var realPrice = canListen(list[0]);
-				var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].text +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><a href="QA_home.html?token='+token+'&uid=' + list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""></a></div></div></li>';
+				var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].text +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face" data-uid="'+ list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""></div></div></li>';
 				$('.qa_list01').html(li);
 				toPlayVioce();
 				$('.qa_bar').hide();
@@ -561,12 +591,13 @@ function buildMainDomByIsNotAgree(){
 				$('.qa_list02').hide();
 			}else if(d.code == 0 && worryId == '' && topicId == '' && lqId != '') {
 				var firstData = d.data[0];
-				$('.qa_qner .qa_face a').attr('href','QA_home.html?token='+token+'&uid=' + firstData.userId);
+				//$('.qa_qner .qa_face a').attr('href','QA_home.html?token='+token+'&uid=' + firstData.userId);
+				$('.qa_a_info .qa_face').attr('data-uid',firstData.userId);
 				$('.qa_qner .qa_face img').attr('src', firstData.userHead);
 				$('.qa_qner .qa_name').html(firstData.userNickName);
 				var list = d.data;
 				var realPrice = canListen(list[0]);
-				var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].text +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face"><a href="QA_home.html?token='+token+'&uid=' + list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""></a></div></div></li>';
+				var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].text +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face" data-uid="'+ list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""></div></div></li>';
 				$('.qa_list01').html(li);
 				toPlayVioce();
 				$('.qa_bar').hide();
@@ -574,6 +605,7 @@ function buildMainDomByIsNotAgree(){
 				$('.qa_tit02').hide();
 				$('.qa_list02').hide();
 			}
+			clickHeadImgToUserCenter()
 		}
 	})
 }

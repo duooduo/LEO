@@ -63,6 +63,15 @@ function cutText(text){
 	}
 }
 
+function clickHeadImgToUserCenter(){
+	$('.cmt-head figure').on('click',function(){
+		var userUid = $(this).attr('data-uid');
+		if(OCModel && OCModel.goToPersonalDynamicPage) {
+			var userUidInfo = {'uid': userUid};
+			OCModel.goToPersonalDynamicPage(JSON.stringify(userUidInfo));
+		}
+	})
+}
 
 $(function(){
 	//获取详情
@@ -91,6 +100,7 @@ $(function(){
 				console.log(replySendJson);
 				//$('.cmt-head a').attr('href','QA_home.html?token='+token+'&uid=' + louzhuId);	//跳转个人主页
 				$('.cmt-head img').attr('src',data.toHead);  //头像
+				$('.cmt-head figure').attr('data-uid',louzhuId);    //存id
 				$('.c-landlord h4').prepend(data.toNickName);  //昵称
 				$('.c-landlord p').html(data.textCreateTime);	// 时间?
 
@@ -153,7 +163,7 @@ $(function(){
 							louzhustr = '<i>楼主</i>';
 						}
 						dom += '<div class="cmt-head">' +
-							'<figure>' +
+							'<figure data-uid="'+ data.list[i].fromId +'">' +
 								//'<a href="QA_home.html?token='+token+'&uid=' + data.list[i].fromId +'">' +
 									'<img src="'+ data.list[i].fromHead +'" alt="">' +
 								//'</a>' +
@@ -220,6 +230,8 @@ $(function(){
 						$this.html('[展开]');
 					}
 				});*/
+
+				clickHeadImgToUserCenter();
 
 				$('.cmt-zan').on('click',function(e){
 					e.preventDefault();
