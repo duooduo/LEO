@@ -99,7 +99,8 @@ $(function(){
 				};
 				console.log(replySendJson);
 				//$('.cmt-head a').attr('href','QA_home.html?token='+token+'&uid=' + louzhuId);	//跳转个人主页
-				$('.cmt-head img').attr('src',data.toHead);  //头像
+				$('.cmt-head img').eq(0).attr('src',data.toHead);  //头像
+				$('.cmt-head img').eq(1).attr('src',data.toPendant);  //头像挂件
 				$('.cmt-head figure').attr('data-uid',louzhuId);    //存id
 				$('.c-landlord h4').prepend(data.toNickName);  //昵称
 				$('.c-landlord p').html(data.textCreateTime);	// 时间?
@@ -166,6 +167,7 @@ $(function(){
 							'<figure data-uid="'+ data.list[i].fromId +'">' +
 								//'<a href="QA_home.html?token='+token+'&uid=' + data.list[i].fromId +'">' +
 									'<img src="'+ data.list[i].fromHead +'" alt="">' +
+									'<img src="'+ data.list[i].fromPendant +'" alt="">' +
 								//'</a>' +
 							'</figure>' +
 							'<div class="ovh">' +

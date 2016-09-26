@@ -344,8 +344,9 @@ img.emoji { height: 1em; width: 1em; margin: 0 .05em 0 .1em; vertical-align: -0.
 // --- 评论
 .cmt-wrap { padding-bottom: 10px; background: #fff;}
 .cmt-head { overflow: hidden; padding: 0 50px 0 15px; position: relative;
-	figure { display: block; float: left; width: 40px; height: 40px; padding: 15px 0;
+	figure { display: block; float: left; width: 40px; height: 40px; padding: 15px 0; position: relative;
 		img { width: 100%; height: 100%; border-radius: 50%;}
+		img:nth-of-type(2){ display: block; width: 51px; height: 23px; position: absolute; left: -6px; top: -15px;}
 	}
 	.ovh { overflow: hidden; padding: 15px 0 15px 15px;
 		h4 { height: 23px; line-height: 23px; font-size: 15px; color: #0092ff;
@@ -438,7 +439,7 @@ img.emoji { height: 1em; width: 1em; margin: 0 .05em 0 .1em; vertical-align: -0.
 	.qa_name { padding: 8px 12px; font-size: 12px; color: #666; word-break: break-all;
 		em { padding: 0 3px;}
 	}
-	.qa_re { height: 40px; width: 100%; position: relative;
+	.qa_re { height: 40px; width: 100%; position: relative; padding-top: 10px;
 		.qa_listenBox { width: 50%; padding: 0 0 0 72px;
 			span { float: right; width: 45px; line-height: 40px; text-align: center; font-size: 12px; color: #999; overflow: hidden; -webkit-transform: translate3d(100%,-100%,0);}
 		}
@@ -447,8 +448,9 @@ img.emoji { height: 1em; width: 1em; margin: 0 .05em 0 .1em; vertical-align: -0.
 			&:before { content: ''; display: block; width: 11px; height: 13px; position: absolute; left: -10px; top: 50%; margin-top: -6px; @extend %icons; background-position: -51px -54px;}
 		}
 	}
-	.qa_face { position: absolute; left: 12px; top: 0; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #ddd;
+	.qa_face { position: absolute; left: 12px; top: 10px; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #ddd;
 		img { display: block; width: 100%; height: 100%;}
+		img:nth-of-type(2){ display: block; width: 51px; height: 23px; position: absolute; left: -6px; top: -15px;}
 	}
 	.qa_renke,.qa_tingguo { position: absolute; right: 12px; width: rem(180); word-break: break-all; overflow: hidden; text-align: right;}
 	.qa_renke { top: 0; font-size: 12px; color: #eb4f38;}
@@ -467,7 +469,7 @@ img.emoji { height: 1em; width: 1em; margin: 0 .05em 0 .1em; vertical-align: -0.
 			span { float: right; -webkit-transform: translate3d(0,0,0); }
 			.qa_listen { width: 1000px; display: table-cell; }
 		}
-		.qa_a_used { display: block; width: 48px; height: 36px; position: absolute; right: 12px; top: 2px;}
+		.qa_a_used { display: block; width: 48px; height: 36px; position: absolute; right: 12px; top: 12px;}
 
 	}
 
@@ -480,12 +482,13 @@ img.emoji { height: 1em; width: 1em; margin: 0 .05em 0 .1em; vertical-align: -0.
 		.qa_a_head { display: block; padding-bottom: 35px;}
 		.qa_hide_more { display: block; width: 100%; height: 30px; line-height: 30px; text-align: center; position: absolute; left: 0; right: 0; bottom: 0; font-size: 13px; color: #0092ff;}
 	}
-	.qa_qner { position: relative; padding: 8px 12px 0; font-size: 0; vertical-align: top;
-		.qa_face { display: inline-block; vertical-align: top; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #ddd;
+	.qa_qner { position: relative; padding: 18px 12px 0; font-size: 0; vertical-align: top;
+		.qa_face { display: inline-block; vertical-align: top; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #ddd; position: relative;
 			img { display: block; width: 100%; height: 100%;}
+			img:nth-of-type(2){ display: block; width: 51px; height: 23px; position: absolute; left: -6px; top: -15px;}
 		}
 		.qa_name { display: inline-block; padding: 0 15px; line-height: 40px; height: 40px; font-size: 15px; color: #666; vertical-align: top;}
-		.qa_price { position: absolute; right: 12px; top: 8px; height: 40px; line-height: 40px; font-size: 12px; color: #eb4f38;}
+		.qa_price { position: absolute; right: 12px; top: 18px; height: 40px; line-height: 40px; font-size: 12px; color: #eb4f38;}
 	}
 	.qa_bar { height: 36px; line-height: 36px; font-size: 0; vertical-align: top;
 		a,span { display: inline-block; overflow: hidden;}
@@ -522,9 +525,10 @@ img.emoji { height: 1em; width: 1em; margin: 0 .05em 0 .1em; vertical-align: -0.
 	.qa_h2 { padding: 0 10px; word-break: break-all; font-size: 21px; color: #333333;}
 }
 .qa_a_info { margin-top: 10px; background: #fff;}
-.qa_infoMain { display: block; padding: 10px 35px 10px 12px; position: relative;
-	.qa_face { float: left; width: 40px; height: 40px; border-radius: 50%; overflow: hidden;
+.qa_infoMain { display: block; padding: 20px 35px 10px 12px; position: relative;
+	.qa_face { float: left; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; position: relative;
 		img { display: block; width: 100%; height: 100%;}
+		img:nth-of-type(2){ display: block; width: 51px; height: 23px; position: absolute; left: -6px; top: -15px;}
 	}
 	.ovh { overflow: hidden; padding-left: 15px; line-height: 20px;
 		h3 { height: 20px; word-break: break-all; overflow: hidden; font-size: 15px; color: #333;}
