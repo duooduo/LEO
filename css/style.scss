@@ -441,20 +441,25 @@ img.emoji { height: 1em; width: 1em; margin: 0 .05em 0 .1em; vertical-align: -0.
 	}
 	.qa_re { height: 40px; width: 100%; position: relative; padding-top: 10px;
 		.qa_listenBox { width: 50%; padding: 0 0 0 72px;
-			span { float: right; width: 45px; line-height: 40px; text-align: center; font-size: 12px; color: #999; overflow: hidden; -webkit-transform: translate3d(100%,-100%,0);}
+			span { float: right; line-height: 40px; text-align: center; font-size: 12px; color: #999; overflow: hidden; -webkit-transform: translate3d(100%,-100%,0);}
 		}
-		.qa_listen { display: block; -webkit-box-sizing: border-box; box-sizing: border-box; width: 100%; height: 40px; padding: 0 10px 0 40px; line-height: 40px; color: #fff; text-align: center; background: #0092ff; border-radius: 3px; position: relative; word-break: break-all; font-size: 12px;
-			&:after { content: ''; display: block; width: 15px; height: 18px; position: absolute; left: 13px; top: 50%; margin-top: -9px; @extend %icons; background-position: -35px -54px;}
-			&:before { content: ''; display: block; width: 11px; height: 13px; position: absolute; left: -10px; top: 50%; margin-top: -6px; @extend %icons; background-position: -51px -54px;}
+		.qa_listen { display: block; -webkit-box-sizing: border-box; box-sizing: border-box; width: 100%; height: 40px; padding: 0 40px 0 40px; line-height: 40px; color: #fff; text-align: center; background: #fe9595; border-radius: 3px; position: relative; word-break: break-all; font-size: 12px;
+			&:after { content: ''; display: block; width: 15px; height: 18px; position: absolute; left: 13px; top: 50%; margin-top: -9px; @extend %icons; background-position: -35px -73px;}
+			&:before { content: ''; display: block; width: 11px; height: 13px; position: absolute; left: -10px; top: 50%; margin-top: -6px; @extend %icons; background-position: -51px -73px;}
+			i{position: absolute;right: 10px;top: 0;}
 		}
 	}
-	.qa_face { position: absolute; left: 12px; top: 10px; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #ddd;
+	.qa_face { position: absolute; left: 12px; top: 10px; width: 40px; height: 40px;
 		img { display: block; width: 100%; height: 100%;}
+		img:nth-of-type(1){ border-radius: 50%;}
 		img:nth-of-type(2){ display: block; width: 51px; height: 23px; position: absolute; left: -6px; top: -15px;}
 	}
 	.qa_renke,.qa_tingguo { position: absolute; right: 12px; width: rem(180); word-break: break-all; overflow: hidden; text-align: right;}
 	.qa_renke { top: 0; font-size: 12px; color: #eb4f38;}
 	.qa_tingguo { bottom: 0; font-size: 11px; color: #999999;}
+	.qa_re_spec{height: 120px;
+		.qa_face{top:44px;}
+	}
 
 	&.list02 {
 		.qa_re .qa_listenBox { width: 40%; padding: 0 0 0 72px; }
@@ -465,14 +470,20 @@ img.emoji { height: 1em; width: 1em; margin: 0 .05em 0 .1em; vertical-align: -0.
 			&.qa_a_head { border-bottom: 1px solid #ddd;}
 		}
 		.qa_hide_more { display: none;}
-		.qa_re .qa_listenBox { -webkit-box-sizing: border-box; box-sizing: border-box; width: 100%; padding: 0 80px 0 72px;
-			span { float: right; -webkit-transform: translate3d(0,0,0); }
+		.qa_re .qa_listenBox { -webkit-box-sizing: border-box; box-sizing: border-box; width: 100%; padding: 0 40px 0 72px;
+			span { float: right; -webkit-transform: translate3d(0,0,0); margin-left: 20px;}
 			.qa_listen { width: 1000px; display: table-cell; }
 		}
-		.qa_a_used { display: block; width: 48px; height: 36px; position: absolute; right: 12px; top: 12px;}
-
+		.c_qa_listenBox {margin-bottom: 28px;
+			.qa_listen{background: #0092ff;
+				&:after { content: ''; display: block; width: 15px; height: 18px; position: absolute; left: 13px; top: 50%; margin-top: -9px; @extend %icons; background-position: -35px -54px;}
+				&:before { content: ''; display: block; width: 11px; height: 13px; position: absolute; left: -10px; top: 50%; margin-top: -6px; @extend %icons; background-position: -51px -54px;}
+			}
+		}
 	}
-
+}
+.qa_a_used { display: none; width: 48px; height: 36px; position: absolute; right: 12px; top: 22px;
+	img{ display: block; width: 48px; height: 36px;}
 }
 
 // -- 答二级
@@ -483,8 +494,9 @@ img.emoji { height: 1em; width: 1em; margin: 0 .05em 0 .1em; vertical-align: -0.
 		.qa_hide_more { display: block; width: 100%; height: 30px; line-height: 30px; text-align: center; position: absolute; left: 0; right: 0; bottom: 0; font-size: 13px; color: #0092ff;}
 	}
 	.qa_qner { position: relative; padding: 18px 12px 0; font-size: 0; vertical-align: top;
-		.qa_face { display: inline-block; vertical-align: top; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #ddd; position: relative;
+		.qa_face { display: inline-block; vertical-align: top; width: 40px; height: 40px; position: relative;
 			img { display: block; width: 100%; height: 100%;}
+			img:nth-of-type(1){ border-radius: 50%;}
 			img:nth-of-type(2){ display: block; width: 51px; height: 23px; position: absolute; left: -6px; top: -15px;}
 		}
 		.qa_name { display: inline-block; padding: 0 15px; line-height: 40px; height: 40px; font-size: 15px; color: #666; vertical-align: top;}
@@ -526,8 +538,9 @@ img.emoji { height: 1em; width: 1em; margin: 0 .05em 0 .1em; vertical-align: -0.
 }
 .qa_a_info { margin-top: 10px; background: #fff;}
 .qa_infoMain { display: block; padding: 20px 35px 10px 12px; position: relative;
-	.qa_face { float: left; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; position: relative;
+	.qa_face { float: left; width: 40px; height: 40px; position: relative;
 		img { display: block; width: 100%; height: 100%;}
+		img:nth-of-type(1){ border-radius: 50%;}
 		img:nth-of-type(2){ display: block; width: 51px; height: 23px; position: absolute; left: -6px; top: -15px;}
 	}
 	.ovh { overflow: hidden; padding-left: 15px; line-height: 20px;

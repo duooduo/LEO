@@ -121,6 +121,16 @@ function toPlayVioce(){
 					OCModel.userDidFinishPlayingTheVoice();
 				}
 			}, false);
+		}else if(willCost == '30sFreeListen'){
+			pauseAllAudio(that);
+			var audio = $(this).next().get(0);
+			// console.log($audio);
+			// $audio.get(0).play();
+			if(audio.paused){
+				audio.play();//播放
+			}else if(audio.played){
+				audio.pause();//暂停
+			}
 		}else {
 			pauseAllAudio(that);
 			var thisVoiceId = $(this).attr('data-voiceId');
@@ -275,9 +285,9 @@ function buildMainDomByWorryId(){
 				$('.qa_qner .qa_name').html(firstData.userNickName);
 				$('.qa_qner .qa_price').html('价值￥' + (firstData.acceptMoney == ''? 0:(parseInt(firstData.acceptMoney)/100)));
 				var $span = $('.qa_bar .fr span');
-				$span.eq(0).html(firstData.listenNum + '人听过');
-				$span.eq(1).html(firstData.praiseNum + '人认可');
-				$span.eq(2).html(firstData.stepNum + '人呵呵');
+				//$span.eq(0).html(firstData.listenNum + '人听过');
+				$span.eq(0).html(firstData.praiseNum + '人认可');
+				$span.eq(1).html(firstData.stepNum + '人呵呵');
 				$('.qa_like').on('click',function(){
 					if(firstData.price == -1 || firstData.price == -1.0 || firstData.price == 0){
 						if(voiceIdJsonList.isOperation == 0){
@@ -330,27 +340,105 @@ function buildMainDomByWorryId(){
 					}
 				});
 
-				var qaUsedImg = '';
+				//var qaUsedImg = '';
 				var list = d.data;
 				if(list.length == 1){
 					var realPrice = canListen(list[0]);
 					if(IsAgree == 1){
-						qaUsedImg = '<img src="images/qa-used.png" alt="" class="qa_a_used">';
+						$('.qa_a_used').show();
 					}
-					var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].text +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face" data-uid="'+ list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""><img src="'+ list[0].listenerPendant +'" alt=""></div>'+ qaUsedImg +'</div></li>';
+					if(realPrice == '限时免费听'){
+						var li = '' +
+							'<li class="qa_a_head">' +
+							'<div class="qa_issue">'+ list[0].text +'</div>' +
+							'<div class="qa_re">' +
+							'<div class="qa_listenBox">' +
+							'<span>'+ list[0].listenNum +'人听过</span>' +
+							'<a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">' +
+							'<p>'+ realPrice +'</p>' +
+							'<i>0:'+ list[0].voiceTime +'</i>' +
+							'</a>' +
+							'<audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio>' +
+							'</div>' +
+							'<div class="qa_face" data-uid="'+ list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""><img src="'+ list[0].listenerPendant +'" alt=""></div>' +
+							'</div>' +
+							'</li>';
+					}else {
+					var li = '' +
+						'<li class="qa_a_head">' +
+							'<div class="qa_issue">'+ list[0].text +'</div>' +
+							'<div class="qa_re qa_re_spec">' +
+								'<div class="qa_listenBox c_qa_listenBox">' +
+									'<span>'+ list[0].auditionNum +'人试听</span>' +
+									'<a data-listenerId="'+ list[0].listenerId +'" data-price="30sFreeListen" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">' +
+										'<p>30秒免费听</p>' +
+										'<i>0:30</i>' +
+									'</a>' +
+									'<audio src="'+ list[0].voiceUrl30s +'" controls="controls" hidden></audio>' +
+								'</div>' +
+								'<div class="qa_listenBox">' +
+									'<span>'+ list[0].listenNum +'人听过</span>' +
+									'<a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">' +
+										'<p>'+ realPrice +'</p>' +
+										'<i>0:'+ list[0].voiceTime +'</i>' +
+									'</a>' +
+									'<audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio>' +
+								'</div>' +
+								'<div class="qa_face" data-uid="'+ list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""><img src="'+ list[0].listenerPendant +'" alt=""></div>' +
+							'</div>' +
+						'</li>';
+					}
 					$('.qa_list01').html(li);
 				}else {
 					var dom ='';
 					for(var i=0; i<list.length; i++){
 						var index = list[i];
 						var realPrice = canListen(index);
-						dom += '<li><div class="qa_issue">'+ index.text +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ index.voiceTime +'&prime;&prime;</span><a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face" data-uid="'+ index.listenerId +'"><img src="'+ index.listenerHead +'" alt=""><img src="'+ index.listenerPendant +'" alt=""></div></div></li>';
+						if(i == 0 && realPrice != '限时免费听'){
+							dom += '<li class="qa_a_head">' +
+								'<div class="qa_issue">'+ index.text +'</div>' +
+								'<div class="qa_re qa_re_spec">' +
+								'<div class="qa_listenBox c_qa_listenBox">' +
+								'<span>'+ index.auditionNum +'人试听</span>' +
+								'<a data-listenerId="'+ index.listenerId +'" data-price="30sFreeListen" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">' +
+								'<p>30秒免费听</p>' +
+								'<i>0:30</i>' +
+								'</a>' +
+								'<audio src="'+ index.voiceUrl30s +'" controls="controls" hidden></audio>' +
+								'</div>' +
+								'<div class="qa_listenBox">' +
+								'<span>'+ index.listenNum +'人听过</span>' +
+								'<a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">' +
+								'<p>'+ realPrice +'</p>' +
+								'<i>0:'+ index.voiceTime +'</i>' +
+								'</a>' +
+								'<audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio>' +
+								'</div>' +
+								'<div class="qa_face" data-uid="'+ index.listenerId +'"><img src="'+ index.listenerHead +'" alt=""><img src="'+ index.listenerPendant +'" alt=""></div>' +
+								'</div>' +
+								'</li>';
+						}else {
+							dom += '<li class="qa_a_head">' +
+								'<div class="qa_issue">'+ index.text +'</div>' +
+								'<div class="qa_re">' +
+								'<div class="qa_listenBox">' +
+								'<span>'+ index.listenNum +'人听过</span>' +
+								'<a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">' +
+								'<p>'+ realPrice +'</p>' +
+								'<i>0:'+ index.voiceTime +'</i>' +
+								'</a>' +
+								'<audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio>' +
+								'</div>' +
+								'<div class="qa_face" data-uid="'+ index.listenerId +'"><img src="'+ index.listenerHead +'" alt=""><img src="'+ index.listenerPendant +'" alt=""></div>' +
+								'</div>' +
+								'</li>';
+						}
 					}
 					$('.qa_list01').html(dom);
 					if(IsAgree == 1){
-						qaUsedImg = '<img src="images/qa-used.png" alt="" class="qa_a_used">';
+						$('.qa_a_used').show();
 					}
-					$('.qa_list01 li').eq(0).append('<a class="qa_hide_more" href="javascript:;">【更多】</a>').addClass('qa_a_head').find('.qa_re').append(qaUsedImg);
+					$('.qa_list01 li').eq(0).append('<a class="qa_hide_more" href="javascript:;">【更多】</a>').addClass('qa_a_head');
 					$('.qa_hide_more').on('click',function(){
 						if(list[0].price == -1 || list[0].price == -1.0 || list[0].price == 0){
 							$('.qa_a_main').removeClass('qa_hide');
@@ -424,9 +512,9 @@ function buildMainDomByTopicId(){
 				$('.qa_qner .qa_name').html(firstData.userNickName);
 				$('.qa_qner .qa_price').html('价值￥' + (firstData.acceptMoney == ''? 0:(parseInt(firstData.acceptMoney)/100)));
 				var $span = $('.qa_bar .fr span');
-				$span.eq(0).html(firstData.listenNum + '人听过');
-				$span.eq(1).html(firstData.praiseNum + '人认可');
-				$span.eq(2).html(firstData.stepNum + '人呵呵');
+				//$span.eq(0).html(firstData.listenNum + '人听过');
+				$span.eq(0).html(firstData.praiseNum + '人认可');
+				$span.eq(1).html(firstData.stepNum + '人呵呵');
 				$('.qa_like').on('click',function(){
 					if(firstData.price == -1 || firstData.price == -1.0 || firstData.price == 0){
 						if(voiceIdJsonList.isOperation == 0){
@@ -479,27 +567,105 @@ function buildMainDomByTopicId(){
 					}
 				});
 
-				var qaUsedImg = '';
+				//var qaUsedImg = '';
 				var list = d.data;
 				if(list.length == 1){
 					var realPrice = canListen(list[0]);
 					if(IsAgree == 1){
-						qaUsedImg = '<img src="images/qa-used.png" alt="" class="qa_a_used">';
+						$('.qa_a_used').show();
 					}
-					var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].title +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face" data-uid="'+ list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""><img src="'+ list[0].listenerPendant +'" alt=""></div>'+ qaUsedImg +'</div></li>';
+					if(realPrice == '限时免费听'){
+						var li = '' +
+							'<li class="qa_a_head">' +
+							'<div class="qa_issue">'+ list[0].title +'</div>' +
+							'<div class="qa_re">' +
+							'<div class="qa_listenBox">' +
+							'<span>'+ list[0].listenNum +'人听过</span>' +
+							'<a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">' +
+							'<p>'+ realPrice +'</p>' +
+							'<i>0:'+ list[0].voiceTime +'</i>' +
+							'</a>' +
+							'<audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio>' +
+							'</div>' +
+							'<div class="qa_face" data-uid="'+ list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""><img src="'+ list[0].listenerPendant +'" alt=""></div>' +
+							'</div>' +
+							'</li>';
+					}else {
+					var li = '' +
+						'<li class="qa_a_head">' +
+						'<div class="qa_issue">'+ list[0].title +'</div>' +
+						'<div class="qa_re qa_re_spec">' +
+						'<div class="qa_listenBox c_qa_listenBox">' +
+						'<span>'+ list[0].auditionNum +'人试听</span>' +
+						'<a data-listenerId="'+ list[0].listenerId +'" data-price="30sFreeListen" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">' +
+						'<p>30秒免费听</p>' +
+						'<i>0:30</i>' +
+						'</a>' +
+						'<audio src="'+ list[0].voiceUrl30s +'" controls="controls" hidden></audio>' +
+						'</div>' +
+						'<div class="qa_listenBox">' +
+						'<span>'+ list[0].listenNum +'人听过</span>' +
+						'<a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">' +
+						'<p>'+ realPrice +'</p>' +
+						'<i>0:'+ list[0].voiceTime +'</i>' +
+						'</a>' +
+						'<audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio>' +
+						'</div>' +
+						'<div class="qa_face" data-uid="'+ list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""><img src="'+ list[0].listenerPendant +'" alt=""></div>' +
+						'</div>' +
+						'</li>';
+					}
 					$('.qa_list01').html(li);
 				}else {
 					var dom ='';
 					for(var i=0; i<list.length; i++){
 						var index = list[i];
 						var realPrice = canListen(index);
-						dom += '<li><div class="qa_issue">'+ index.title +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ index.voiceTime +'&prime;&prime;</span><a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face" data-uid="'+ index.listenerId +'"><img src="'+ index.listenerHead +'" alt=""><img src="'+ index.listenerPendant +'" alt=""></div></div></li>';
+						if(i == 0 && realPrice != '限时免费听'){
+							dom += '<li class="qa_a_head">' +
+								'<div class="qa_issue">'+ index.title +'</div>' +
+								'<div class="qa_re qa_re_spec">' +
+								'<div class="qa_listenBox c_qa_listenBox">' +
+								'<span>'+ index.auditionNum +'人试听</span>' +
+								'<a data-listenerId="'+ index.listenerId +'" data-price="30sFreeListen" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">' +
+								'<p>30秒免费听</p>' +
+								'<i>0:30</i>' +
+								'</a>' +
+								'<audio src="'+ index.voiceUrl30s +'" controls="controls" hidden></audio>' +
+								'</div>' +
+								'<div class="qa_listenBox">' +
+								'<span>'+ index.listenNum +'人听过</span>' +
+								'<a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">' +
+								'<p>'+ realPrice +'</p>' +
+								'<i>0:'+ index.voiceTime +'</i>' +
+								'</a>' +
+								'<audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio>' +
+								'</div>' +
+								'<div class="qa_face" data-uid="'+ index.listenerId +'"><img src="'+ index.listenerHead +'" alt=""><img src="'+ index.listenerPendant +'" alt=""></div>' +
+								'</div>' +
+								'</li>';
+						}else {
+							dom += '<li class="qa_a_head">' +
+								'<div class="qa_issue">'+ index.title +'</div>' +
+								'<div class="qa_re">' +
+								'<div class="qa_listenBox">' +
+								'<span>'+ index.listenNum +'人听过</span>' +
+								'<a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">' +
+								'<p>'+ realPrice +'</p>' +
+								'<i>0:'+ index.voiceTime +'</i>' +
+								'</a>' +
+								'<audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio>' +
+								'</div>' +
+								'<div class="qa_face" data-uid="'+ index.listenerId +'"><img src="'+ index.listenerHead +'" alt=""><img src="'+ index.listenerPendant +'" alt=""></div>' +
+								'</div>' +
+								'</li>';
+						}
 					}
 					$('.qa_list01').html(dom);
 					if(IsAgree == 1){
-						qaUsedImg = '<img src="images/qa-used.png" alt="" class="qa_a_used">';
+						$('.qa_a_used').show();
 					}
-					$('.qa_list01 li').eq(0).append('<a class="qa_hide_more" href="javascript:;">【更多】</a>').addClass('qa_a_head').find('.qa_re').append(qaUsedImg);
+					$('.qa_list01 li').eq(0).append('<a class="qa_hide_more" href="javascript:;">【更多】</a>').addClass('qa_a_head');
 					$('.qa_hide_more').on('click',function(){
 						if(list[0].price == -1 || list[0].price == -1.0 || list[0].price == 0){
 							$('.qa_a_main').removeClass('qa_hide');
@@ -572,7 +738,21 @@ function buildMainDomByIsNotAgree(){
 				$('.qa_qner .qa_name').html(firstData.userNickName);
 				var list = d.data;
 				var realPrice = canListen(list[0]);
-				var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].title +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face" data-uid="'+ list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""><img src="'+ list[0].listenerPendant +'" alt=""></div></div></li>';
+				var li = '' +
+					'<li class="qa_a_head">' +
+					'<div class="qa_issue">'+ list[0].title +'</div>' +
+					'<div class="qa_re">' +
+					'<div class="qa_listenBox">' +
+					'<span>'+ list[0].listenNum +'人听过</span>' +
+					'<a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">' +
+					'<p>'+ realPrice +'</p>' +
+					'<i>0:'+ list[0].voiceTime +'</i>' +
+					'</a>' +
+					'<audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio>' +
+					'</div>' +
+					'<div class="qa_face" data-uid="'+ list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""><img src="'+ list[0].listenerPendant +'" alt=""></div>' +
+					'</div>' +
+					'</li>';
 				$('.qa_list01').html(li);
 				toPlayVioce();
 				$('.qa_bar').hide();
@@ -588,7 +768,21 @@ function buildMainDomByIsNotAgree(){
 				$('.qa_qner .qa_name').html(firstData.userNickName);
 				var list = d.data;
 				var realPrice = canListen(list[0]);
-				var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].text +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face" data-uid="'+ list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""><img src="'+ list[0].listenerPendant +'" alt=""></div></div></li>';
+				var li = '' +
+					'<li class="qa_a_head">' +
+					'<div class="qa_issue">'+ list[0].text +'</div>' +
+					'<div class="qa_re">' +
+					'<div class="qa_listenBox">' +
+					'<span>'+ list[0].listenNum +'人听过</span>' +
+					'<a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">' +
+					'<p>'+ realPrice +'</p>' +
+					'<i>0:'+ list[0].voiceTime +'</i>' +
+					'</a>' +
+					'<audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio>' +
+					'</div>' +
+					'<div class="qa_face" data-uid="'+ list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""><img src="'+ list[0].listenerPendant +'" alt=""></div>' +
+					'</div>' +
+					'</li>';
 				$('.qa_list01').html(li);
 				toPlayVioce();
 				$('.qa_bar').hide();
@@ -604,7 +798,21 @@ function buildMainDomByIsNotAgree(){
 				$('.qa_qner .qa_name').html(firstData.userNickName);
 				var list = d.data;
 				var realPrice = canListen(list[0]);
-				var li = '<li class="qa_a_head"><div class="qa_issue">'+ list[0].text +'</div><div class="qa_re"><div class="qa_listenBox"><span>'+ list[0].voiceTime +'&prime;&prime;</span><a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">'+ realPrice +'</a><audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio></div><div class="qa_face" data-uid="'+ list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""><img src="'+ list[0].listenerPendant +'" alt=""></div></div></li>';
+				var li = '' +
+					'<li class="qa_a_head">' +
+					'<div class="qa_issue">'+ list[0].text +'</div>' +
+					'<div class="qa_re">' +
+					'<div class="qa_listenBox">' +
+					'<span>'+ list[0].listenNum +'人听过</span>' +
+					'<a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">' +
+					'<p>'+ realPrice +'</p>' +
+					'<i>0:'+ list[0].voiceTime +'</i>' +
+					'</a>' +
+					'<audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio>' +
+					'</div>' +
+					'<div class="qa_face" data-uid="'+ list[0].listenerId +'"><img src="'+ list[0].listenerHead +'" alt=""><img src="'+ list[0].listenerPendant +'" alt=""></div>' +
+					'</div>' +
+					'</li>';
 				$('.qa_list01').html(li);
 				toPlayVioce();
 				$('.qa_bar').hide();
