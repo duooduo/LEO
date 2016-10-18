@@ -251,6 +251,16 @@ function clickHeadImgToUserCenter(){
 	})
 }
 
+function setVoiceTime(data){
+	var m = parseInt(data)/60;
+	m = Math.floor(m);
+	var s = parseInt(data)%60;
+	if(s < 10){
+		s = '0' + s;
+	}
+	return m+':'+s;
+}
+
 
 function buildMainDomByWorryId(){
 	var idJson = {};
@@ -356,7 +366,7 @@ function buildMainDomByWorryId(){
 							'<span>'+ list[0].listenNum +'人听过</span>' +
 							'<a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">' +
 							'<p>'+ realPrice +'</p>' +
-							'<i>0:'+ list[0].voiceTime +'</i>' +
+							'<i>'+ setVoiceTime(list[0].voiceTime) +'</i>' +
 							'</a>' +
 							'<audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio>' +
 							'</div>' +
@@ -380,7 +390,7 @@ function buildMainDomByWorryId(){
 									'<span>'+ list[0].listenNum +'人听过</span>' +
 									'<a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">' +
 										'<p>'+ realPrice +'</p>' +
-										'<i>0:'+ list[0].voiceTime +'</i>' +
+										'<i>'+ setVoiceTime(list[0].voiceTime) +'</i>' +
 									'</a>' +
 									'<audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio>' +
 								'</div>' +
@@ -410,7 +420,7 @@ function buildMainDomByWorryId(){
 								'<span>'+ index.listenNum +'人听过</span>' +
 								'<a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">' +
 								'<p>'+ realPrice +'</p>' +
-								'<i>0:'+ index.voiceTime +'</i>' +
+								'<i>'+ setVoiceTime(index.voiceTime) +'</i>' +
 								'</a>' +
 								'<audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio>' +
 								'</div>' +
@@ -425,7 +435,7 @@ function buildMainDomByWorryId(){
 								'<span>'+ index.listenNum +'人听过</span>' +
 								'<a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">' +
 								'<p>'+ realPrice +'</p>' +
-								'<i>0:'+ index.voiceTime +'</i>' +
+								'<i>'+ setVoiceTime(index.voiceTime) +'</i>' +
 								'</a>' +
 								'<audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio>' +
 								'</div>' +
@@ -583,7 +593,7 @@ function buildMainDomByTopicId(){
 							'<span>'+ list[0].listenNum +'人听过</span>' +
 							'<a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">' +
 							'<p>'+ realPrice +'</p>' +
-							'<i>0:'+ list[0].voiceTime +'</i>' +
+							'<i>'+ setVoiceTime(list[0].voiceTime) +'</i>' +
 							'</a>' +
 							'<audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio>' +
 							'</div>' +
@@ -607,7 +617,7 @@ function buildMainDomByTopicId(){
 						'<span>'+ list[0].listenNum +'人听过</span>' +
 						'<a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">' +
 						'<p>'+ realPrice +'</p>' +
-						'<i>0:'+ list[0].voiceTime +'</i>' +
+						'<i>'+ setVoiceTime(list[0].voiceTime) +'</i>' +
 						'</a>' +
 						'<audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio>' +
 						'</div>' +
@@ -637,7 +647,7 @@ function buildMainDomByTopicId(){
 								'<span>'+ index.listenNum +'人听过</span>' +
 								'<a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">' +
 								'<p>'+ realPrice +'</p>' +
-								'<i>0:'+ index.voiceTime +'</i>' +
+								'<i>'+ setVoiceTime(index.voiceTime) +'</i>' +
 								'</a>' +
 								'<audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio>' +
 								'</div>' +
@@ -652,7 +662,7 @@ function buildMainDomByTopicId(){
 								'<span>'+ index.listenNum +'人听过</span>' +
 								'<a data-listenerId="'+ index.listenerId +'" data-price="'+ index.price +'" data-voiceId="'+ index.voiceId +'" class="qa_listen" href="javascript:;">' +
 								'<p>'+ realPrice +'</p>' +
-								'<i>0:'+ index.voiceTime +'</i>' +
+								'<i>'+ setVoiceTime(index.voiceTime) +'</i>' +
 								'</a>' +
 								'<audio src="'+ index.voiceUrl +'" controls="controls" hidden></audio>' +
 								'</div>' +
@@ -746,7 +756,7 @@ function buildMainDomByIsNotAgree(){
 					'<span>'+ list[0].listenNum +'人听过</span>' +
 					'<a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">' +
 					'<p>'+ realPrice +'</p>' +
-					'<i>0:'+ list[0].voiceTime +'</i>' +
+					'<i>'+ setVoiceTime(list[0].voiceTime) +'</i>' +
 					'</a>' +
 					'<audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio>' +
 					'</div>' +
@@ -776,7 +786,7 @@ function buildMainDomByIsNotAgree(){
 					'<span>'+ list[0].listenNum +'人听过</span>' +
 					'<a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">' +
 					'<p>'+ realPrice +'</p>' +
-					'<i>0:'+ list[0].voiceTime +'</i>' +
+					'<i>'+ setVoiceTime(list[0].voiceTime) +'</i>' +
 					'</a>' +
 					'<audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio>' +
 					'</div>' +
@@ -806,7 +816,7 @@ function buildMainDomByIsNotAgree(){
 					'<span>'+ list[0].listenNum +'人听过</span>' +
 					'<a data-listenerId="'+ list[0].listenerId +'" data-price="'+ list[0].price +'" data-voiceId="'+ list[0].voiceId +'" class="qa_listen" href="javascript:;">' +
 					'<p>'+ realPrice +'</p>' +
-					'<i>0:'+ list[0].voiceTime +'</i>' +
+					'<i>'+ setVoiceTime(list[0].voiceTime) +'</i>' +
 					'</a>' +
 					'<audio src="'+ list[0].voiceUrl +'" controls="controls" hidden></audio>' +
 					'</div>' +
